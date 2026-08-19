@@ -1,0 +1,249 @@
+{
+  "profile_version": "MS-1.1",
+  "audit": {
+    "repo": "https://github.com/spring-petclinic/spring-petclinic-microservices",
+    "commit": "305a1f13e4f961001d4e6cb50a9db51dc3fc5967",
+    "date": "2026-08-19",
+    "auditor": "agent"
+  },
+  "service": {
+    "name": "api-gateway",
+    "path": "spring-petclinic-api-gateway",
+    "language": "Java 17",
+    "framework": "Spring Boot / Spring Cloud Gateway (WebFlux)"
+  },
+  "boundary": {
+    "included_points": 4,
+    "excluded_points": [
+      {
+        "target": "config-server (source of externalized application config)",
+        "reason": "outside boundary — config-server owns and can remediate its own availability; api-gateway has no authority over it"
+      },
+      {
+        "target": "discovery-server (Eureka)",
+        "reason": "outside boundary — same rationale"
+      }
+    ],
+    "unclassified_points": 0
+  },
+  "points": [
+    {
+      "id": "EE-1",
+      "vertical": "EE",
+      "target": "client-facing entry surface (ApiGatewayController /api/gateway/** + Spring Cloud Gateway proxy routes /api/vet/**, /api/visit/**, /api/customer/**, /api/genai/**)",
+      "defined_at": "spring-petclinic-api-gateway/src/main/resources/application.yml:9-31; ApiGatewayController.java:36",
+      "mechanisms": [],
+      "penalties": [],
+      "set_aside": [
+        {
+          "name": "gateway-level Retry filter (retries=1, statuses=SERVICE_UNAVAILABLE, methods=POST) applied to proxy routes",
+          "evidence": "application.yml:14-18 — this is an SE/CE-class outbound protection on the proxy path, not an EE inbound protection (rate limiting/bulkhead); logged here because it is adjacent evidence, not scored under EE"
+        }
+      ],
+      "point_score": 0
+    },
+    {
+      "id": "CE-1",
+      "vertical": "CE",
+      "target": "customers-service GET /owners/{ownerId}",
+      "defined_at": "spring-petclinic-api-gateway/src/main/java/.../application/CustomersServiceClient.java:29-32",
+      "mechanisms": [
+        {
+          "name": "circuit_breaker",
+          "resolved_value": "ABSENT",
+          "resolution_path": "no ReactiveCircuitBreaker, no Resilience4j annotation, no gateway CircuitBreaker filter wraps this specific WebClient call (the gateway-level CircuitBreaker filter in application.yml applies only to Spring Cloud Gateway proxy routes, not to this internally-issued WebClient call)",
+          "evidence": "CustomersServiceClient.java (full file); ApiGatewayController.java:38-42 (call site, unwrapped)",
+          "weight": 0,
+          "condition_applied": null,
+          "status": "VERIFIED_ABSENT"
+        },
+        {
+          "name": "fallback",
+          "resolved_value": "ABSENT",
+          "resolution_path": "no .onErrorResume / .transform fallback wraps getOwner()",
+          "evidence": "ApiGatewayController.java:38-42",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT"
+        },
+        {
+          "name": "retry",
+          "resolved_value": "ABSENT",
+          "resolution_path": "no .retry() / .retryWhen() operator on the Mono chain",
+          "evidence": "CustomersServiceClient.java:29-32",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT"
+        },
+        {
+          "name": "timeout",
+          "resolved_value": "UNVERIFIED",
+          "resolution_path": "no .responseTimeout() / .timeout() operator, no HttpClient customization, no application.yml spring.cloud.gateway.httpclient.response-timeout or reactor.netty client config found; WebClient.Builder used with no customization at injection point (checked: no @Bean WebClient.Builder customizer found in ApiGatewayApplication.java or elsewhere)",
+          "evidence": "CustomersServiceClient.java:23-25 (constructor, unmodified builder); grep across module: no timeout config found",
+          "weight": 0,
+          "status": "UNVERIFIED"
+        },
+        {
+          "name": "connection_pool",
+          "resolved_value": "UNVERIFIED",
+          "resolution_path": "Reactor Netty default connection pool applies implicitly; no explicit ConnectionProvider bean or pool-size config found in repo",
+          "evidence": "no positive evidence found",
+          "weight": 0,
+          "status": "UNVERIFIED"
+        }
+      ],
+      "penalties": [],
+      "set_aside": [],
+      "point_score": 0
+    },
+    {
+      "id": "CE-2",
+      "vertical": "CE",
+      "target": "visits-service GET /pets/visits",
+      "defined_at": "spring-petclinic-api-gateway/src/main/java/.../application/VisitsServiceClient.java:38-43",
+      "mechanisms": [
+        {
+          "name": "circuit_breaker",
+          "resolved_value": "PRESENT — name=getOwnerDetails, via ReactiveCircuitBreakerFactory (Resilience4j-backed)",
+          "resolution_path": "code-level instantiation, no explicit resilience4j.circuitbreaker.instances.getOwnerDetails config block found anywhere in repo (defaults apply, exact threshold/window UNVERIFIED in-repo)",
+          "evidence": "ApiGatewayController.java:44-48",
+          "weight": 1,
+          "condition_applied": "prerequisite 'timeout' UNVERIFIED (no explicit TimeLimiter/timeout config found for this breaker in-repo) -> conditional else-branch applied (1 instead of 3)",
+          "status": "VERIFIED_PARTIAL"
+        },
+        {
+          "name": "fallback",
+          "resolved_value": "PRESENT — emptyVisitsForPets() returns Mono.just(new Visits(List.of()))",
+          "resolution_path": "code-level, does not call any other dependency (not circular)",
+          "evidence": "ApiGatewayController.java:50-52",
+          "weight": 5,
+          "condition_applied": "prerequisite 'timeout or circuit_breaker' satisfied (circuit_breaker present) -> full weight",
+          "status": "VERIFIED"
+        },
+        {
+          "name": "retry",
+          "resolved_value": "ABSENT",
+          "resolution_path": "no retry operator found",
+          "evidence": "VisitsServiceClient.java (full file)",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT"
+        },
+        {
+          "name": "timeout",
+          "resolved_value": "UNVERIFIED",
+          "resolution_path": "same as CE-1 — no explicit timeout config found in-repo for this call path",
+          "evidence": "no positive evidence found",
+          "weight": 0,
+          "status": "UNVERIFIED"
+        },
+        {
+          "name": "connection_pool",
+          "resolved_value": "UNVERIFIED",
+          "resolution_path": "same as CE-1",
+          "evidence": "no positive evidence found",
+          "weight": 0,
+          "status": "UNVERIFIED"
+        }
+      ],
+      "penalties": [],
+      "set_aside": [],
+      "point_score": 6
+    },
+    {
+      "id": "AC-1",
+      "vertical": "AC",
+      "target": "api-gateway container",
+      "defined_at": "docker-compose.yml:71-82 (api-gateway service block); docker/Dockerfile",
+      "mechanisms": [
+        {
+          "name": "readiness_probe",
+          "resolved_value": "ABSENT (as wired)",
+          "resolution_path": "spring-boot-starter-actuator IS a declared dependency (pom.xml) so /actuator/health exists in the running app, but docker-compose.yml defines NO healthcheck stanza for the api-gateway service (contrast with config-server and discovery-server, which do have one), and no Kubernetes manifests exist in this repository. The mechanism exists in the dependency tree but is not verifiably wired to any container-level probe in this repo.",
+          "evidence": "pom.xml (actuator dep present); docker-compose.yml:71-82 (no healthcheck key, compare to lines for config-server/discovery-server which have one)",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT_AS_WIRED"
+        },
+        {
+          "name": "liveness_probe",
+          "resolved_value": "ABSENT (as wired)",
+          "resolution_path": "same as readiness_probe",
+          "evidence": "same",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT_AS_WIRED"
+        },
+        {
+          "name": "self_healing",
+          "resolved_value": "ABSENT",
+          "resolution_path": "prerequisite (specific liveness probe) not satisfied",
+          "evidence": "n/a",
+          "weight": 0,
+          "condition_applied": "prerequisite failed -> 0",
+          "status": "VERIFIED_ABSENT"
+        },
+        {
+          "name": "graceful_shutdown",
+          "resolved_value": "ABSENT",
+          "resolution_path": "no server.shutdown: graceful found in any application.yml in this module",
+          "evidence": "spring-petclinic-api-gateway/src/main/resources/application.yml (full file, no shutdown key)",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT"
+        },
+        {
+          "name": "declared_resource_limits",
+          "resolved_value": "PARTIAL — memory limit 512M only, no CPU limit, no reservation/request of any kind",
+          "resolution_path": "docker-compose deploy.resources.limits.memory",
+          "evidence": "docker-compose.yml:76-78",
+          "weight": 0,
+          "status": "VERIFIED_PARTIAL_BELOW_THRESHOLD",
+          "note": "profile requires CPU+memory request AND limit for credit; only memory limit present, so this does not meet the bar for the weight-2 item"
+        },
+        {
+          "name": "startup_probe",
+          "resolved_value": "ABSENT",
+          "resolution_path": "no evidence found",
+          "evidence": "n/a",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT"
+        },
+        {
+          "name": "disruption_policy",
+          "resolved_value": "N/A",
+          "resolution_path": "no Kubernetes manifests in repository; concept does not apply to docker-compose",
+          "evidence": "n/a",
+          "weight": 0,
+          "status": "NOT_APPLICABLE"
+        }
+      ],
+      "penalties": [],
+      "set_aside": [],
+      "point_score": 0
+    }
+  ],
+  "totals": {
+    "index_raw": 6,
+    "penalties_sum": 0,
+    "index": 6,
+    "index_min": 0,
+    "index_max": 53,
+    "domains_D": 1,
+    "domains_rationale": "api-gateway serves a single functional domain: read-aggregation of owner/pet/visit data for the client. All endpoints and proxy routes serve that one purpose; no unrelated business capability is co-located.",
+    "endpoint_count": 5,
+    "degradation_factor": 1.0,
+    "index_degraded": 6,
+    "irc": 1.13,
+    "tier": "Unsatisfactory"
+  },
+  "remediation": [
+    { "order": 1, "action": "Add an explicit response timeout to the customers-service WebClient call (CE-1)", "projected_irc": 1.9, "rationale": "Closes the single largest exposure: this call currently has zero time bound and can hang indefinitely." },
+    { "order": 2, "action": "Wrap the customers-service call in a circuit breaker (CE-1), with the timeout above as prerequisite for full credit", "projected_irc": 2.5, "rationale": "Limits blast radius once the timeout exists; without the timeout the breaker cannot trip on hangs." },
+    { "order": 3, "action": "Add a fallback for the customers-service call (CE-1)", "projected_irc": 3.4, "rationale": "The visits-service path already degrades gracefully to an empty list; the customers-service path has no equivalent and currently fails the whole request." },
+    { "order": 4, "action": "Wire /actuator/health into a container-level readiness and liveness probe (docker-compose healthcheck, or Kubernetes probes if deployed there)", "projected_irc": 4.5, "rationale": "The health-check machinery already exists via Actuator; it is simply not connected to anything that acts on it." },
+    { "order": 5, "action": "Configure a specific liveness probe distinct from readiness, then enable self-healing (restart policy tied to liveness failure)", "projected_irc": 5.1, "rationale": "Enables automatic recovery once the probe exists." },
+    { "order": 6, "action": "Enable graceful shutdown (server.shutdown: graceful) with a bounded grace period", "projected_irc": 5.9, "rationale": "Prevents in-flight request loss on every redeploy — currently every deployment is a small outage for requests in flight." },
+    { "order": 7, "action": "Declare CPU limit and both CPU+memory reservations, not memory limit alone", "projected_irc": 6.3, "rationale": "Closes the resource-limits item; low individual weight but easy to ship alongside the above." },
+    { "order": 8, "action": "Add a rate limiter or bulkhead at the gateway's own entry surface (EE-1)", "projected_irc": 7.5, "rationale": "Nothing currently bounds concurrent/rate load on the gateway's own endpoint before it fans out to two downstream calls." },
+    { "order": 9, "action": "Confirm (and if absent, configure) an explicit timeout and connection pool for the visits-service call (CE-2), and confirm the circuit breaker's own timeout so it earns full conditional credit", "projected_irc": 8.9, "rationale": "CE-2 is currently the strongest path but still rests on unverified framework defaults rather than explicit configuration." }
+  ],
+  "quality": {
+    "unverified_count": 4,
+    "set_aside_count": 1
+  }
+}

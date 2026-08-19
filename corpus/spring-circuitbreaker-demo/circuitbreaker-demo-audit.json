@@ -1,0 +1,99 @@
+{
+  "profile_version": "MS-1.1",
+  "audit": {
+    "repo": "https://github.com/rbiedrawa/spring-circuitbreaker-demo",
+    "commit": "2e7be63ed140d33f55498bc9b43c9d786b02cf78",
+    "date": "2026-08-19",
+    "auditor": "agent"
+  },
+  "service": {
+    "name": "circuitbreaker-demo",
+    "path": ".",
+    "language": "Java 11",
+    "framework": "Spring Boot 2.4.4 / Spring WebFlux / Resilience4j"
+  },
+  "indirect_protection_sweep": "none found beyond the annotations already visible at the call site — checked: no internal shared library dependency beyond spring-cloud/resilience4j/actuator/sleuth/micrometer (all public, well-known); no @Aspect/@Around/BeanPostProcessor/RestTemplateCustomizer in the codebase; no service mesh manifests present (no istio-manifests/, no linkerd config); this is a single, undecorated Spring Boot application.",
+  "boundary": {
+    "included_points": 1,
+    "excluded_points": [],
+    "unclassified_points": 0,
+    "boundary_finding": "CRITICAL METHODOLOGICAL RESULT — see summary. This service has no CE, SE, or DI interaction points at all. `HelloService.remoteCall()`, the method wrapped by @TimeLimiter/@Retry/@CircuitBreaker, performs no I/O of any kind: it is `return Mono.just(msg)` after an artificial `delayElement(Duration.ofSeconds(random 0-5))`. There is no HTTP client, no gRPC stub, no database, no external system whose failure this code could ever observe. Per the boundary rule (score only integrations at the frontier whose failure compromises this application's function), this method does not qualify as a CE point — there is no external dependency to be a frontier of. The README's mention of 'keycloak and postgres' is unreflected in any dependency file or code and appears to be a stale artifact from a template this repo was adapted from; verified absent in build.gradle, all .java files, and docker-compose.yml."
+  },
+  "points": [
+    {
+      "id": "EE-1",
+      "vertical": "EE",
+      "target": "GET /api/hello, GET /api/hello/success",
+      "defined_at": "HelloController.java:15-23; HelloService.java:22-25 (@Bulkhead on sayHello)",
+      "mechanisms": [
+        {
+          "name": "bulkhead",
+          "resolved_value": "PRESENT — maxConcurrentCalls=100 (semaphore bulkhead default config); a separate thread-pool-bulkhead config also present (maxThreadPoolSize=4, coreThreadPoolSize=2, queueCapacity=2), though instance-level binding to confirm which bulkhead type backs `sayHello` was not fully resolved from config alone — both configs exist under `resilience4j.bulkhead` defaults",
+          "resolution_path": "application.yml: resilience4j.bulkhead.configs.default; resilience4j.thread-pool-bulkhead.configs.default",
+          "evidence": "HelloService.java:24 (@Bulkhead(name = CB_SAY_HELLO)); application.yml (bulkhead + thread-pool-bulkhead blocks)",
+          "weight": 5,
+          "status": "VERIFIED",
+          "note": "This is genuine protection of the service's OWN concurrency/thread-pool exhaustion — real regardless of what the wrapped operation does. Scored on its own merits, independent of the boundary finding above."
+        }
+      ],
+      "penalties": [],
+      "set_aside": [
+        {
+          "name": "rate limiter configured but never applied",
+          "evidence": "application.yml declares resilience4j.ratelimiter.configs.default (limitForPeriod=10, limitRefreshPeriod=1s) in full, but no @RateLimiter annotation exists anywhere in the codebase — the configuration block is orphaned.",
+          "note": "Distinct from UNVERIFIED (where a mechanism is referenced but its value can't be resolved). This is CONFIGURED-BUT-UNAPPLIED: full calibration exists for a mechanism that protects nothing. Recommended as a distinct status category for MS-1.2 tooling, since it is more informative than silence to a reader auditing their own config for dead entries."
+        }
+      ],
+      "point_score": 5
+    },
+    {
+      "id": "AC-1",
+      "vertical": "AC",
+      "target": "circuitbreaker-demo container",
+      "defined_at": "docker/docker-compose.yml",
+      "mechanisms": [
+        {
+          "name": "readiness_probe",
+          "resolved_value": "ABSENT (as wired)",
+          "resolution_path": "Actuator health endpoint auto-registers CircuitBreaker and RateLimiter health indicators (management.health.circuitbreakers.enabled: true, ratelimiters.enabled: true) — genuinely richer health signal content than any other service audited in this corpus so far. BUT docker-compose.yml defines a `healthcheck` block for prometheus and grafana, and explicitly NOT for the circuitbreaker-demo service itself.",
+          "evidence": "application.yml:5-6 (health indicator config); docker/docker-compose.yml (circuitbreaker-demo service block, no healthcheck key, contrast with prometheus/grafana blocks which have one)",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT_AS_WIRED"
+        },
+        { "name": "liveness_probe", "resolved_value": "ABSENT (as wired)", "resolution_path": "same as readiness_probe", "weight": 0, "status": "VERIFIED_ABSENT_AS_WIRED" },
+        { "name": "self_healing", "resolved_value": "ABSENT", "condition_applied": "prerequisite (specific liveness probe) not met -> 0", "weight": 0, "status": "VERIFIED_ABSENT" },
+        { "name": "graceful_shutdown", "resolved_value": "ABSENT", "resolution_path": "Spring Boot 2.4.4 supports server.shutdown=graceful (available since 2.3), but no such key found in application.yml", "evidence": "application.yml (full file, no shutdown key)", "weight": 0, "status": "VERIFIED_ABSENT" },
+        { "name": "declared_resource_limits", "resolved_value": "ABSENT", "resolution_path": "docker-compose.yml circuitbreaker-demo service has no deploy.resources block at all", "weight": 0, "status": "VERIFIED_ABSENT" },
+        { "name": "startup_probe", "resolved_value": "ABSENT", "weight": 0, "status": "VERIFIED_ABSENT" },
+        { "name": "disruption_policy", "resolved_value": "NOT_APPLICABLE", "resolution_path": "no Kubernetes manifests in repository", "weight": 0, "status": "NOT_APPLICABLE" }
+      ],
+      "penalties": [],
+      "point_score": 0
+    }
+  ],
+  "totals": {
+    "index_raw": 5,
+    "penalties_sum": 0,
+    "index": 5,
+    "index_min": 0,
+    "index_max": 23,
+    "domains_D": 1,
+    "domains_rationale": "Single domain — a greeting endpoint pattern showcase. Only EE (5) and AC (18) verticals have a present instance; CE/SE/DI are correctly excluded from index_max, not scored as 0/15 etc., because no interaction point of those kinds exists in this topology.",
+    "endpoint_count": 2,
+    "degradation_factor": 1.0,
+    "index_degraded": 5,
+    "irc": 2.17,
+    "tier": "Unsatisfactory"
+  },
+  "remediation": [
+    { "order": 1, "action": "Wire the existing Actuator health endpoint (already rich, with circuit breaker/rate limiter state) to a docker-compose healthcheck", "projected_irc": 3.5, "rationale": "The health signal content is better than average in this corpus; it's simply not connected to anything that acts on it — cheapest, highest-value fix available." },
+    { "order": 2, "action": "Configure graceful shutdown (server.shutdown: graceful)", "projected_irc": 4.3, "rationale": "One line of YAML in a Spring Boot 2.3+ app; currently unused despite being available." },
+    { "order": 3, "action": "Declare resource requests/limits in docker-compose", "projected_irc": 5.2, "rationale": "Closes the last AC gap." },
+    {
+      "order": "N/A — out of scope for remediation ranking",
+      "action": "This service cannot meaningfully raise its CE/SE/DI verticals because it has none. Any further CRAFT Score improvement is bounded by AC alone (max attainable: 5 EE + 18 AC = 23 raw, i.e. CRAFT Score 10.0 is reachable purely through container hygiene). This is stated explicitly rather than left implicit, because a reader comparing this service's ceiling to a service with real downstream dependencies should understand they are not directly comparable topologies.",
+      "projected_irc": null
+    }
+  ],
+  "quality": { "unverified_count": 0, "set_aside_count": 1 }
+}

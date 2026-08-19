@@ -1,0 +1,80 @@
+{
+  "note": "Compact treatment: these three services are leaf business services with an identical structural shape — one EE surface, one DI dependency (their own datastore), one AC container, and NO outbound calls (no CE/SE points exist; verified by grep across each module's src/main for RestTemplate/WebClient/FeignClient — none found). Full per-mechanism detail follows the same schema as api-gateway-audit.json; abbreviated here to avoid repeating near-identical evidence three times.",
+  "profile_version": "MS-1.1",
+  "audit": {
+    "repo": "https://github.com/spring-petclinic/spring-petclinic-microservices",
+    "commit": "305a1f13e4f961001d4e6cb50a9db51dc3fc5967",
+    "date": "2026-08-19"
+  },
+  "services": [
+    {
+      "name": "customers-service",
+      "path": "spring-petclinic-customers-service",
+      "points": {
+        "EE-1": {
+          "target": "OwnerResource, PetResource REST endpoints",
+          "mechanisms": "none found (no rate limiter, no bulkhead)",
+          "score": 0, "max": 5
+        },
+        "DI-1": {
+          "target": "own datastore (JPA via OwnerRepository, PetRepository)",
+          "note": "BOUNDARY FINDING: db/mysql/schema.sql exists in-repo, but no application-mysql.yml datasource block and no database service in docker-compose.yml were found. The docker-compose deployment topology implies the active production datasource is externalized to the config-server's backing configuration repository, which is NOT part of this codebase and therefore out of this audit's boundary. What IS verifiable in-repo (test/default profile) is an embedded HSQLDB with no replication, no explicit pool config, no explicit timeout.",
+          "mechanisms": "no replication, no fallback, no explicit timeout, no explicit pool found in-repo",
+          "score": 0, "max": 14,
+          "status": "PARTIAL_BOUNDARY_UNCERTAINTY — flagged, not guessed"
+        },
+        "AC-1": {
+          "target": "container",
+          "mechanisms": "actuator dependency present but unwired (no docker-compose healthcheck for this service — verified by absence in docker-compose.yml, contrast with config-server/discovery-server which have one); no graceful shutdown config; memory limit only (512M), no CPU limit, no reservations; no startup probe",
+          "score": 0, "max": 18
+        }
+      },
+      "totals": { "index": 0, "index_min": 0, "index_max": 37, "D": 1, "irc": 0.0, "tier": "Unsatisfactory" },
+      "quality": { "unverified_count": 2, "set_aside_count": 0 }
+    },
+    {
+      "name": "visits-service",
+      "path": "spring-petclinic-visits-service",
+      "points": {
+        "EE-1": { "target": "VisitResource REST endpoints", "mechanisms": "none found", "score": 0, "max": 5 },
+        "DI-1": {
+          "target": "own datastore (JPA via VisitRepository)",
+          "note": "Same boundary finding as customers-service — production datasource likely externalized to config-server backing repo, out of boundary; in-repo evidence shows embedded HSQLDB with no replication/pool/timeout declared.",
+          "mechanisms": "no replication, no fallback, no explicit timeout, no explicit pool found in-repo",
+          "score": 0, "max": 14
+        },
+        "AC-1": {
+          "target": "container",
+          "mechanisms": "same pattern as customers-service: actuator present, unwired; no graceful shutdown; memory-limit-only resource declaration; no startup probe",
+          "score": 0, "max": 18
+        }
+      },
+      "totals": { "index": 0, "index_min": 0, "index_max": 37, "D": 1, "irc": 0.0, "tier": "Unsatisfactory" },
+      "quality": { "unverified_count": 2, "set_aside_count": 0 }
+    },
+    {
+      "name": "vets-service",
+      "path": "spring-petclinic-vets-service",
+      "points": {
+        "EE-1": { "target": "VetResource REST endpoints", "mechanisms": "none found", "score": 0, "max": 5 },
+        "DI-1": {
+          "target": "own datastore (JPA via VetRepository)",
+          "note": "Same boundary finding as the other two leaf services.",
+          "mechanisms": "no replication, no fallback, no explicit timeout, no explicit pool found in-repo",
+          "score": 0, "max": 14
+        },
+        "AC-1": {
+          "target": "container",
+          "mechanisms": "same pattern; additionally uses spring.cache (cache-names: vets, application.yml) as an in-process read-through cache in front of vet lookups",
+          "score": 0, "max": 18
+        }
+      },
+      "totals": { "index": 0, "index_min": 0, "index_max": 37, "D": 1, "irc": 0.0, "tier": "Unsatisfactory" },
+      "quality": {
+        "unverified_count": 2,
+        "set_aside_count": 1,
+        "set_aside_detail": "In-process read-through cache (CacheConfig.java, vets.cache.ttl=10 in application.yml) reduces load on the DI dependency but has no slot in the current MS-1.1 profile — the profile's DI protections (replication/fallback/timeout/pool) model protection of a call to the store, not application-level caching in front of it. Logged as a genuine profile coverage gap, not scored."
+      }
+    }
+  ]
+}

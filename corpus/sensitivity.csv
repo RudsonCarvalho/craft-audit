@@ -1,0 +1,8 @@
+perturbation,parameter,services_total,tier_changes,tier_change_fraction
+weight_perturbation,-2,9,0,0.0
+weight_perturbation,-1,9,0,0.0
+weight_perturbation,+1,9,0,0.0
+weight_perturbation,+2,9,0,0.0
+degradation_base,0.85,9,0,0.0
+degradation_base,0.9,9,0,0.0
+degradation_base,0.95,9,0,0.0
