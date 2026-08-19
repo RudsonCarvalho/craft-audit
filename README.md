@@ -1,51 +1,150 @@
 # CRAFT — Conformance-based Resilience Assessment of Fault Tolerance
 
-**Análise de qualidade da construção de microsserviços, com foco em resiliência.**
+**Análise de qualidade da construção de microsserviços, com foco em resiliência.**  
 *Build-quality analysis for microservices, focused on resilience.*
 
-CRAFT scores a service's resilience **as built** — the presence and calibration of protection mechanisms at its functional boundary — rather than as observed in production. It produces a 0–10 **CRAFT Score** with a four-tier classification, a per-item evidence ledger, and an ordered remediation plan with ready-to-execute fix prompts.
+CRAFT evaluates a service's resilience **as built**: the presence and calibration of protection mechanisms at its functional boundary. It produces a 0–10 resilience score, a four-tier classification, a per-item evidence ledger, and an ordered remediation plan with ready-to-execute fix prompts.
 
-It is not observability (it does not watch production), not chaos engineering (it does not inject failure), and not SLO measurement (it does not measure outcome). It answers a question none of those answer: **where is this service structurally fragile, and how would we know before the incident?**
+It is not observability, chaos engineering, or SLO measurement. Those approaches evaluate behavior or outcomes. CRAFT asks a different question: **where is this service structurally fragile, and how can that be proven from the artifact before the incident?**
 
-## Why
+## Install the agent skill
 
-Outcome metrics — MTBF, SLIs, chaos experiments, load tests — are all conditioned on what the environment happened to exercise. A service that was never stressed and a service engineered to withstand stress produce indistinguishable readings. Aviation (DO-178C), automotive (ISO 26262), and medical devices (IEC 62304) resolved this decades ago by assessing *how the artifact was built*. CRAFT brings that discipline to distributed systems.
+The canonical runtime skill lives here:
 
-## What's here
+[`skills/craft-audit/`](skills/craft-audit/)
 
-```
-SKILL.md                    the audit procedure (9 steps) — usable as an agent skill
-references/profile.md       reference profile CRAFT/MS-1.1.1 — weights, penalties, conditionals
-references/output-schema.md JSON output schema
-corpus/                     9 audited services across 5 public repositories
-CRAFT-preprint-v0.9.pdf     the paper
-craft-badge-howto.md        how to display a CRAFT Score badge
-```
-
-## Running an audit
-
-Point a CRAFT-capable agent at a repository:
-
-```
-run the CRAFT resilience audit on ./my-service
+```text
+skills/craft-audit/
+├── SKILL.md
+└── references/
+    ├── profile.md
+    └── output-schema.md
 ```
 
-The agent inventories services and interaction points, resolves each protection mechanism to its *configured value* (not merely its presence), applies anti-pattern penalties and the domain-coherence degradation factor, and emits scored output with file-and-line evidence for every claim.
+> **Do not copy `SKILL.md` alone.** The three files above are one execution unit. `SKILL.md` loads the scoring profile and output contract through relative paths, so the `references/` directory must travel with it.
 
-**Core rule — provenance or reject:** no evidence, no score. An item whose effective value cannot be resolved in-repo is scored zero and logged `UNVERIFIED`, never credited from an assumed framework default.
+### What each file does
+
+| File | Responsibility |
+|---|---|
+| [`SKILL.md`](skills/craft-audit/SKILL.md) | Agent audit procedure and evidence-resolution workflow |
+| [`profile.md`](skills/craft-audit/references/profile.md) | Normative `CRAFT/MS-1.1.1` scoring model: weights, conditionals, maxima and penalties |
+| [`output-schema.md`](skills/craft-audit/references/output-schema.md) | Machine-readable audit/output contract |
+
+### Option A — install from source
+
+Copy the **entire** `skills/craft-audit/` directory into the skill search path used by your agent runtime. Installation paths vary by runtime; the portable contract is the directory structure above.
+
+### Option B — build the packaged `.skill`
+
+```bash
+python3 scripts/package_skill.py
+```
+
+The command generates:
+
+```text
+dist/craft-audit.skill
+```
+
+The package is ZIP-compatible and contains:
+
+```text
+craft-audit/
+├── SKILL.md
+└── references/
+    ├── profile.md
+    └── output-schema.md
+```
+
+This makes the source directory and the packaged distribution equivalent: the package is generated from the canonical files, not maintained separately.
+
+## Run an audit
+
+Point a CRAFT-capable agent at a repository and ask:
+
+```text
+Run the CRAFT structural resilience audit on this repository.
+```
+
+or, when the repository is local to the agent:
+
+```text
+Run the CRAFT structural resilience audit on ./my-service.
+```
+
+The agent inventories independently deployable services and their interaction points, resolves each resilience mechanism to its **effective configured value**, checks anti-patterns, computes the score, and emits evidence-backed output.
+
+**Core rule — provenance or reject:** no evidence, no score. A mechanism whose effective value cannot be resolved from code/configuration is scored zero and recorded as `UNVERIFIED`; it is never credited from an assumption.
+
+## How the skill executes
+
+```text
+Target repository
+      │
+      ▼
+craft-audit/SKILL.md
+      │
+      ├── references/profile.md
+      │      scoring rules and penalties
+      │
+      └── references/output-schema.md
+             output contract
+      │
+      ▼
+<repo-name>-craft/
+      ├── <service>-audit.json
+      ├── <service>-report.md
+      ├── summary.csv
+      └── scorecard.md       # multi-service / corpus audits
+```
+
+The skill is intentionally evidence-first: the profile defines **what counts**, while the procedure defines **how the agent must prove it**.
+
+## Repository structure
+
+```text
+.
+├── README.md
+├── LICENSE
+├── skills/
+│   └── craft-audit/              # canonical executable skill
+│       ├── SKILL.md
+│       └── references/
+│           ├── profile.md
+│           └── output-schema.md
+├── scripts/
+│   └── package_skill.py          # builds the portable .skill archive
+├── dist/                         # generated distribution artifacts
+├── docs/
+│   ├── CRAFT-preprint-v0.9.pdf   # methodology paper
+│   ├── craft-badge-howto.md      # score-badge integrity and usage
+│   └── craft-score-badge.svg
+└── corpus/                       # reproducible audit evidence
+    ├── scorecard.md
+    ├── corpus-summary.csv
+    └── ...
+```
+
+The separation is deliberate:
+
+- **`skills/`** is the executable product.
+- **`docs/`** is human-facing methodology and supporting documentation.
+- **`corpus/`** is the empirical/reproducibility layer.
+- **`dist/`** is generated from `skills/`; it is not a second source of truth.
 
 ## Classification
 
-| CRAFT Score | Classificação | Meaning |
+| Resilience score | Classificação | Meaning |
 |---|---|---|
 | 8.0–10.0 | **Excelente** | High reliability and resilience |
-| 5.0–7.9 | **Bom** | Reliable, but single points of failure without fallback |
+| 5.0–7.9 | **Bom** | Reliable, but with meaningful structural gaps |
 | 3.0–4.9 | **Aceitável** | Corrective measures required; low robustness |
-| 0.0–2.9 | **Insatisfatório** | Requires revision; risks damage to adjacent services |
+| 0.0–2.9 | **Insatisfatório** | Requires revision; significant structural risk |
 
 ## Published corpus
 
-Nine services across five public repositories, every score re-derivable from the recorded commit:
+The repository includes audited services from public projects, with evidence tied to recorded commits. The portfolio view lives in [`corpus/scorecard.md`](corpus/scorecard.md).
 
 | Service | Repository | Score | Classificação |
 |---|---|---:|---|
@@ -57,15 +156,37 @@ Nine services across five public repositories, every score re-derivable from the
 | cartservice | microservices-demo | 2.97 | Insatisfatório |
 | resilience-golden-demo | resilience-golden-demo | 10.00 | Excelente |
 
-See [`corpus/scorecard.md`](corpus/scorecard.md) for the portfolio view and the four structurally distinct failure shapes found.
-
 ## Positive control
 
-[**resilience-golden-demo**](https://github.com/RudsonCarvalho/resilience-golden-demo) — a fixture implementing every mechanism in the profile against a real running stack (Spring Boot, Redis Sentinel, Kafka, Avro, Kubernetes, CI). It scores 10.0, and it caught an arithmetic defect in this profile's declared maxima during its own audit — corrected in MS-1.1.1.
+[**resilience-golden-demo**](https://github.com/RudsonCarvalho/resilience-golden-demo) is the positive-control fixture: a small runnable Spring Boot service designed to expose every profile vertical against real network dependencies and deployment configuration.
+
+Its complete evidence ledger is versioned in [`corpus/resilience-golden-demo/audit.json`](corpus/resilience-golden-demo/audit.json).
+
+## Paper and methodology
+
+The current preprint is [`docs/CRAFT-preprint-v0.9.pdf`](docs/CRAFT-preprint-v0.9.pdf).
+
+The normative scoring rules used by the agent are not hidden in the paper: they are versioned directly in [`skills/craft-audit/references/profile.md`](skills/craft-audit/references/profile.md). This keeps the executable evaluator and the published methodology independently inspectable.
+
+## CRAFT badge
+
+Repositories may display a score badge, but the badge should always remain traceable to:
+
+1. the audited commit;
+2. the profile version;
+3. the corresponding `audit.json` evidence ledger.
+
+See [`docs/craft-badge-howto.md`](docs/craft-badge-howto.md) for the recommended badge formats and integrity rule.
+
+## Versioning and integrity
+
+The active reference profile is **CRAFT/MS-1.1.1**.
+
+When the scoring profile changes, the profile file is the normative source and generated audit artifacts should record the exact profile version used. A score describes a specific repository state under a specific profile; it is not a timeless certification of the repository.
 
 ## Status
 
-Preprint v0.9. The most important open validation item is an agent-versus-human auditor agreement study; the corpus also cannot currently support a meaningful weight-sensitivity analysis because its score distribution is bimodal. Both are stated in the paper (§9) rather than glossed.
+Preprint v0.9. The repository includes the executable audit procedure, the versioned scoring profile, the output contract, a positive control, and a public audit corpus. Open validation work described in the paper remains part of the research roadmap.
 
 ## Citation
 
