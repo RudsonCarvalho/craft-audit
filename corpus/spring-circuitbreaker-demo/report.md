@@ -1,7 +1,7 @@
 # CRAFT Audit — spring-circuitbreaker-demo
 **Repo:** rbiedrawa/spring-circuitbreaker-demo
 **Commit:** 2e7be63ed140d33f55498bc9b43c9d786b02cf78
-**CRAFT Score: 2.17 — Unsatisfactory**
+**IRC: 2.17 — Unsatisfactory**
 
 ## Why this result matters more than the number
 
@@ -48,7 +48,7 @@ The score decomposes into two independent risk axes, and this repository is a cl
 
 ## The methodological payoff
 
-This case is a direct, real-world demonstration of the paper's central distinction between a **macro/presence index** and CRAFT's **boundary-anchored, calibration-aware model**. A tool that counted annotations would rank this repository above every other service audited so far. CRAFT ranks it below `cartservice` (2.97) and above `checkoutservice` (1.72) — for the correct reason: it has excellent, real protection on the one real interaction point it has (its own entry surface), and zero protectable surface anywhere else, because there is nothing else to protect.
+This case is a direct, real-world demonstration of the paper's central distinction between a **macro/presence index** and CRAFT's **boundary-anchored, calibration-aware model**. A tool that counted annotations would rank this repository above every other service audited so far. CRAFT ranks it below `cartservice` (2.97) and above `checkoutservice` (0.16) — for the correct reason: it has excellent, real protection on the one real interaction point it has (its own entry surface), and zero protectable surface anywhere else, because there is nothing else to protect.
 
 This is worth using in the paper verbatim as the canonical illustration for Section 5.1 — it is a stronger example than any synthetic one, precisely because the author of this repository was not trying to fool an evaluator. They were trying to teach Resilience4j, honestly and well, and in doing so built the clearest natural specimen of "protection density without a boundary" available in the open-source ecosystem.
 
