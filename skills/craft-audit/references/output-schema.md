@@ -4,7 +4,7 @@
 
 ```json
 {
-  "profile_version": "MS-1.1.1",
+  "profile_version": "MS-1.1",
   "audit": { "repo": "", "commit": "", "date": "", "auditor": "agent" },
   "service": { "name": "", "path": "", "language": "", "framework": "" },
   "boundary": {
