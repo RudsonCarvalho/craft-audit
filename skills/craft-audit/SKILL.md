@@ -1,11 +1,11 @@
 ---
 name: craft-audit
-description: Perform a CRAFT structural resilience audit on a code repository and compute the CRAFT Score (0-10) per service, with a full evidence ledger and machine-readable output. Use this skill whenever the user asks to audit, score, or evaluate the resilience, reliability, or structural robustness of a repository, microservice, or codebase; asks for a CRAFT Score; asks to "run the resilience audit" against a repo; or wants to build a resilience dataset/corpus from one or more repositories. Trigger even if the user just provides a repo URL/path and mentions resilience, CRAFT, CRAFT Score, or structural analysis.
+description: Perform a CRAFT structural resilience audit on a code repository and compute the CRAFT Score (0-10) per service, with a full evidence ledger and machine-readable output. Use this skill whenever the user asks to audit, score, or evaluate the resilience, reliability, or structural robustness of a repository, microservice, or codebase; asks for an CRAFT Score score; asks to "run the resilience audit" against a repo; or wants to build a resilience dataset/corpus from one or more repositories. Trigger even if the user just provides a repo URL/path and mentions resilience, CRAFT, CRAFT Score, or structural analysis.
 ---
 
 # CRAFT Structural Resilience Audit
 
-Audit a repository's resilience **as built** — not as observed in production. Score protection mechanisms at each service's functional boundary using the MS-1.1.1 reference profile, apply anti-pattern penalties and the domain-coherence degradation factor, and emit a normalized CRAFT Score per service plus a machine-readable dataset.
+Audit a repository's resilience **as built** — not as observed in production. Score protection mechanisms at each service's functional boundary using the MS-1.1 reference profile, apply anti-pattern penalties and the domain-coherence degradation factor, and emit a normalized CRAFT Score per service plus a machine-readable dataset.
 
 **Core rule — provenance or reject:** every scored item MUST carry evidence: file path, line(s), and the resolved configuration value. If you cannot point to the evidence, the item scores 0 and is logged as `UNVERIFIED`. Never score from assumption, framework defaults you did not confirm, or "this project probably has X".
 
@@ -154,7 +154,7 @@ This scorecard is the artifact meant for a portfolio owner, staff engineer, or p
 - Every scored line has file:line evidence? Items without it are 0 + `UNVERIFIED`.
 - Report the count of interaction points you could NOT classify — do not silently drop them.
 - If the stack is one the profile's mechanism list fits poorly (e.g., no container, batch job), say so; do not force-fit.
-- State the profile version used (MS-1.1.1) in every output file.
+- State the profile version used (MS-1.1) in every output file.
 
 ## Sensitivity mode (optional)
 
