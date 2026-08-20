@@ -18,7 +18,7 @@ Conditional notation: `w [req: X, else w′]` — score w only if prerequisite X
 |---|---|
 | 3 | Circuit breaker [req: timeout, else 1] |
 | 5 | Fallback [req: timeout or circuit breaker, else 2] |
-| 0–2 | Retry band: none 0 · fixed backoff + attempt cap 1 · exponential backoff + jitter + cap 2 · +1 if global retry budget/token bucket |
+| 0–2 | Retry band [req: timeout, else 0]: none 0 · fixed backoff + attempt cap 1 · exponential backoff + jitter + cap 2 · +1 if global retry budget/token bucket |
 | 4 | Timeout (resolved value must be recorded) |
 | 2 | Connection pool |
 | 4 | Idempotent write (idempotency key, or operation naturally idempotent) |
@@ -31,7 +31,7 @@ Conditional notation: `w [req: X, else w′]` — score w only if prerequisite X
 |---|---|
 | 3 | Circuit breaker [req: timeout, else 1] |
 | 5 | Fallback [req: timeout or circuit breaker, else 2] |
-| 0–2 | Retry band (as SE) |
+| 0–2 | Retry band [req: timeout, else 0] (as SE) |
 | 4 | Timeout |
 | 2 | Connection pool |
 
@@ -82,6 +82,8 @@ Conditional notation: `w [req: X, else w′]` — score w only if prerequisite X
 
 ## Changelog
 
+- **v1.1.1a**: retry band made explicitly conditional on a verified timeout (`[req: timeout, else 0]`) in SE and CE, aligning the profile with the conditional-weights table published in the paper (§3.3). No corpus score changes: every retry scored in the published corpus co-occurs with a verified timeout. Penalties are additionally clarified as excluded from the degradation multiplication (see Scoring rules).
+
 - **v1.1.1** (found via independent audit of `RudsonCarvalho/resilience-golden-demo`, a purpose-built positive-control fixture): corrected CE declared max 15→17 and SE declared max 21→23. The stated maxima did not match the literal sum of each vertical's own weight table once the +1 global-retry-budget modifier is included (circuit breaker 3 + fallback 5 + retry band 2 + retry bonus 1 + timeout 4 + pool 2 = 17 for CE; +4 idempotent write +1 compression +1 async = 23 for SE). This was an arithmetic bug in the profile, not a scoring rule change — no weights were altered, only the declared ceiling was corrected to match them.
 
 ## Scoring rules
@@ -91,5 +93,6 @@ Conditional notation: `w [req: X, else w′]` — score w only if prerequisite X
 3. Conditionals: prerequisite must be evidenced on the same point.
 4. Bands: resolve the configured value first; no value ⇒ lowest band, log `UNVERIFIED`.
 5. Penalties are additive and independent of positive scores on the same point.
-6. Index_min for the topology = sum of penalties applicable to that topology's shape (a topology with retries present can carry retry penalties; one without retries cannot).
-7. Mechanisms found that the profile does not list: score 0, log as `SET_ASIDE` with description — this measures profile coverage; report the set-aside count.
+6. Degradation applies only to the positive protection total; penalties are added afterward and are NOT multiplied by 0.9^(D-1). Applying degradation to a negative total would make a penalised service score less negative as domains increase, inverting the intended semantics.
+7. Index_min for the topology = sum of penalties applicable to that topology's shape (a topology with retries present can carry retry penalties; one without retries cannot).
+8. Mechanisms found that the profile does not list: score 0, log as `SET_ASIDE` with description — this measures profile coverage; report the set-aside count.
