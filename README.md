@@ -24,7 +24,7 @@ craft-audit/
 │           └── output-schema.md
 │
 ├── docs/
-│   ├── CRAFT-preprint-v0.9.1.pdf
+│   ├── CRAFT-v1.0.pdf
 │   ├── craft-badge-howto.md
 │   └── craft-score-badge.svg
 │
@@ -146,7 +146,7 @@ The `profile_version` emitted by an audit should match the profile actually load
 
 Human-facing material is intentionally separate from the executable skill:
 
-- [`docs/CRAFT-preprint-v0.9.1.pdf`](docs/CRAFT-preprint-v0.9.1.pdf) — methodology paper.
+- [`docs/CRAFT-v1.0.pdf`](docs/CRAFT-v1.0.pdf) — methodology paper.
 - [`docs/craft-badge-howto.md`](docs/craft-badge-howto.md) — how to display a traceable CRAFT score badge.
 - [`docs/craft-score-badge.svg`](docs/craft-score-badge.svg) — versioned badge asset.
 
@@ -212,13 +212,13 @@ Its published audit is stored under [`corpus/resilience-golden-demo/`](corpus/re
 
 ## Status
 
-Preprint v0.9.1. The framework was first published in April 2024 under the name REOF; this work renames it CRAFT
+Preprint v1.0. The framework was first published in April 2024 under the name REOF; this work renames it CRAFT
 and adds an agent-based evaluator and an empirical corpus. The most important open validation item is an
 agent-versus-human auditor agreement study. The corpus also cannot currently support a meaningful weight-sensitivity
 analysis, because its score distribution is bimodal, and audits do not yet record evaluator versioning
 (model, harness, skill commit) — so this work claims auditability of evidence rather than reproducibility of
 judgement. All three limitations are stated in the
-[paper](docs/CRAFT-preprint-v0.9.1.pdf) rather than hidden.
+[paper](docs/CRAFT-v1.0.pdf) rather than hidden.
 
 ## Citation
 
@@ -228,7 +228,7 @@ judgement. All three limitations are stated in the
   title  = {{CRAFT}: A Structural Conformance Index for System Resilience,
             and the Evaluator That Did Not Exist},
   year   = {2026},
-  note   = {Preprint v0.9.1; supersedes REOF (2024)},
+  note   = {Preprint v1.0; supersedes REOF (2024)},
   url    = {https://github.com/RudsonCarvalho/craft-audit}
 }
 ```
