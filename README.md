@@ -5,32 +5,66 @@
 
 CRAFT scores a service's resilience **as built** — the presence and calibration of protection mechanisms at its functional boundary — rather than as observed in production. It produces a 0–10 **Nota de Resiliência** (CRAFT Score), a four-tier classification, a per-item evidence ledger, and an ordered remediation plan with ready-to-execute fix prompts.
 
-> **Looking for the agent skill? Start with [`SKILL.md`](SKILL.md).**  
-> The executable skill is a **three-file package**: `SKILL.md` plus the two files under `references/`. Copying `SKILL.md` alone is incomplete.
+> **Looking for the agent skill? Use [`skills/craft-audit/`](skills/craft-audit/).**  
+> That directory is the complete portable skill. Copy it as a unit; `SKILL.md` depends on both files under its local `references/` directory.
+
+## Repository structure
+
+```text
+craft-audit/
+│
+├── README.md
+├── LICENSE
+│
+├── skills/
+│   └── craft-audit/
+│       ├── SKILL.md
+│       └── references/
+│           ├── profile.md
+│           └── output-schema.md
+│
+├── docs/
+│   ├── CRAFT-preprint-v0.9.pdf
+│   ├── craft-badge-howto.md
+│   └── craft-score-badge.svg
+│
+└── corpus/
+    ├── scorecard.md
+    └── ...
+```
+
+The separation is intentional:
+
+- **`skills/craft-audit/`** is the reusable agent skill.
+- **`docs/`** contains human-facing methodology and presentation material.
+- **`corpus/`** contains published audit evidence and benchmark data.
+- **`README.md`** explains how the pieces fit together.
+
+A future packaged distribution may live under `dist/`, but no generated package is committed today. The source of truth is the directory under `skills/`.
 
 ## Use CRAFT as an agent skill
 
 ### Canonical skill package
 
-The smallest portable CRAFT unit is exactly this structure:
+The smallest portable CRAFT unit is this directory:
 
 ```text
-craft-audit/
+skills/craft-audit/
 ├── SKILL.md
 └── references/
     ├── profile.md
     └── output-schema.md
 ```
 
-The three files have different responsibilities and should be versioned together:
+The three files have different responsibilities and should always be versioned and copied together:
 
 | File | Role | When the agent must read it |
 |---|---|---|
-| [`SKILL.md`](SKILL.md) | **Audit procedure** — trigger, repository inventory, boundary discovery, evidence resolution, anti-pattern checks, scoring workflow, findings and output steps | First; this is the entry point |
-| [`references/profile.md`](references/profile.md) | **Scoring policy** — CRAFT/MS-1.1.1 weights, maxima, conditional rules, penalties, normalization and classification | Before assigning any score |
-| [`references/output-schema.md`](references/output-schema.md) | **Output contract** — JSON fields, evidence ledger shape, findings/remediation structure and CSV schemas | Before writing audit artifacts |
+| [`skills/craft-audit/SKILL.md`](skills/craft-audit/SKILL.md) | **Audit procedure** — trigger, repository inventory, boundary discovery, evidence resolution, anti-pattern checks, scoring workflow, findings and output steps | First; this is the entry point |
+| [`skills/craft-audit/references/profile.md`](skills/craft-audit/references/profile.md) | **Scoring policy** — CRAFT/MS-1.1.1 weights, maxima, conditional rules, penalties, normalization and classification | Before assigning any score |
+| [`skills/craft-audit/references/output-schema.md`](skills/craft-audit/references/output-schema.md) | **Output contract** — JSON fields, evidence ledger shape, findings/remediation structure and CSV schemas | Before writing audit artifacts |
 
-The dependency is intentionally explicit:
+Inside the skill directory the dependency remains intentionally relative:
 
 ```text
 SKILL.md
@@ -38,49 +72,43 @@ SKILL.md
 └── requires before output  ──> references/output-schema.md
 ```
 
-**Do not detach these files from one another.** The paths in `SKILL.md` are relative, so when the skill is copied into another agent, repository, or harness, preserve the `references/` directory beside it.
-
-### What is optional
-
-Everything else in this repository supports research, validation, or presentation, but is **not required to run the skill**:
-
-```text
-corpus/                     published audit evidence and benchmark data
-CRAFT-preprint-v0.9.pdf     methodology paper
-craft-badge-howto.md        score-badge usage
-craft-score-badge.svg       badge asset
-```
-
-This distinction matters when embedding CRAFT elsewhere: the runtime package is three Markdown files; the corpus and paper do not need to travel with it.
+**Do not copy `SKILL.md` alone.** Preserve the directory layout so those relative references remain valid in any agent, repository, or harness.
 
 ### Copy the skill into another environment
 
-The destination directory is agent/harness-specific. Whatever directory your agent uses for skills, copy the CRAFT package while preserving the relative layout:
+The destination directory is agent/harness-specific. Copy the whole skill directory rather than selecting files individually:
 
 ```bash
 git clone --depth 1 https://github.com/RudsonCarvalho/craft-audit.git
 
-mkdir -p <agent-skill-dir>/craft-audit/references
-cp craft-audit/SKILL.md <agent-skill-dir>/craft-audit/SKILL.md
-cp craft-audit/references/profile.md <agent-skill-dir>/craft-audit/references/profile.md
-cp craft-audit/references/output-schema.md <agent-skill-dir>/craft-audit/references/output-schema.md
+cp -R craft-audit/skills/craft-audit <agent-skill-dir>/craft-audit
 ```
 
-If your agent can read a GitHub repository directly, no installation convention is required: point it to `SKILL.md` and make the two referenced files available at their relative paths.
+After the copy, the destination should still look like:
+
+```text
+<agent-skill-dir>/craft-audit/
+├── SKILL.md
+└── references/
+    ├── profile.md
+    └── output-schema.md
+```
+
+If an agent can read this GitHub repository directly, point it to [`skills/craft-audit/SKILL.md`](skills/craft-audit/SKILL.md); the required references are available beside it at their expected relative paths.
 
 ### Run without native skill support
 
 CRAFT does not require a proprietary skill loader. A generic coding agent can be given the contract explicitly:
 
 ```text
-Use SKILL.md as the CRAFT audit procedure.
-Before scoring, read references/profile.md.
-Before writing outputs, read references/output-schema.md.
+Use skills/craft-audit/SKILL.md as the CRAFT audit procedure.
+Before scoring, read skills/craft-audit/references/profile.md.
+Before writing outputs, read skills/craft-audit/references/output-schema.md.
 Run the audit against <repository-or-service-path>.
 Do not award points without file/line evidence and a resolved configuration value.
 ```
 
-A shorter invocation is enough when the agent already has the skill installed:
+A shorter invocation is enough when the skill is already installed:
 
 ```text
 Run the CRAFT resilience audit on ./my-service
@@ -102,11 +130,11 @@ summary.csv                 corpus-level summary
 scorecard.md                portfolio view when 2+ services are audited
 ```
 
-The exact machine-readable contract is defined by [`references/output-schema.md`](references/output-schema.md), not by examples in the README.
+The exact machine-readable contract is defined by [`skills/craft-audit/references/output-schema.md`](skills/craft-audit/references/output-schema.md).
 
 ### Versioning rule
 
-Treat the three-file skill package as one release unit:
+Treat `skills/craft-audit/` as one release unit:
 
 - `SKILL.md` defines **how to audit**;
 - `references/profile.md` defines **how to score**;
@@ -114,20 +142,15 @@ Treat the three-file skill package as one release unit:
 
 The `profile_version` emitted by an audit should match the profile actually loaded by the agent. The active reference profile in this repository is **CRAFT/MS-1.1.1**.
 
-## Repository map
+## Documentation
 
-```text
-.
-├── SKILL.md                    portable skill entry point
-├── references/
-│   ├── profile.md              CRAFT/MS-1.1.1 scoring profile
-│   └── output-schema.md        machine-readable output contract
-├── corpus/                     published audit corpus and scorecard
-├── CRAFT-preprint-v0.9.pdf     paper
-├── craft-badge-howto.md        badge documentation
-├── craft-score-badge.svg       badge asset
-└── LICENSE
-```
+Human-facing material is intentionally separate from the executable skill:
+
+- [`docs/CRAFT-preprint-v0.9.pdf`](docs/CRAFT-preprint-v0.9.pdf) — methodology paper.
+- [`docs/craft-badge-howto.md`](docs/craft-badge-howto.md) — how to display a traceable CRAFT score badge.
+- [`docs/craft-score-badge.svg`](docs/craft-score-badge.svg) — versioned badge asset.
+
+None of these files is required to execute the audit skill.
 
 ## Why
 
@@ -176,7 +199,7 @@ Its published audit is stored under [`corpus/resilience-golden-demo/`](corpus/re
 
 ## Status
 
-Preprint v0.9. The most important open validation item is an agent-versus-human auditor agreement study; the corpus also cannot currently support a meaningful weight-sensitivity analysis because its score distribution is bimodal. Both limitations are stated in the paper rather than hidden.
+Preprint v0.9. The most important open validation item is an agent-versus-human auditor agreement study; the corpus also cannot currently support a meaningful weight-sensitivity analysis because its score distribution is bimodal. Both limitations are stated in the [paper](docs/CRAFT-preprint-v0.9.pdf) rather than hidden.
 
 ## Citation
 
