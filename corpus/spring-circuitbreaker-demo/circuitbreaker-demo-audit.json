@@ -1,5 +1,5 @@
 {
-  "profile_version": "MS-1.1",
+  "profile_version": "MS-1.1.1",
   "audit": {
     "repo": "https://github.com/rbiedrawa/spring-circuitbreaker-demo",
     "commit": "2e7be63ed140d33f55498bc9b43c9d786b02cf78",
@@ -60,12 +60,48 @@
           "weight": 0,
           "status": "VERIFIED_ABSENT_AS_WIRED"
         },
-        { "name": "liveness_probe", "resolved_value": "ABSENT (as wired)", "resolution_path": "same as readiness_probe", "weight": 0, "status": "VERIFIED_ABSENT_AS_WIRED" },
-        { "name": "self_healing", "resolved_value": "ABSENT", "condition_applied": "prerequisite (specific liveness probe) not met -> 0", "weight": 0, "status": "VERIFIED_ABSENT" },
-        { "name": "graceful_shutdown", "resolved_value": "ABSENT", "resolution_path": "Spring Boot 2.4.4 supports server.shutdown=graceful (available since 2.3), but no such key found in application.yml", "evidence": "application.yml (full file, no shutdown key)", "weight": 0, "status": "VERIFIED_ABSENT" },
-        { "name": "declared_resource_limits", "resolved_value": "ABSENT", "resolution_path": "docker-compose.yml circuitbreaker-demo service has no deploy.resources block at all", "weight": 0, "status": "VERIFIED_ABSENT" },
-        { "name": "startup_probe", "resolved_value": "ABSENT", "weight": 0, "status": "VERIFIED_ABSENT" },
-        { "name": "disruption_policy", "resolved_value": "NOT_APPLICABLE", "resolution_path": "no Kubernetes manifests in repository", "weight": 0, "status": "NOT_APPLICABLE" }
+        {
+          "name": "liveness_probe",
+          "resolved_value": "ABSENT (as wired)",
+          "resolution_path": "same as readiness_probe",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT_AS_WIRED"
+        },
+        {
+          "name": "self_healing",
+          "resolved_value": "ABSENT",
+          "condition_applied": "prerequisite (specific liveness probe) not met -> 0",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT"
+        },
+        {
+          "name": "graceful_shutdown",
+          "resolved_value": "ABSENT",
+          "resolution_path": "Spring Boot 2.4.4 supports server.shutdown=graceful (available since 2.3), but no such key found in application.yml",
+          "evidence": "application.yml (full file, no shutdown key)",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT"
+        },
+        {
+          "name": "declared_resource_limits",
+          "resolved_value": "ABSENT",
+          "resolution_path": "docker-compose.yml circuitbreaker-demo service has no deploy.resources block at all",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT"
+        },
+        {
+          "name": "startup_probe",
+          "resolved_value": "ABSENT",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT"
+        },
+        {
+          "name": "disruption_policy",
+          "resolved_value": "NOT_APPLICABLE",
+          "resolution_path": "no Kubernetes manifests in repository",
+          "weight": 0,
+          "status": "NOT_APPLICABLE"
+        }
       ],
       "penalties": [],
       "point_score": 0
@@ -83,17 +119,37 @@
     "degradation_factor": 1.0,
     "index_degraded": 5,
     "irc": 2.17,
-    "tier": "Unsatisfactory"
+    "tier": "Insatisfatório",
+    "craft_score": 2.17,
+    "recalculation_note": "Rescored under corrected profile MS-1.1.1 (CE max 15->17, SE max 21->23) with penalties excluded from the degradation term. See corpus/RECALCULATION.md for the prior values and rationale."
   },
   "remediation": [
-    { "order": 1, "action": "Wire the existing Actuator health endpoint (already rich, with circuit breaker/rate limiter state) to a docker-compose healthcheck", "projected_irc": 3.5, "rationale": "The health signal content is better than average in this corpus; it's simply not connected to anything that acts on it — cheapest, highest-value fix available." },
-    { "order": 2, "action": "Configure graceful shutdown (server.shutdown: graceful)", "projected_irc": 4.3, "rationale": "One line of YAML in a Spring Boot 2.3+ app; currently unused despite being available." },
-    { "order": 3, "action": "Declare resource requests/limits in docker-compose", "projected_irc": 5.2, "rationale": "Closes the last AC gap." },
+    {
+      "order": 1,
+      "action": "Wire the existing Actuator health endpoint (already rich, with circuit breaker/rate limiter state) to a docker-compose healthcheck",
+      "projected_irc": 3.5,
+      "rationale": "The health signal content is better than average in this corpus; it's simply not connected to anything that acts on it — cheapest, highest-value fix available."
+    },
+    {
+      "order": 2,
+      "action": "Configure graceful shutdown (server.shutdown: graceful)",
+      "projected_irc": 4.3,
+      "rationale": "One line of YAML in a Spring Boot 2.3+ app; currently unused despite being available."
+    },
+    {
+      "order": 3,
+      "action": "Declare resource requests/limits in docker-compose",
+      "projected_irc": 5.2,
+      "rationale": "Closes the last AC gap."
+    },
     {
       "order": "N/A — out of scope for remediation ranking",
-      "action": "This service cannot meaningfully raise its CE/SE/DI verticals because it has none. Any further CRAFT Score improvement is bounded by AC alone (max attainable: 5 EE + 18 AC = 23 raw, i.e. CRAFT Score 10.0 is reachable purely through container hygiene). This is stated explicitly rather than left implicit, because a reader comparing this service's ceiling to a service with real downstream dependencies should understand they are not directly comparable topologies.",
+      "action": "This service cannot meaningfully raise its CE/SE/DI verticals because it has none. Any further IRC improvement is bounded by AC alone (max attainable: 5 EE + 18 AC = 23 raw, i.e. IRC 10.0 is reachable purely through container hygiene). This is stated explicitly rather than left implicit, because a reader comparing this service's ceiling to a service with real downstream dependencies should understand they are not directly comparable topologies.",
       "projected_irc": null
     }
   ],
-  "quality": { "unverified_count": 0, "set_aside_count": 1 }
+  "quality": {
+    "unverified_count": 0,
+    "set_aside_count": 1
+  }
 }

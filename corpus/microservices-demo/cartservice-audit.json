@@ -1,5 +1,5 @@
 {
-  "profile_version": "MS-1.1",
+  "profile_version": "MS-1.1.1",
   "audit": {
     "repo": "https://github.com/GoogleCloudPlatform/microservices-demo",
     "commit": "34ffea9175946982c3088ed84994fe6019ad6e92",
@@ -114,8 +114,18 @@
           "weight": 2,
           "status": "VERIFIED"
         },
-        { "name": "startup_probe", "resolved_value": "ABSENT", "weight": 0, "status": "VERIFIED_ABSENT" },
-        { "name": "disruption_policy", "resolved_value": "ABSENT", "weight": 0, "status": "VERIFIED_ABSENT" }
+        {
+          "name": "startup_probe",
+          "resolved_value": "ABSENT",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT"
+        },
+        {
+          "name": "disruption_policy",
+          "resolved_value": "ABSENT",
+          "weight": 0,
+          "status": "VERIFIED_ABSENT"
+        }
       ],
       "penalties": [],
       "point_score": 11
@@ -133,16 +143,51 @@
     "degradation_factor": 1.0,
     "index_degraded": 11,
     "irc": 2.97,
-    "tier": "Unsatisfactory",
-    "note": "0.03 below the Acceptable threshold (3.0) — closest tier boundary case in the corpus so far."
+    "tier": "Insatisfatório",
+    "note": "0.03 below the Acceptable threshold (3.0) — closest tier boundary case in the corpus so far.",
+    "craft_score": 2.97,
+    "recalculation_note": "Rescored under corrected profile MS-1.1.1 (CE max 15->17, SE max 21->23) with penalties excluded from the degradation term. See corpus/RECALCULATION.md for the prior values and rationale."
   },
   "remediation": [
-    { "order": 1, "action": "Add graceful shutdown logic explicitly (e.g., a bounded IHostApplicationLifetime.ApplicationStopping handler that stops accepting new gRPC calls and drains in-flight ones)", "projected_irc": 2.97, "rationale": "Currently UNVERIFIED, not penalized, but also not credited — making it explicit is what would let this score improve, since the underlying framework behavior cannot be credited on the basis of an assumed default." },
-    { "order": 2, "action": "Add an explicit Redis connect/sync timeout to AddStackExchangeRedisCache options", "projected_irc": 3.8, "rationale": "Closes the DI vertical's timeout gap; single highest-value action available on this service." },
-    { "order": 3, "action": "Add Redis replication (Sentinel or a managed HA Redis) rather than a single unreplicated pod", "projected_irc": 4.6, "rationale": "The current single-instance redis-cart Deployment is this service's largest structural exposure — the cart store has no redundancy at all." },
-    { "order": 4, "action": "Add a fallback path for read operations (e.g., serve an empty or last-known cart on Redis failure) distinct from the current catch-and-rethrow", "projected_irc": 5.7, "rationale": "Converts every Redis blip into a hard failure for the end user today; a degraded response is often preferable to a hard error for cart reads specifically." },
-    { "order": 5, "action": "Add a rate limiter or bulkhead at the gRPC entry surface", "projected_irc": 6.2, "rationale": "Nothing currently bounds concurrent load on this service." },
-    { "order": 6, "action": "Add a startup probe and a PodDisruptionBudget", "projected_irc": 6.7, "rationale": "Lower-weight, low-effort items." }
+    {
+      "order": 1,
+      "action": "Add graceful shutdown logic explicitly (e.g., a bounded IHostApplicationLifetime.ApplicationStopping handler that stops accepting new gRPC calls and drains in-flight ones)",
+      "projected_irc": 2.97,
+      "rationale": "Currently UNVERIFIED, not penalized, but also not credited — making it explicit is what would let this score improve, since the underlying framework behavior cannot be credited on the basis of an assumed default."
+    },
+    {
+      "order": 2,
+      "action": "Add an explicit Redis connect/sync timeout to AddStackExchangeRedisCache options",
+      "projected_irc": 3.8,
+      "rationale": "Closes the DI vertical's timeout gap; single highest-value action available on this service."
+    },
+    {
+      "order": 3,
+      "action": "Add Redis replication (Sentinel or a managed HA Redis) rather than a single unreplicated pod",
+      "projected_irc": 4.6,
+      "rationale": "The current single-instance redis-cart Deployment is this service's largest structural exposure — the cart store has no redundancy at all."
+    },
+    {
+      "order": 4,
+      "action": "Add a fallback path for read operations (e.g., serve an empty or last-known cart on Redis failure) distinct from the current catch-and-rethrow",
+      "projected_irc": 5.7,
+      "rationale": "Converts every Redis blip into a hard failure for the end user today; a degraded response is often preferable to a hard error for cart reads specifically."
+    },
+    {
+      "order": 5,
+      "action": "Add a rate limiter or bulkhead at the gRPC entry surface",
+      "projected_irc": 6.2,
+      "rationale": "Nothing currently bounds concurrent load on this service."
+    },
+    {
+      "order": 6,
+      "action": "Add a startup probe and a PodDisruptionBudget",
+      "projected_irc": 6.7,
+      "rationale": "Lower-weight, low-effort items."
+    }
   ],
-  "quality": { "unverified_count": 2, "set_aside_count": 0 }
+  "quality": {
+    "unverified_count": 2,
+    "set_aside_count": 0
+  }
 }

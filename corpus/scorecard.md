@@ -1,11 +1,11 @@
 # CRAFT Portfolio Scorecard
-**Profile:** MS-1.1.1 · **Audit window:** 2026-08-19 · **Services audited:** 9 · **Repositories:** 5
+**Profile:** MS-1.1.1.1.1 · **Audit window:** 2026-08-19 · **Services audited:** 9 · **Repositories:** 5
 
 ---
 
 ## Executive summary
 
-Nine services were audited across five repositories: two established microservice reference architectures (Spring PetClinic, Google's Online Boutique), one large academic benchmark (train-ticket, 1 of 47 services sampled), one single-pattern tutorial (spring-circuitbreaker-demo), and one purpose-built positive-control fixture (craft-golden-demo). CRAFT Score ranges from **0.00 to 10.00**, mean **2.00**. Eight of nine services land in **Insatisfatório (Unsatisfactory)**; one — the fixture deliberately engineered to demonstrate full conformance — reaches **Excelente (Excellent)**.
+Nine services were audited across five repositories: two established microservice reference architectures (Spring PetClinic, Google's Online Boutique), one large academic benchmark (train-ticket, 1 of 47 services sampled), one single-pattern tutorial (spring-circuitbreaker-demo), and one purpose-built positive-control fixture (craft-golden-demo). CRAFT Score ranges from **0.00 to 10.00**, mean **1.82**. Eight of nine services land in **Insatisfatório (Unsatisfactory)**; one — the fixture deliberately engineered to demonstrate full conformance — reaches **Excelente (Excellent)**.
 
 **The single most consequential cross-service pattern:** in every service where a health probe was found, it existed as *infrastructure* (an Actuator dependency, a gRPC health handler) without being *connected* to anything that acts on it — or, where connected, it was frequently backed by a check incapable of failing. This pattern repeats in 5 of the 8 Insatisfatório-tier services and is the highest-leverage fix across the portfolio: cheap per service, and the only finding that generalizes almost verbatim across every affected service.
 
@@ -34,9 +34,9 @@ Insatisfatório (Unsatisfactory) ████████ 8
 | customers-service | spring-petclinic | 0.00 | Insatisfatório | 1 | 0 | 2 | No protections on any vertical; DB config externalized out of boundary |
 | visits-service | spring-petclinic | 0.00 | Insatisfatório | 1 | 0 | 2 | Same shape as customers-service |
 | vets-service | spring-petclinic | 0.00 | Insatisfatório | 1 | 0 | 2 | Same shape; has an in-process cache the profile doesn't yet score |
-| ts-preserve-service | train-ticket | 0.05 | Insatisfatório | 1 | 0 | 0 | 11 unprotected downstream calls on one shared, unconfigured HTTP client |
-| api-gateway | spring-petclinic | 1.13 | Insatisfatório | 1 | 0 | 4 | Asymmetric protection — the higher-consequence call is the unprotected one |
-| checkoutservice | microservices-demo | 1.72 | Insatisfatório | 1 | 1 | 0 | Liveness handler unconditionally returns SERVING — active anti-pattern, not just absence |
+| ts-preserve-service | train-ticket | 0.04 | Insatisfatório | 1 | 0 | 0 | 11 unprotected downstream calls on one shared, unconfigured HTTP client |
+| api-gateway | spring-petclinic | 1.05 | Insatisfatório | 1 | 0 | 4 | Asymmetric protection — the higher-consequence call is the unprotected one |
+| checkoutservice | microservices-demo | 0.16 | Insatisfatório | 1 | 1 | 0 | Liveness handler unconditionally returns SERVING — active anti-pattern, not just absence |
 | circuitbreaker-demo | spring-circuitbreaker-demo | 2.17 | Insatisfatório | 1 | 0 | 0 | Textbook-perfect annotations wrapping a call with no real dependency — presence ≠ boundary |
 | cartservice | microservices-demo | 2.97 | Insatisfatório | 1 | 0 | 2 | 0.03 below Acceptable; real health check, but zero DI replication/fallback |
 | craft-golden-demo | craft-golden-demo | 10.00 | Excelente | 1 | 0 | 0 | Positive control — every vertical independently verified against source |
@@ -65,7 +65,7 @@ before wiring it to the orchestrator.
 Confirmed by exhaustive grep across `src/`, not inferred from a sample: neither repository contains a single circuit breaker or retry mechanism anywhere in its business logic. Both are widely used as reference/teaching architectures. This is the strongest evidence in the corpus for the paper's opening claim — that structural resilience is not measured anywhere in the ordinary development lifecycle, and it shows even in flagship examples.
 
 ### 3. Fan-out without protection scales the exposure linearly (ts-preserve-service)
-11 downstream calls sharing one unconfigured `RestTemplate` produced the lowest score in the corpus (0.05) without a single active anti-pattern — pure absence, multiplied by fan-out. This is a distinct risk shape from low cohesion (which the degradation factor targets): high fan-out inflates `Index_max` (more points to protect) while `Index` stays at zero, and the ratio does the rest. Worth a dedicated mention in the paper's methodology section — fan-out risk and cohesion risk are both real, are structurally different, and MS-1.1 already discriminates between them correctly.
+11 downstream calls sharing one unconfigured `RestTemplate` produced the lowest score in the corpus (0.04) without a single active anti-pattern — pure absence, multiplied by fan-out. This is a distinct risk shape from low cohesion (which the degradation factor targets): high fan-out inflates `Index_max` (more points to protect) while `Index` stays at zero, and the ratio does the rest. Worth a dedicated mention in the paper's methodology section — fan-out risk and cohesion risk are both real, are structurally different, and MS-1.1 already discriminates between them correctly.
 
 ## Per-tier detail
 

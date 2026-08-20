@@ -1,14 +1,14 @@
 # CRAFT Audit — microservices-demo (Google Online Boutique)
 **Repo:** GoogleCloudPlatform/microservices-demo
 **Commit:** 34ffea9175946982c3088ed84994fe6019ad6e92
-**Profile:** MS-1.1 · **Date:** 2026-08-19
+**Profile:** MS-1.1.1.1 · **Date:** 2026-08-19
 **Services audited:** checkoutservice (Go), cartservice (C#)
 
 ## Scores
 
-| Service | Index | Max | D | CRAFT Score | Tier |
+| Service | Index | Max | D | IRC | Tier |
 |---|---|---|---|---|---|
-| checkoutservice | −1 | 113 | 1 | **1.72** | Unsatisfactory |
+| checkoutservice | −1 | 113 | 1 | **0.16** | Unsatisfactory |
 | cartservice | 11 | 37 | 1 | **2.97** | Unsatisfactory *(0.03 below Acceptable)* |
 
 ## Repo-wide confirmed absence

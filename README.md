@@ -24,7 +24,7 @@ craft-audit/
 │           └── output-schema.md
 │
 ├── docs/
-│   ├── CRAFT-preprint-v0.9.pdf
+│   ├── CRAFT-preprint-v0.9.1.pdf
 │   ├── craft-badge-howto.md
 │   └── craft-score-badge.svg
 │
@@ -146,7 +146,7 @@ The `profile_version` emitted by an audit should match the profile actually load
 
 Human-facing material is intentionally separate from the executable skill:
 
-- [`docs/CRAFT-preprint-v0.9.pdf`](docs/CRAFT-preprint-v0.9.pdf) — methodology paper.
+- [`docs/CRAFT-preprint-v0.9.1.pdf`](docs/CRAFT-preprint-v0.9.1.pdf) — methodology paper.
 - [`docs/craft-badge-howto.md`](docs/craft-badge-howto.md) — how to display a traceable CRAFT score badge.
 - [`docs/craft-score-badge.svg`](docs/craft-score-badge.svg) — versioned badge asset.
 
@@ -157,6 +157,15 @@ None of these files is required to execute the audit skill.
 CRAFT is not observability (it does not watch production), not chaos engineering (it does not inject failure), and not SLO measurement (it does not measure outcome). It asks a different question: **where is this service structurally fragile, and how would we know before the incident?**
 
 Outcome metrics — MTBF, SLIs, chaos experiments, load tests — are conditioned on what the environment happened to exercise. A service that was never stressed and a service engineered to withstand stress can produce indistinguishable readings. CRAFT instead evaluates the construction of the artifact and the protections visible at its functional boundary.
+
+## Prior art
+
+CRAFT was first published as REOF (Resilience Evaluation and Optimization Framework) on 10 April 2024:
+https://medium.com/@rudsonkiyoshicarvalho/resilience-evaluation-and-optimization-framework-reof-541d23018460
+
+That article contains the original specification, including the passage recording that a precise automated index
+would require a code-comprehending evaluator that "does not exist on the market" — the requirement this work's
+agent-based auditor satisfies. It is cited in the paper as the public, third-party-timestamped provenance of that claim.
 
 ## Audit principle
 
@@ -177,17 +186,21 @@ The workflow inventories services and interaction points, resolves each protecti
 
 The repository contains nine service audit entries across five public repositories. Every published score is tied to a recorded commit so the evidence can be re-derived.
 
-| Service | Repository | Score | Classificação |
-|---|---|---:|---|
-| customers-service | spring-petclinic-microservices | 0.00 | Insatisfatório |
-| visits-service | spring-petclinic-microservices | 0.00 | Insatisfatório |
-| vets-service | spring-petclinic-microservices | 0.00 | Insatisfatório |
-| ts-preserve-service | train-ticket | 0.05 | Insatisfatório |
-| api-gateway | spring-petclinic-microservices | 1.13 | Insatisfatório |
-| checkoutservice | microservices-demo | 1.72 | Insatisfatório |
-| circuitbreaker-demo | spring-circuitbreaker-demo | 2.17 | Insatisfatório |
-| cartservice | microservices-demo | 2.97 | Insatisfatório |
-| resilience-golden-demo | resilience-golden-demo | 10.00 | Excelente |
+| Service                | Repository                     | Score | Classificação  |
+| ---------------------- | ------------------------------ | ----- | -------------- |
+| customers-service      | spring-petclinic-microservices | 0.00  | Insatisfatório |
+| visits-service         | spring-petclinic-microservices | 0.00  | Insatisfatório |
+| vets-service           | spring-petclinic-microservices | 0.00  | Insatisfatório |
+| ts-preserve-service    | train-ticket                   | 0.04  | Insatisfatório |
+| checkoutservice        | microservices-demo             | 0.16  | Insatisfatório |
+| api-gateway            | spring-petclinic-microservices | 1.05  | Insatisfatório |
+| circuitbreaker-demo    | spring-circuitbreaker-demo     | 2.17  | Insatisfatório |
+| cartservice            | microservices-demo             | 2.97  | Insatisfatório |
+| resilience-golden-demo | resilience-golden-demo         | 10.00 | Excelente      |
+
+Scores are under profile **CRAFT/MS-1.1.1**. Earlier published values (api-gateway 1.13, checkoutservice 1.72,
+ts-preserve-service 0.05) were scored under the uncorrected MS-1.1 maxima and are superseded —
+see [`corpus/RECALCULATION.md`](corpus/RECALCULATION.md) for what changed and why.
 
 See [`corpus/scorecard.md`](corpus/scorecard.md) for the portfolio view and the structurally distinct failure shapes found in the corpus.
 
@@ -199,7 +212,13 @@ Its published audit is stored under [`corpus/resilience-golden-demo/`](corpus/re
 
 ## Status
 
-Preprint v0.9. The most important open validation item is an agent-versus-human auditor agreement study; the corpus also cannot currently support a meaningful weight-sensitivity analysis because its score distribution is bimodal. Both limitations are stated in the [paper](docs/CRAFT-preprint-v0.9.pdf) rather than hidden.
+Preprint v0.9.1. The framework was first published in April 2024 under the name REOF; this work renames it CRAFT
+and adds an agent-based evaluator and an empirical corpus. The most important open validation item is an
+agent-versus-human auditor agreement study. The corpus also cannot currently support a meaningful weight-sensitivity
+analysis, because its score distribution is bimodal, and audits do not yet record evaluator versioning
+(model, harness, skill commit) — so this work claims auditability of evidence rather than reproducibility of
+judgement. All three limitations are stated in the
+[paper](docs/CRAFT-preprint-v0.9.1.pdf) rather than hidden.
 
 ## Citation
 
@@ -209,7 +228,7 @@ Preprint v0.9. The most important open validation item is an agent-versus-human 
   title  = {{CRAFT}: A Structural Conformance Index for System Resilience,
             and the Evaluator That Did Not Exist},
   year   = {2026},
-  note   = {Preprint v0.9},
+  note   = {Preprint v0.9.1; supersedes REOF (2024)},
   url    = {https://github.com/RudsonCarvalho/craft-audit}
 }
 ```

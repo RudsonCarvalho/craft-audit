@@ -4,7 +4,7 @@
 
 ## Nota geral
 
-**Nota de Resiliência 1.13 — Insatisfatório**
+**Nota de Resiliência 1.05 — Insatisfatório**
 
 > *Insatisfatório: o serviço tem muito espaço para melhorias, necessita revisões e medidas corretivas para aumentar a confiabilidade e reduzir impactos de paradas — e danos a serviços adjacentes, podendo afetar o sistema como um todo. Possui baixa robustez.*
 
@@ -148,7 +148,7 @@ de nível superior. Não altere nenhuma outra configuração deste arquivo.
 
 | Achado | Correção | Nota depois | Classificação depois |
 |---|---|---:|---|
-| — | (nota atual) | 1.13 | Insatisfatório |
+| — | (nota atual) | 1.05 | Insatisfatório |
 | 1 | Timeout na consulta de clientes | 1.9 | Insatisfatório |
 | 2 | Circuito de proteção na consulta de clientes | 2.5 | Insatisfatório |
 | 3 | Plano B na consulta de clientes | 3.4 | Aceitável |

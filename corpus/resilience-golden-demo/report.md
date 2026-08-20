@@ -1,9 +1,9 @@
 # CRAFT Audit — resilience-golden-demo
 **Repo:** RudsonCarvalho/resilience-golden-demo
 **Commit:** c1cbfbcfdf3c8e503387807792af522ab42e7681
-**Profile:** MS-1.1.1 · **Date:** 2026-08-19
+**Profile:** MS-1.1.1.1 · **Date:** 2026-08-19
 
-## CRAFT Score = 10.0 — Excellent. First non-Unsatisfactory result in the corpus.
+## IRC = 10.0 — Excellent. First non-Unsatisfactory result in the corpus.
 
 ## Methodology note, read first
 
@@ -29,7 +29,7 @@ One real defect surfaced during this process — not in the fixture, but in the 
 
 **D = 1**, confirmed by inspection: exactly one `@PostMapping` exists in the entire codebase.
 
-$$\text{CRAFT Score} = \frac{94 - 0}{94 - 0} \times 10 = 10.0$$
+$$\text{IRC} = \frac{94 - 0}{94 - 0} \times 10 = 10.0$$
 
 No clamp was even needed once the profile arithmetic was corrected — the implemented sum lands exactly on the corrected maximum.
 
@@ -41,7 +41,7 @@ No clamp was even needed once the profile arithmetic was corrected — the imple
 
 This is the ninth service audited and the first to leave the Unsatisfactory tier — every other result so far (PetClinic, Online Boutique, train-ticket, spring-circuitbreaker-demo) landed between 0.0 and 2.97. That raised a fair methodological question earlier in this work: can CRAFT ever say a service is well-built, or does it only produce pessimism? This result answers it. The instrument reaches its ceiling when the evidence genuinely earns it, verified independently rather than asserted, and it reaches exactly the ceiling this repository was deliberately engineered to demonstrate — no more, no less.
 
-This repository is the correct positive control for the paper's validation section: unlike a purely synthetic minimal example, it exercises all six verticals against a real, running stack (Spring Boot, Redis Sentinel, Kafka, Avro, WireMock-based failure injection, Kubernetes manifests, CI), and its own README predicted the exact CRAFT Score/tier/penalty outcome this audit reached independently.
+This repository is the correct positive control for the paper's validation section: unlike a purely synthetic minimal example, it exercises all six verticals against a real, running stack (Spring Boot, Redis Sentinel, Kafka, Avro, WireMock-based failure injection, Kubernetes manifests, CI), and its own README predicted the exact IRC/tier/penalty outcome this audit reached independently.
 
 ## Data quality
 
