@@ -1,7 +1,7 @@
 # CRAFT Audit — api-gateway
 **Repo:** spring-petclinic/spring-petclinic-microservices
 **Commit:** 305a1f13e4f961001d4e6cb50a9db51dc3fc5967
-**Profile:** MS-1.1 · **Date:** 2026-08-19
+**Profile:** MS-1.1.1.1 · **Date:** 2026-08-19
 
 ## Score
 
@@ -14,7 +14,7 @@
 | **Total** | **6** | **53** |
 
 **D = 1** (single domain, no degradation applied)
-**CRAFT Score = (6−0)/(53−0) × 10 = 1.13 → Tier: Unsatisfactory**
+**IRC = (6−0)/(53−0) × 10 = 1.05 → Tier: Unsatisfactory**
 
 ## Evidence ledger (summary — full detail in api-gateway-audit.json)
 
@@ -32,7 +32,7 @@ No rate limiter, no bulkhead on the gateway's own surface. (A `Retry` filter exi
 
 ## Remediation plan (ordered, cumulative)
 
-| # | Action | Projected CRAFT Score |
+| # | Action | Projected IRC |
 |---|---|---|
 | 1 | Explicit timeout on the customers-service call | 1.9 |
 | 2 | Circuit breaker on the customers-service call | 2.5 |
