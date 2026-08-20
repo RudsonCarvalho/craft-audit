@@ -5,6 +5,33 @@
 
 CRAFT scores a service's resilience **as built** — the presence and calibration of protection mechanisms at its functional boundary — rather than as observed in production. It produces a 0–10 **Nota de Resiliência** (CRAFT Score), a four-tier classification, a per-item evidence ledger, and an ordered remediation plan with ready-to-execute fix prompts.
 
+## What CRAFT is trying to prove
+
+CRAFT is built around a falsifiable hypothesis:
+
+> **Structural resilience conformance is a property worth measuring before runtime evidence exists.**
+
+The project does not assume that a resilience score is valuable simply because it can be computed. CRAFT becomes useful only if the evidence it produces changes or improves engineering decisions.
+
+Three questions therefore matter more than the score itself:
+
+1. **Does CRAFT surface structural risks that experienced engineers would want to know before production?**
+2. **Can independent evaluators inspect the same repository and profile and derive materially consistent evidence?**
+3. **Is the resulting evidence useful enough to influence design reviews, remediation priorities, delivery gates, or other engineering decisions?**
+
+The current public corpus demonstrates that the method can be executed against real repositories, that every awarded point can be tied to inspectable evidence, and that the positive control is distinguished from the sampled public services.
+
+It does **not** yet establish that CRAFT predicts production reliability, that different evaluators will always reach the same judgement, or that organizations should use the score as a delivery gate.
+
+Those are validation questions, not assumptions of the framework.
+
+A useful test for CRAFT is deliberately simple:
+
+> **Would an experienced engineer receive a CRAFT finding and say: “I would want to know this before putting the service into production”?**
+
+If the answer is repeatedly no, then CRAFT is only another scanner.  
+If the answer is repeatedly yes, structural resilience conformance may be a useful engineering control.
+
 > **Looking for the agent skill? Use [`skills/craft-audit/`](skills/craft-audit/).**  
 > That directory is the complete portable skill. Copy it as a unit; `SKILL.md` depends on both files under its local `references/` directory.
 
