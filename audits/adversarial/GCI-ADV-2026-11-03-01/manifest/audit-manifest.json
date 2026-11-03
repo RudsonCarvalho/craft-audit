@@ -1,6 +1,6 @@
 {
  "audit_id": "GCI-ADV-2026-11-03-01",
- "manifest_version": 2,
+ "manifest_version": 3,
  "audit_as_of": "2026-11-03T15:58:54Z",
  "protocol": "GCI Auditoria Adversarial Independente, protocolo de execucao v2 (prompt do operador, 2026-11-03)",
  "mode": "read-only; no production, merge, deploy, holdout access, paid services or financial operations",
@@ -244,6 +244,11 @@
    "version": 2,
    "at": "2026-11-03T18:40:00Z",
    "change": "adicionados worktrees auditados com contagens de testes, fontes externas por missão com estado de acesso, sondas executadas; nenhuma alteração nos SHAs congelados"
+  },
+  {
+   "version": 3,
+   "at": "2026-11-03T19:50:00Z",
+   "change": "revisao independente incorporada: 5 rebaixamentos de severidade, erratas em 7 relatorios, sondas arquivadas e reexecutadas em fixtures/evidence, matriz v3 (+5 REQ nao testados), SRC-M3-01 corrigido; SHAs congelados inalterados"
   }
  ],
  "worktrees_audited": [
@@ -303,5 +308,25 @@
    "1 sonda exclusão",
    "independent-review por subagente Claude Opus (mesmo fornecedor)"
   ]
+ },
+ "independent_review": {
+  "file": "final/independent-review.md",
+  "evaluator_model": "claude-opus-5-5 (subagente, mesma sessao e container; mesmo fornecedor)",
+  "received_at": "2026-11-03T19:00:00Z",
+  "verdicts": {
+   "Alta": {
+    "concorda": 4,
+    "concorda_com_correcao": 8,
+    "diverge": 0,
+    "nao_resolvido": 0
+   },
+   "severity_downgrades": [
+    "F-01",
+    "F-03",
+    "F-04",
+    "F-05",
+    "F-18"
+   ]
+  }
  }
 }

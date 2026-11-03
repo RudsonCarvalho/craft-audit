@@ -1,7 +1,7 @@
 {
  "schema": "audit-requirements-matrix/1",
  "audit_id": "GCI-ADV-2026-11-03-01",
- "matrix_version": 2,
+ "matrix_version": 3,
  "frozen_at": "2026-11-03T16:40:00Z",
  "denominator": 50,
  "status_legend": {
@@ -991,19 +991,118 @@
    "findings": [
     "F-19"
    ]
+  },
+  {
+   "id": "REQ-051",
+   "requirement": "Anti-poda: falta de causa identificada nao apaga hipotese nem associacao exploratoria; descarte indevido e erro registravel",
+   "source": "issue #173 (criterios de conclusao; principio); apontado pela revisao independente",
+   "component": "hypothesis_dossier (estados), decision_gate (descartar)",
+   "status_inicial": "descoberto_apos_congelamento",
+   "location": "ver source",
+   "mission": "M4/M7",
+   "planned_test": "Sonda: descartar hipotese com evidencia 'sem causa' e verificar se o sistema exige razao/alternativas; medir se 'rejected' pode vir so de 'nao achamos causa'",
+   "priority": "P1",
+   "evidence_consulted": [
+    "final/independent-review.md#5"
+   ],
+   "result": "nao_testado",
+   "reason": "requisito identificado pela revisao independente apos o congelamento da v1; fora do orcamento desta execucao",
+   "next_step": "incluir na proxima execucao da auditoria",
+   "added_in_version": 3,
+   "origin": "revisao independente (secao 5a)"
+  },
+  {
+   "id": "REQ-052",
+   "requirement": "Multiplicidade e resultados negativos: registrar numero de testes, amostras insuficientes e resultados negativos em todo lote; correcao de multiplas buscas antes de 'candidata'",
+   "source": "issue #173 (guardrails), #189; AGENTS invariantes",
+   "component": "catalyst_batch (Holm), extreme_attribution, estudos/",
+   "status_inicial": "descoberto_apos_congelamento",
+   "location": "ver source",
+   "mission": "M4",
+   "planned_test": "Inspecao dos relatorios de lote e do Holm conjunto; nao exercitado sem banco",
+   "priority": "P1",
+   "evidence_consulted": [
+    "final/independent-review.md#5"
+   ],
+   "result": "nao_testado",
+   "reason": "requisito identificado pela revisao independente apos o congelamento da v1; fora do orcamento desta execucao",
+   "next_step": "incluir na proxima execucao da auditoria",
+   "added_in_version": 3,
+   "origin": "revisao independente (secao 5a)"
+  },
+  {
+   "id": "REQ-053",
+   "requirement": "Aprendizagem sem autorreforco: feedback versionado -> proposta PR -> revisao -> reindexacao; nenhuma promocao automatica de conhecimento; rollback por regressao",
+   "source": "issue #173 (#200/#201) e knowledge-hub #26",
+   "component": "role_challenge knowledge_proposals (PR #209, so arquivo local); hub (sem economics/)",
+   "status_inicial": "descoberto_apos_congelamento",
+   "location": "ver source",
+   "mission": "M7",
+   "planned_test": "Inspecao: propostas de conhecimento vao so para arquivo local (PR #209); nenhum loop existe",
+   "priority": "P1",
+   "evidence_consulted": [
+    "final/independent-review.md#5"
+   ],
+   "result": "nao_testado",
+   "reason": "requisito identificado pela revisao independente apos o congelamento da v1; fora do orcamento desta execucao",
+   "next_step": "incluir na proxima execucao da auditoria",
+   "added_in_version": 3,
+   "origin": "revisao independente (secao 5a)"
+  },
+  {
+   "id": "REQ-054",
+   "requirement": "Mecanica de curvas e instrumentos: DI1 cotado em taxa com PU inverso, DV01, base 252, taxa a termo != expectativa de Copom, breakeven != previsao de inflacao; nenhum 'score macro' sem calibracao; choque domestico x global",
+   "source": "issue #195 (complemento tecnico)",
+   "component": "(nenhum componente)",
+   "status_inicial": "descoberto_apos_congelamento",
+   "location": "ver source",
+   "mission": "M4",
+   "planned_test": "Inventario: inexistente",
+   "priority": "P1",
+   "evidence_consulted": [
+    "final/independent-review.md#5"
+   ],
+   "result": "nao_testado",
+   "reason": "requisito identificado pela revisao independente apos o congelamento da v1; fora do orcamento desta execucao",
+   "next_step": "incluir na proxima execucao da auditoria",
+   "added_in_version": 3,
+   "origin": "revisao independente (secao 5a)"
+  },
+  {
+   "id": "REQ-055",
+   "requirement": "Direitos de uso por dataset macro (BCB SGS/Focus, PTAX): autorizacao por dataset e finalidade; 'PTAX autorizada nao autoriza outros produtos'; nenhuma coleta nova sem gate",
+   "source": "issue #195 (cuidados), #173 (guardrails), #220",
+   "component": "sources/catalog.py direitos por uso (PR #157/#163); evidence_store gate (#168)",
+   "status_inicial": "descoberto_apos_congelamento",
+   "location": "ver source",
+   "mission": "M2/M4",
+   "planned_test": "Inspecao do catalogo gci-source/1 por dataset; nao exercitado",
+   "priority": "P1",
+   "evidence_consulted": [
+    "final/independent-review.md#5"
+   ],
+   "result": "nao_testado",
+   "reason": "requisito identificado pela revisao independente apos o congelamento da v1; fora do orcamento desta execucao",
+   "next_step": "incluir na proxima execucao da auditoria",
+   "added_in_version": 3,
+   "origin": "revisao independente (secao 5a)"
   }
  ],
  "updated_at": "2026-11-03T18:00:00Z",
- "previous_version_file": "requirements-matrix.v1.json",
+ "previous_version_file": "requirements-matrix.v2.json",
  "changelog": [
   "v1: congelamento inicial, 50 requisitos",
-  "v2: resultados por requisito após M2–M7; nenhum requisito removido; nenhum acrescentado"
+  "v2: resultados por requisito após M2–M7; nenhum requisito removido; nenhum acrescentado",
+  "v3: +5 requisitos (REQ-051..055) derivados de #173/#195 apontados pela revisao independente; resultado 'nao_testado'; v1 e v2 preservadas; denominador de cobertura inicial continua 50"
  ],
  "result_counts": {
   "aprovado": 16,
   "falhou": 16,
   "aprovado_com_ressalva": 9,
   "inconclusivo": 2,
-  "inexistente": 7
- }
+  "inexistente": 7,
+  "nao_testado": 5
+ },
+ "denominator_v1": 50,
+ "denominator_v3": 55
 }

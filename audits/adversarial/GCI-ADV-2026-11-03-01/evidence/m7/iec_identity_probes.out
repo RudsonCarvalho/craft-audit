@@ -1,0 +1,13 @@
+R2 D4 producer='model-A'              reviewer='Model-A '                           -> ['REVIEW-MESMO-MODELO']
+R2 D4 producer='model-A'              reviewer='model-a-v2'                         -> ['REVIEW-MESMO-MODELO']
+R2 D4 producer='claude-sonnet-4-5'    reviewer='Claude Sonnet 4.5'                  -> ACEITO
+R2 D4 producer='claude-sonnet-4-5'    reviewer='claude-opus-4-1'                    -> ACEITO
+R2 D4 producer='claude-sonnet-4-5'    reviewer='anthropic/claude-sonnet-4.5:thinking' -> ['REVIEW-MESMO-MODELO']
+R2 D4 producer='gpt-4o'               reviewer='gpt-4o-2024-11-20'                  -> ['REVIEW-MESMO-MODELO']
+R1 D3 ack autorizado_por='orquestrador': missao aceita; run status=ok
+R1 D3 ack autorizado_por='humano-rudson': missao aceita; run status=blocked
+R1 D3 ack autorizado_por='model-A': MissionInvalid: MISSION-ACK-AUTORIDADE: ack só de ('orquestrador', 'humano'), nunca do produtor ou do papel; MISSION-ACK-AUTORIDADE: ack
+R3 FONTE-LIDA pass com ev_index (nao_lido): ['REVIEW-FONTE-NAO-LIDA']
+R3 FONTE-LIDA pass com ev_late (apos corte): ['REVIEW-PONTEIRO-INVALIDO']
+R3 FONTE-LIDA pass com ev2 (outra claim, span ok): ACEITO
+R4 exclusao revisada por string 'gci-lider (modo humano)'/revisor_papel=humano: ACEITA

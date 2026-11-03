@@ -74,3 +74,13 @@ Cinco documentos, todos "Claude Opus 5.5, sem acesso à conclusão do implementa
 ## F. Resultados por requisito (v2)
 
 REQ-007 **falhou** (F-04, F-06); REQ-008 ressalva (F-03); REQ-009 **falhou** (F-21, F-03); REQ-011 **falhou** (F-07); REQ-013 **falhou** (F-05, F-13); REQ-014 **falhou** (F-24); REQ-015 ressalva (F-20); REQ-019 ressalva (F-14); REQ-020 ressalva (relevância do ponteiro); REQ-021 **falhou** (F-13, F-14); REQ-022 aprovado por inspeção; REQ-023 aprovado por inspeção + controle positivo (citação sem relação recusada); REQ-032 **falhou** (F-13); REQ-049 aprovado por inspeção.
+
+
+## G. Errata (v2, após revisão independente)
+
+- A.1 (F-04): a ancoragem do revisor **não está demonstrada** (ele contestou a ficha, deu duas claims `against` e recomendou `inconclusive`); a limitação está parcialmente declarada no PROJECT-STATE. **F-04 rebaixado para Média** (falha de desenho sem impacto mostrado).
+- A.3 (F-05): quatro das seis revisões de PR declaram "Claude Opus 5.5"; as normas do hub são `draft`; Sonnet é "carro-chefe" no catálogo do hub, logo não há indício de violação de OPS-REVIEWER-001, só impossibilidade de verificar. **F-05 rebaixado para Média**; o caminho concreto de autorrevisão é F-13.
+- A.4: `human_review_reasons` inclui "H07-fund pediu revisão humana", não só a regra geral.
+- B (F-14): o ack por `orquestrador`/`humano*` é comportamento projetado (`ACK_AUTHORITIES`); a sonda mostra `run status=blocked`, logo a cobertura de ponta a ponta sem revisor distinto não está demonstrada.
+- Sondas arquivadas: `fixtures/m7/iec_identity_probes.py` → `evidence/m7/iec_identity_probes.out`; `fixtures/m7/isolation_probes.py` → `evidence/m7/isolation_probes.out`.
+- B (F-14), reexecução arquivada: com `autorizado_por='orquestrador'` o run D3 fechou **`status=ok`** com revisor = produtor em todos os checks (nenhuma segunda opinião sorteada para esse hash de missão); com `humano-rudson`, `blocked`. A cobertura completa sem revisor distinto é, portanto, alcançável em D3 por configuração.

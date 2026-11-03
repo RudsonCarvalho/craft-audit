@@ -46,3 +46,9 @@ Conclusão: o GCI não possui (a) identidade de evento por atores/SIF/datas, (b)
 ## 5. Resultados por requisito (v2)
 
 REQ-039 **inexistente**; REQ-040 **falhou** (sem decomposição; homônimo não detectável); REQ-017/018 aprovados por inspeção (o que existe é relevância e dedupe por origem/similaridade). Limitações: preços bloqueados; GACC não consultada; três fontes 403; uma alegação (50% da cota em maio) não verificada e registrada como tal.
+
+
+## 6. Errata (v2, após revisão independente)
+
+- §3 e SRC-M3-01: o PDF do MAPA (04/03/2025) **não nomeia** as três plantas de 2025; os nomes (JBS Mozarlândia, Frisa Nanuque, Bon-Mart Presidente Prudente) vêm do Poder360 de 20/05/2026 (SRC-M3-05). `evidence/m3-sources/sources.json` foi corrigido.
+- F-18 rebaixado para **Média**: o impacto descrito ("um resumidor que cite o PDF…") é hipotético, pois nenhuma ficha, entrega ou dossiê do GCI trata o caso; é lacuna de capacidade (mesma classe de F-17), não perda demonstrada.

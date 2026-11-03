@@ -67,3 +67,9 @@ Denominador de cobertura inicial: **50**. Requisitos descobertos depois entram e
 ## 5. Orçamento proposto (antes da execução)
 
 Ver `manifest/audit-manifest.json#budget`. Regra de parada aplicada: ao atingir 25 achados distintos, triagem dos P0 pendentes antes de ampliar.
+
+
+## 6. Errata (v2, após revisão independente — `final/independent-review.md`)
+
+- §2.2: "**Todos** declaram como revisor 'Claude Opus 5.5'" está impreciso: quatro das seis revisões (#206, #207, #211, #209) declaram "Claude Opus 5.5"; a de #212 diz "Claude (Opus)" e a de #208, "Claude (sessão independente)". A conclusão (mesma família de fornecedor) não muda.
+- §1: este relatório não resume o texto das issues de referência; a revisão independente leu #173 e #195 e apontou cinco classes de requisito ausentes, acrescentadas como REQ-051..055 na matriz v3 (`nao_testado`). O denominador de cobertura inicial continua 50.

@@ -53,3 +53,13 @@ Controles eficazes observados: `EvidenceBoard.add_evidence` recusou citação se
 ## C. Resultados por requisito (v2)
 
 REQ-008 ressalva (post_event perdido a jusante); REQ-009 **falhou** (perda de campos em `companies[]`, `post_event`); REQ-010 **falhou** (F-02); REQ-011 **falhou** (F-07); REQ-012 **falhou/inexistente** (F-01); REQ-029/030 aprovados por inspeção (não sondados: `reduce_claims` determinístico; `assemble_decisions` força `needs_review` sem retrieval); REQ-031 **falhou** (F-12); REQ-032 ver M7 (F-13); REQ-033 aprovado por inspeção; REQ-038 inconclusivo (sem benchmark com modelo real, declarado pelo PR).
+
+
+## D. Errata (v2, após revisão independente)
+
+- A: "o contraexemplo só existe no log" é **falso**: TBLE3 −12,0% está na ficha (`H07.md:904`, `evidence_for[5]`) e no Radar. A não exposição da Tractebel é "não verificada" na rodada 1, logo TBLE3 é contraexemplo **candidato**. A frase "recusada uma vez" do PROJECT-STATE é inverificável por desenho (`submit_task` não grava recusas), não "sem rastro" por omissão. **F-01 rebaixado para Média.** Permanece a omissão no `summary` e o rótulo errado de Taesa.
+- A (F-02): o Radar **não** descarta claims (41 evidências, inclusive 26 neutras); o descarte de 81% é da ficha `.md`. A perda material no Radar é o `summary`, `needs_human_review`, `recommended_states`, `conflicts`, `refutation_tests` e os campos de `companies[]`.
+- A (F-03): o texto da evidência na ficha conserva "posterior ao as_of e não prova exposição ex ante"; a perda é do marcador estruturado. **F-03 rebaixado para Média.**
+- A (F-07): é conflito de **escopo temporal** (as_of 2012-10-31 escolhido pelo líder) não sinalizado, não contradição factual direta; severidade mantida.
+- A: a nota do líder registra em texto "Seleção retrospectiva… é circular" (F-21 corrigido: reconhecido em texto, não em estrutura).
+- B: `fixtures/m5/fidelity_211_probes.json#results` agora traz decisão, gate, achados e suspeitas por caso (a versão anterior gravou só nomes); saída de reexecução em `evidence/m5/fidelity_211_probes.rerun.out`. Redação de F-12: o dado central é que em F2, F3, F4, F6 e F11 a camada determinística não levanta **nenhuma** suspeita pertinente, e F6 (×1000) é falha da camada numérica.

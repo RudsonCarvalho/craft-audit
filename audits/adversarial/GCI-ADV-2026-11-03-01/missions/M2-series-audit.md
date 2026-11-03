@@ -66,3 +66,9 @@ O validador determinístico só pega a troca quando ela introduz um **número no
 ## 4. Limitações
 
 Primária RatingDog bloqueada; consenso de provedor não nomeado; fixture não cega; nenhum acesso a Bloomberg/Refinitiv; os horários "01:45 GMT" vêm de agregadores.
+
+
+## 5. Errata (v2, após revisão independente)
+
+- §2.2: o script da sonda do store e sua saída não estavam arquivados; agora estão em `fixtures/m2/store_homonym_probe.py` e `evidence/m2/store_homonym_probe.out` (reexecutados; mesmo resultado). A revisão independente reproduziu a troca de série de forma autônoma.
+- §2.4: em F7 e F10 a camada determinística levanta a suspeita `negacao_perdida`, que não é a do defeito plantado (o M5 dizia "nenhum" para F7; a tabela deste relatório está correta).

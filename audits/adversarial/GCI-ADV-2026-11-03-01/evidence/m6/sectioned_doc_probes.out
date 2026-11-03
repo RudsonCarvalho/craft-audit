@@ -1,0 +1,9 @@
+Q1 CA1 contestada: ('active', 'contestada')
+Q1 replace mesmo board_claim_id -> ('active', 'contestada')
+Q1c retract (pelo autor) + append mesmo texto, novo board_claim_id -> (('active', 'aprovada'), ['| SA | 5 | caaa23baa50c | ana | active | 1 | 0 |'])
+Q2 apos retract CA1: conclusions= {'CC1': 'stale'} hashes changed= {'SA': True, 'SB': False, 'SC': False}
+Q3 idempotency_key reutilizada com conteudo diferente -> ContentConflict: idempotency_key k-same já usada com conteúdo diferente
+Q4b patch obsoleto reafirmando conclusao dependente de claim retratada -> PatchInvalid: ops[0] (replace_claim): depends_on CA1 inexistente ou não ativa
+Q6 default doc fidelity_gate por patch: [{'status': 'nao_executado'}, {'status': 'nao_executado'}, {'status': 'nao_executado'}, {'status': 'nao_executado'}] | CA1: ('active', 'aprovada')
+Q6 gate_required: add_section sem gate -> FidelityGateRejected: documento exige o gate de fidelidade (#211) e nenhum foi dado
+Q7 view: linhas com 'gate' -> ['Patches sem gate de fidelidade: 4 de 4.']

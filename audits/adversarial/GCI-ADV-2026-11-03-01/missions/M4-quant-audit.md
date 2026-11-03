@@ -42,3 +42,9 @@ Escopo: janela/frequência/moeda/regimes/informação futura/fora da amostra; di
 ## 5. Resultados por requisito (v2)
 
 REQ-002 **falhou** (F-08); REQ-003 aprovado por inspeção (não exercitado); REQ-015 aprovado com ressalva (F-21); REQ-016 aprovado (chaves) / ressalva (texto livre, P-D); REQ-041, 042, 043, 045, 046 **inexistentes** (REQ-043 com sonda P-H mostrando furo no único controle existente); REQ-044 parcial (FedWatch recusado; MNPI inexistente).
+
+
+## 6. Errata (v2, após revisão independente)
+
+- As sondas P-A..P-H não estavam arquivadas em `evidence/`; agora estão em `fixtures/m4/probability_guard_probes.py` e `evidence/m4/probability_guard_probes.out` (reexecutadas; mesmo resultado).
+- F-08: nenhuma ficha real tem `scenario_probability` numérico e nenhuma decisão de H07 foi registrada; o risco é de capacidade.

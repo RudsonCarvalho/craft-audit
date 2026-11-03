@@ -1,0 +1,12 @@
+P-A llm score + calibration_ref textual: ACEITO
+P-B palavra LLM: RECUSADO ['scenario_probability: LLM scores can never fill the scenario probability']
+P-C calibration_ref inexistente: ACEITO
+P-D percentual subjetivo em note: ACEITO
+P-F trigger scenario_probability=0.6 source='estimativa do agente Sonnet': ACEITO
+P-G pct: 'probabilidade de 60% de corte' -> ['ROLE-CAPITAL']
+P-H decimal: 'probabilidade de 0,6 de corte' -> PASSA
+P-H 6em10: 'ha 6 chances em 10 de corte' -> PASSA
+P-H odds: 'odds de 3 para 2 a favor do corte' -> PASSA
+P-H p=: 'corte e provavel (p=0,6)' -> PASSA
+P-H pct sem palavra: '60% dos cenarios apontam corte' -> PASSA
+P-H por cento: 'cenario base com 60 por cento' -> PASSA

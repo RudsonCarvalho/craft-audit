@@ -40,3 +40,9 @@ Controles eficazes: CAS por versão/hash, idempotência estrita, tombstones vis�
 ## C. Resultados por requisito (v2)
 
 REQ-004 aprovado (inspeção); REQ-005 aprovado; REQ-006 aprovado com ressalva (F-22); REQ-024 **falhou** no conjunto ativo (F-15); REQ-034 aprovado; REQ-035 aprovado; REQ-036 **falhou** (F-15, variante retract+append); REQ-037 ressalva (F-16).
+
+
+## D. Errata (v2, após revisão independente)
+
+- A: "head não fixado em artefato versionado" é **falso**: `c2476aef…` está em `docs/descoberta/decisoes/H07_gate_check.json` (`evidence_version`) e em `data.note_entry_id` dos três `status.jsonl`. A lacuna real é que nenhum código cruza essas âncoras com o log e elas vivem no mesmo repositório (F-22 corrigido).
+- B: o log `evidence/m6_sectioned_doc_probes.txt` terminava em traceback e não continha Q3/Q7; a sonda completa está em `fixtures/m6/sectioned_doc_probes.py` com saída em `evidence/m6/sectioned_doc_probes.out`. Reforço de F-15: o **autor** retrata a claim sem envolvimento do revisor que a contestou; no board real o id é derivado do conteúdo, bastando mudar uma palavra.
