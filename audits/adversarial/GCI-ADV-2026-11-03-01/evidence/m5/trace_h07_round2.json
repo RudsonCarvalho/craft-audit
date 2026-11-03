@@ -1,0 +1,101 @@
+{
+ "claims_delivered": {
+  "fund": 7,
+  "dados": 15,
+  "rev": 10
+ },
+ "claims_in_log": 32,
+ "stance_in_log": {
+  "neutral": 26,
+  "for": 2,
+  "against": 4
+ },
+ "card": {
+  "evidence_for": 6,
+  "evidence_against": 9,
+  "neutral": 0,
+  "has_open_questions_field": false,
+  "dossier_block_refutation_tests": "revisor.json (4 testes, incluindo estudo de evento com universo fixado antes dos preços e teste fora da amostra só após pré-registro D4)",
+  "dossier_block_mentions_round2": false
+ },
+ "radar_dossier": {
+  "TBLE3": true,
+  "Tractebel": true,
+  "Rede Energia": true,
+  "exposure_share": false,
+  "exposure_basis": false,
+  "refutation": false,
+  "alternative_explanations": true,
+  "human_review_reasons": false,
+  "recommended_state": false,
+  "needs_human_review": false,
+  "conflicts": false,
+  "Rodada 2": false,
+  "notes_last": {
+   "seq": 52,
+   "at": "2026-10-31T14:07:27+00:00",
+   "actor": "gci-lider",
+   "note_kind": "investigation_round",
+   "note": null
+  }
+ },
+ "radar_changes": {
+  "TBLE3": false,
+  "Tractebel": false,
+  "Rede Energia": false,
+  "exposure_share": false,
+  "exposure_basis": false,
+  "refutation": false,
+  "alternative_explanations": false,
+  "human_review_reasons": false,
+  "recommended_state": false,
+  "needs_human_review": false,
+  "conflicts": false,
+  "Rodada 2": false
+ },
+ "note": {
+  "companies_count": 15,
+  "companies_fields_kept": [
+   "exposure_share",
+   "name",
+   "pre_event",
+   "task_id"
+  ],
+  "companies_fields_in_deliverable": [
+   "evidence_class",
+   "exposed_assets",
+   "exposure_basis",
+   "exposure_share",
+   "name",
+   "pre_event",
+   "source_public_date",
+   "source_url_or_ref",
+   "tickers"
+  ],
+  "alt_expl": 5,
+  "ref_tests": 4,
+  "next_questions": 16,
+  "summary": "Rodada 2: MP 579 publicada no DOU de 12/09/2012 (edição normal, inferida); nenhum documento CVM das elétricas sobre renovação entre 20/08 e 10/09; intervenção ANEEL no grupo Rede em 31/08 é explicação concorrente para as quedas de 30–31/08; quedas de 30/08–14/09 concentradas em geradoras/transmissoras (CESP, CTEEP, Cemig, AES Tietê) e quase nulas em distribuidoras (Eletropaulo, EDP, Equatorial, Taesa; CPFL +10%), coerente com o mecanismo mas sem exposição ex ante medida; fundamentalista não obteve exposição pré-evento (FRE em XML sem texto de concessões). Revisor recomenda inconclusive."
+ },
+ "field_loss": {
+  "neutral_claims_dropped_from_card": 26,
+  "companies_fields_dropped_in_note": [
+   "evidence_class",
+   "exposed_assets",
+   "exposure_basis",
+   "source_public_date",
+   "source_url_or_ref",
+   "tickers"
+  ],
+  "radar_note_body_null": true
+ },
+ "summary_mentions": {
+  "TBLE3": false,
+  "Tractebel": false,
+  "Taesa": true,
+  "CPFL": true,
+  "LIGT3": false,
+  "Light": false
+ },
+ "reviewer_mentions_TBLE3": true
+}

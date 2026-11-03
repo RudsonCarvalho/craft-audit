@@ -1,0 +1,6 @@
+baseline replay ok: state investigating length 52 head c2476aef4e2b
+T1 middle edit detected -> ChainError entry #37: content does not match entry_id (tampered)
+T2 middle deletion detected -> ChainError entry #44: seq 45 out of order
+T3 tail truncation (drop seq 42-52): NOT DETECTED; state investigating counts {'for': 5, 'against': 7, 'neutral': 15} notes 8
+T4 stance flip + rechain: NOT DETECTED (no external anchor); counts {'for': 6, 'against': 8, 'neutral': 17} head 89468ff1c9eb
+documented anchor: PROJECT-STATE/PR must pin the head; current head: c2476aef4e2b777ba130310f7e08285e2cc84718d367b5ea3dc2fd22e92a3eec

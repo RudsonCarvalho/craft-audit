@@ -1,0 +1,307 @@
+{
+ "audit_id": "GCI-ADV-2026-11-03-01",
+ "manifest_version": 2,
+ "audit_as_of": "2026-11-03T15:58:54Z",
+ "protocol": "GCI Auditoria Adversarial Independente, protocolo de execucao v2 (prompt do operador, 2026-11-03)",
+ "mode": "read-only; no production, merge, deploy, holdout access, paid services or financial operations",
+ "repositories": [
+  {
+   "name": "Craft-dreams/Global-Catalyst-Intelligence",
+   "role": "audited system (main snapshot)",
+   "default_branch": "main",
+   "frozen_commit": "7d49d051c4f2564fb6bc673069e66b72af61feba",
+   "commit_date": "2026-10-31T14:38:58-03:00",
+   "commit_subject": "Merge pull request #144 from Craft-dreams/feat/hig-register-d1v1-cards",
+   "clone": "shallow (--depth 1) at 2026-11-03T15:58Z; PR branches fetched with --depth 300 and explicit refspecs"
+  },
+  {
+   "name": "Craft-dreams/knowledge-hub",
+   "role": "audited knowledge repository",
+   "default_branch": "main",
+   "frozen_commit": "66bdcb62e55055bf4c4e320a61bbb9733c58b820",
+   "commit_date": "2026-10-29T13:16:34-03:00",
+   "commit_subject": "Merge pull request #24 from Craft-dreams/kb/onda1-lacunas"
+  },
+  {
+   "name": "RudsonCarvalho/craft-audit",
+   "role": "audit workspace (deliverables committed here, branch ccr-6c9d14cc-giokyn)",
+   "base_commit": "5693af519d1243579298f75282cdbcad4600b49b"
+  }
+ ],
+ "branches_and_prs_in_scope": {
+  "note": "All open PRs are titled DO NOT MERGE YET and are stacked; none is merged into main. They are audited as 'present only in PR'. SHAs are the branch heads at fetch time (2026-11-03T16:0xZ).",
+  "items": [
+   {
+    "pr": 218,
+    "branch": "feat/sintese-claims-208",
+    "sha": "884388d8925fec191a6d40f831a246c597160e6c",
+    "base": "feat/sintese-base-208",
+    "issue": 208,
+    "created": "2026-11-03T15:06:15Z"
+   },
+   {
+    "pr": 217,
+    "branch": "feat/sintese-base-208",
+    "sha": "5d3b4110f40837bd321b236ad36b665813dfba1f",
+    "base": "feat/iec-contratos-206",
+    "issue": 208,
+    "created": "2026-11-03T14:49:05Z"
+   },
+   {
+    "pr": 216,
+    "branch": "feat/dossie-patches-212",
+    "sha": "a07befa90554672bbdb4a12d90dff2a343a503e4",
+    "base": "feat/evidence-blackboard-207",
+    "issue": 212,
+    "created": "2026-11-03T14:09:20Z"
+   },
+   {
+    "pr": 215,
+    "branch": "feat/fidelidade-compressao-211",
+    "sha": "3af5f0a55f5942de27ef676f440f4f7d6db777b5",
+    "base": "feat/evidence-blackboard-207",
+    "issue": 211,
+    "created": "2026-11-03T14:01:56Z"
+   },
+   {
+    "pr": 214,
+    "branch": "feat/iec-contratos-206",
+    "sha": "6edbc60b1b620adfeafbe33074118b97e29e1bba",
+    "base": "feat/evidence-blackboard-207",
+    "issue": 206,
+    "created": "2026-11-03T13:53:32Z"
+   },
+   {
+    "pr": 210,
+    "branch": "feat/evidence-blackboard-207",
+    "sha": "24f69307b6c920c7cceb1bfce88e493990448fb0",
+    "base": "feat/itub4-explicativa-171",
+    "issue": 207,
+    "created": "2026-11-03T13:11:10Z"
+   },
+   {
+    "pr": 209,
+    "branch": "feat/agentes-prototipo-203",
+    "sha": "10afbbcb83990a3340562d44c721ddbe5009cda7",
+    "base": "feat/agentes-papeis-202",
+    "issue": 203,
+    "created": "2026-11-03T12:59:16Z"
+   },
+   {
+    "pr": 172,
+    "branch": "feat/itub4-explicativa-171",
+    "sha": "3cb9a2316d3ea263e980ae1c54026fc2a4de30c7",
+    "base": "feat/evidence-store-168",
+    "issue": 171,
+    "created": "2026-11-03T11:31:40Z"
+   },
+   {
+    "pr": 170,
+    "branch": "integracao/consolidacao-167",
+    "sha": "45e407e6546520ca1875af464a886f030c33db76",
+    "base": "main",
+    "issue": 167,
+    "created": "2026-11-02T15:42:16Z",
+    "note": "integrates PRs #157/#158/#163/#159/#161/#162/#166 (sources S1-S4, e2e, piloto)"
+   },
+   {
+    "pr": 161,
+    "branch": "feat/sources-s4-series",
+    "sha": "c133cbfdfce71a48d93721bca35e67e23630c633",
+    "base": "feat/sources-s2-pipeline",
+    "issue": 155,
+    "created": "2026-11-01T15:59:28Z",
+    "note": "series with vintages, release calendar, consensus, fail-closed surprise"
+   },
+   {
+    "pr": 160,
+    "branch": "docs/skills-investigacao-profunda",
+    "sha": "06f51818e1d4fe2ab380194897a3bc3c78f9042c",
+    "base": "docs/rfc-prospectiva",
+    "issue": 150,
+    "created": "2026-11-01T14:46:06Z"
+   },
+   {
+    "pr": 149,
+    "branch": "docs/rfc-prospectiva",
+    "sha": "8fae95aee64118ae7b42bb525d16e3703eec83c1",
+    "base": "main",
+    "issue": 147,
+    "created": "2026-10-31T23:05:46Z"
+   }
+  ]
+ },
+ "reference_issues": {
+  "gci": [
+   173,
+   178,
+   183,
+   194,
+   195,
+   197,
+   206,
+   207,
+   208,
+   211,
+   212,
+   213,
+   219,
+   220,
+   221,
+   222
+  ],
+  "knowledge_hub": [
+   26,
+   27
+  ],
+  "observation": "All 16 GCI reference issues were created on 2026-11-03 (11:53Z to 15:34Z), after the frozen main commit; all are open with closed_by_pull_requests.total_count = 0. Issue text is treated as specification, not as implemented functionality."
+ },
+ "environment": {
+  "os": "Linux 6.18.44-fc-v230 x86_64 (cloud container)",
+  "python": "3.13.18",
+  "git": "2.43.0",
+  "node": "v22.23.4",
+  "postgresql": "not available in the audit container; GCI PostgreSQL integration tests were skipped (68 skipped on main)",
+  "gci_dependencies_installed": {
+   "psycopg": "3.3.7",
+   "psycopg-binary": "3.3.7",
+   "pypdf": "6.21.4",
+   "PyYAML": "6.0.3",
+   "pytest": "8.4.2",
+   "ruff": "0.17.3"
+  },
+  "knowledge_hub_dependencies_installed": {
+   "PyYAML": "6.0.3",
+   "jsonschema": "4.26.0"
+  },
+  "baseline_tests": {
+   "gci_main": "1080 passed, 68 skipped (CATALYST_TEST_DATABASE_URL unset), 54s",
+   "knowledge_hub_main": "56 unittest OK; scripts/validate.py --profile okf ok (215 concepts, 12 skills); --profile hub ok with draft-mandatory warnings"
+  }
+ },
+ "executor": {
+  "agent": "Claude Code (cloud session) acting as Auditor Adversarial Senior",
+  "configured_model": "claude-fable-5-1 (session configuration; serving model may differ, see session metadata)",
+  "session": "https://claude.ai/code/session_01NaHBtap1vmMKmmvYFPGKLB",
+  "operator_account": "rudson.carvalho@gmail.com (GitHub: RudsonCarvalho)"
+ },
+ "permissions": {
+  "github": "read access to Craft-dreams/Global-Catalyst-Intelligence and Craft-dreams/knowledge-hub (attached via add_repo); write access only to RudsonCarvalho/craft-audit branch ccr-6c9d14cc-giokyn",
+  "network": "outbound HTTPS via session proxy; public web sources only; no paid services",
+  "databases": "none (catalyst_trial on the operator VPS was not accessed); no holdout data (2022-2025) accessed"
+ },
+ "dependencies_declared_between_auditor_and_audited_system": {
+  "same_model_family": "The GCI lead and the specialist/reviewer agents recorded in docs/descoberta (actors gci-lider, *-sonnet-r2, claude-hig-p1-1) are Anthropic Claude models; this audit is also executed by an Anthropic Claude model. Shared-error risk is real and is declared in M7.",
+  "same_infrastructure": "Claude Code tooling; the audited repos were cloned fresh into the audit container.",
+  "shared_prompts_or_summaries": "None reused; the auditor read original files and logs, not the PROJECT-STATE summaries, as evidence (PROJECT-STATE is itself an audited artifact).",
+  "independent_controller_for_blind_fixtures": "NOT AVAILABLE in this session. Blind fixtures could not be made genuinely blind; see M2/M5 for the declared limitation."
+ },
+ "budget": {
+  "proposed_before_execution": true,
+  "per_mission": {
+   "M1": {
+    "tool_calls": 60
+   },
+   "M2": {
+    "tool_calls": 40,
+    "web_fetches": 15
+   },
+   "M3": {
+    "tool_calls": 30,
+    "web_fetches": 12
+   },
+   "M4": {
+    "tool_calls": 40
+   },
+   "M5": {
+    "tool_calls": 60,
+    "adversarial_fixtures": 12
+   },
+   "M6": {
+    "tool_calls": 40,
+    "adversarial_fixtures": 8
+   },
+   "M7": {
+    "tool_calls": 60,
+    "adversarial_fixtures": 10
+   }
+  },
+  "rules": "max 2 attempts to fix the same operational failure without new evidence; group duplicate findings by root cause; at 25 distinct findings deliver interim triage of pending P0 requirements before widening; token budget for the whole audit <= 3,000,000 tokens of context consumption (self-imposed)"
+ },
+ "external_sources": {
+  "m2": "evidence/m2-sources/sources.json (9 registros; 2 primárias NBS lidas; 2 primárias S&P Global bloqueadas HTTP 403; 4 secundárias datadas; 1 snippet)",
+  "m3": "evidence/m3-sources/sources.json (12 registros; 1 PDF oficial MAPA 2025 lido e arquivado; 7 secundárias datadas; 3 bloqueadas 403; 1 não verificado)",
+  "retrieval_window": "2026-11-03T16:00Z–17:30Z via WebFetch/WebSearch da sessão",
+  "blocked_access_policy": "uma tentativa com user-agent alternativo foi recusada pela política da sessão e não repetida"
+ },
+ "changelog": [
+  {
+   "version": 1,
+   "at": "2026-11-03T16:10:00Z",
+   "change": "initial freeze: repos, branches/PRs, environment, executor, permissions, budget; external_sources to be appended by M2/M3 with retrieval dates"
+  },
+  {
+   "version": 2,
+   "at": "2026-11-03T18:40:00Z",
+   "change": "adicionados worktrees auditados com contagens de testes, fontes externas por missão com estado de acesso, sondas executadas; nenhuma alteração nos SHAs congelados"
+  }
+ ],
+ "worktrees_audited": [
+  {
+   "path": "/home/user/gci-pr-208",
+   "ref": "feat/sintese-claims-208",
+   "sha": "884388d8925fec191a6d40f831a246c597160e6c",
+   "tests": "1785 passed, 69 skipped"
+  },
+  {
+   "path": "/home/user/gci-pr-167",
+   "ref": "integracao/consolidacao-167",
+   "sha": "45e407e6546520ca1875af464a886f030c33db76",
+   "tests": "1309 passed, 69 skipped"
+  },
+  {
+   "path": "/home/user/gci-pr-203",
+   "ref": "feat/agentes-prototipo-203",
+   "sha": "10afbbcb83990a3340562d44c721ddbe5009cda7",
+   "tests": "1531 passed, 69 skipped"
+  },
+  {
+   "path": "/home/user/gci-pr-161",
+   "ref": "feat/sources-s4-series",
+   "sha": "c133cbfdfce71a48d93721bca35e67e23630c633",
+   "tests": "1171 passed, 68 skipped"
+  }
+ ],
+ "probes_executed": {
+  "M2": [
+   "series_store homonym swap",
+   "surprise via store (upper_bound)",
+   "fidelity F4/F5/F7/F10"
+  ],
+  "M3": [
+   "normalize_event/match_event/group_events com evento 2026, nota 2025 e nota 2025 datada 2026"
+  ],
+  "M4": [
+   "validate_decision_record x4",
+   "validate_trigger scenario_probability x3",
+   "roles.scan_forbidden x8",
+   "gate_check H07"
+  ],
+  "M5": [
+   "trace_h07_round2.py",
+   "13 sondas compression_fidelity"
+  ],
+  "M6": [
+   "4 testes de adulteração do log H07",
+   "9 sondas sectioned_doc"
+  ],
+  "M7": [
+   "4 sondas de isolamento create_task",
+   "6 sondas validate_review model_id",
+   "4 sondas same_model_acks",
+   "3 sondas pointer_problems",
+   "1 sonda exclusão",
+   "independent-review por subagente Claude Opus (mesmo fornecedor)"
+  ]
+ }
+}
