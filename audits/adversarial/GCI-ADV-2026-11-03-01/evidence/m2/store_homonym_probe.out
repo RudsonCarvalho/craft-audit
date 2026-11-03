@@ -1,0 +1,10 @@
+capture NBS: CaptureResult(vintage_id='e84728ed69b2a49c9bed4f1bafa30a99ed85153b2383ea95a65efd6413c8d788', rows=2, new=2, revised=0, unchanged=0, already_recorded=False)
+capture RatingDog (same series_id): CaptureResult(vintage_id='8df847e54be658a3575df83dc66791b3f37182986ff43c3f3ed9a9a3017f7061', rows=2, new=0, revised=2, unchanged=0, already_recorded=False)
+ obs 2026-04 50.3 stats.gov.cn revision_of=  available_precision= upper_bound
+ obs 2026-05 50.0 stats.gov.cn revision_of=  available_precision= upper_bound
+ obs 2026-04 52.2 pmi.spglobal.com revision_of= e84728ed available_precision= upper_bound
+ obs 2026-05 51.8 pmi.spglobal.com revision_of= e84728ed available_precision= upper_bound
+first_release 2026-05 -> 50.0 stats.gov.cn
+as_of 2026-06-02 -> 51.8 pmi.spglobal.com revision_of set: True
+surprise(first_release, consensus provedor nao nomeado 51.4) -> {"reason": "publicacao do realizado inicial nao comprovada pela fonte (limite superior)", "status": "not_assessable", "value": null}
+surprise(first_release, consensus Reuters poll (via RTHK) 51.6) -> {"reason": "publicacao do realizado inicial nao comprovada pela fonte (limite superior)", "status": "not_assessable", "value": null}

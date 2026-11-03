@@ -1,0 +1,592 @@
+{
+ "schema": "audit-findings/1",
+ "audit_id": "GCI-ADV-2026-11-03-01",
+ "count": 25,
+ "stop_rule_note": "25 achados distintos atingidos: triagem dos P0 concluída (todos os REQ P0 têm resultado na matriz v2) antes de encerrar; a busca não foi ampliada além disso.",
+ "severity_counts": {
+  "Crítica": 0,
+  "Alta": 7,
+  "Média": 16,
+  "Baixa": 2
+ },
+ "confirmation_counts": {
+  "confirmado_por_reproducao": 17,
+  "confirmado_por_inspecao_documental": 8
+ },
+ "findings": [
+  {
+   "id": "F-01",
+   "severity": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Resumo do líder omite contraexemplo (TBLE3 −12%) e distorce rótulo (Taesa como distribuidora); handoff repete e acrescenta fato sem rastro",
+   "mission": "M5",
+   "requirements": [
+    "REQ-012",
+    "REQ-009"
+   ],
+   "root_cause_group": "RC-1 texto livre do líder sem controle",
+   "summary": "A revision_note da rodada 2 (H07 log seq 52) e PROJECT-STATE.md afirmam quedas 'quase nulas em distribuidoras' e 'concentradas em geradoras/transmissoras', omitindo TBLE3 −12,0% (geradora sem concessões vincendas segundo a rodada 1) e LIGT3/CLSC4/COCE5 −6%; PROJECT-STATE afirma que a entrega do revisor foi 'recusada uma vez', sem evento rejected em status.jsonl.",
+   "evidence": [
+    "evidence/m5/trace_h07_round2.json#summary_mentions",
+    "GCI:docs/descoberta/hipoteses/log/H07.jsonl#seq52",
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/deliverable.json#claims[0]",
+    "GCI:docs/PROJECT-STATE.md:15",
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/status.jsonl",
+    "GCI:docs/descoberta/hipoteses/H07.md:904",
+    "GCI:src/catalyst/research/investigation_task_io.py:256"
+   ],
+   "material_impact_path": "A frase 'coerente com o mecanismo' chega ao handoff e ao próximo líder; o contraexemplo só existe no log",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Alta",
+    "errata": "Correcao (revisao independente): o contraexemplo TBLE3 −12,0% ESTA na ficha (H07.md evidence_for[5]) e no Radar, nao 'so no log'; a nao exposicao da Tractebel e 'nao verificada' na rodada 1, logo TBLE3 e contraexemplo candidato, nao comprovado; a nota de rodada preserva alternativas contrarias e 'Revisor recomenda inconclusive'. A afirmacao 'recusada uma vez' do PROJECT-STATE e INVERIFICAVEL por desenho (submit_task nao grava nada ao recusar), nao 'sem rastro' por omissao do lider. Permanece: o summary omite TBLE3 e rotula Taesa como distribuidora; o PROJECT-STATE repete a frase."
+   }
+  },
+  {
+   "id": "F-02",
+   "severity": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Projeções (ficha, Radar) descartam 81% das claims da rodada, o corpo das notas e 6 de 9 campos de exposição",
+   "mission": "M5",
+   "requirements": [
+    "REQ-010",
+    "REQ-009"
+   ],
+   "root_cause_group": "RC-2 projeção com perda sem rótulo de incompletude",
+   "summary": "26 de 32 claims da rodada 2 são neutral e não aparecem em H07.md; o Radar expõe a nota investigation_round com note=null (o campo real é summary); refutation_tests, conflicts, human_review_reasons, recommended_state ausentes do dossiê JSON; companies[] perde exposure_basis, source_url_or_ref, source_public_date, evidence_class, exposed_assets, tickers.",
+   "evidence": [
+    "evidence/m5/trace_h07_round2.json",
+    "GCI:src/catalyst/research/hypothesis_dossier.py:apply_to_card",
+    "GCI:src/catalyst/radar/queries.py:dossier",
+    "GCI:src/catalyst/research/investigation_reconcile.py:plan_reconciliation",
+    "evidence/m5/trace_h07_round2.json#radar_dossier"
+   ],
+   "material_impact_path": "Operador no Radar vê 'media' e 15 evidências; não vê recomendação inconclusive, testes de refutação nem a base das exposições",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Alta",
+    "errata": "Correcao: o Radar NAO descarta claims (dossier devolve for 6 / against 9 / neutral 26 = 41 evidencias, inclusive TBLE3); o descarte de 81% e da FICHA .md. A perda material no Radar e o sinal needs_human_review, recommended_states (inconclusive), conflicts, refutation_tests e o summary da rodada (note=null), mais os 6 campos de companies[]."
+   }
+  },
+  {
+   "id": "F-03",
+   "severity": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Flag post_event não sobrevive à reconciliação: alegação de imprensa pós-evento vira evidence_for",
+   "mission": "M5/M7",
+   "requirements": [
+    "REQ-008",
+    "REQ-009"
+   ],
+   "root_cause_group": "RC-2 projeção com perda sem rótulo de incompletude",
+   "summary": "plan_reconciliation gera payload sem post_event; a claim c5 da fundamentalista (post_event=true, public_timestamp=null) entra na ficha como evidência a favor (allegation), sem o marcador que o contrato diz 'nunca prova exposição ex ante'.",
+   "evidence": [
+    "evidence/m7_isolation_and_gate_probes.txt",
+    "GCI:docs/descoberta/hipoteses/H07.md#evidence_for[4]"
+   ],
+   "material_impact_path": "Evidência ex-post indistinguível de ex-ante na ficha e no Radar",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Alta",
+    "errata": "Correcao: neste caso o texto da evidencia na ficha conserva a ressalva ('posterior ao as_of e nao prova exposicao ex ante') e a classe allegation; a perda e do marcador ESTRUTURADO post_event, que nenhum consumidor usa hoje. Risco de desenho, sem impacto demonstrado."
+   }
+  },
+  {
+   "id": "F-04",
+   "severity": "Média",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Snapshot 'congelado' do revisor transporta conclusões da rodada 1 (date_note do gatilho, inferência do líder, confiança rebaixada)",
+   "mission": "M7",
+   "requirements": [
+    "REQ-007"
+   ],
+   "root_cause_group": "RC-3 independência formal do revisor",
+   "summary": "REVIEWER_STRIPPED_FIELDS remove só dossier/revisions/evidence_*; triggers[0].date_note cita 'dossiê H07, dados_eventos.json'; inference.alternative_explanations é do líder; qualitative_confidence=media e state=investigating são pós-rodada 1. O revisor citou o snapshot (claim c9 'segundo a ficha').",
+   "evidence": [
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/card_snapshot.json",
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/deliverable.json#claims[9]",
+    "GCI:src/catalyst/research/investigation_task.py:REVIEWER_STRIPPED_FIELDS"
+   ],
+   "material_impact_path": "Revisor ancorado nas conclusões que deveria refutar",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Alta",
+    "errata": "Correcao: a limitacao esta parcialmente declarada no PROJECT-STATE ('o snapshot do revisor ainda inclui gaps e next_step_d3'); a ancoragem do revisor nao esta demonstrada (ele contestou a ficha, deu 2 claims against e recomendou inconclusive). Falha de desenho de REQ-007 sem impacto mostrado."
+   }
+  },
+  {
+   "id": "F-05",
+   "severity": "Média",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Nenhuma identidade estrutural de modelo; mesma família (Claude) em especialistas, revisor, líder, revisores de PR e neste auditor",
+   "mission": "M7",
+   "requirements": [
+    "REQ-013",
+    "REQ-047",
+    "REQ-048"
+   ],
+   "root_cause_group": "RC-4 identidade de modelo",
+   "summary": "status.jsonl registra só actor textual (*-sonnet-r2); as 5 revisões independentes dos PRs declaram 'Claude Opus 5.5'; a norma do hub OPS-REVIEWER-001 e a revisão cruzada de outro fornecedor não são verificáveis.",
+   "evidence": [
+    "GCI:docs/descoberta/tarefas/*/status.jsonl",
+    "gci-pr-208:docs/*/revisao_independente_*.md",
+    "knowledge-hub:bundles/agent-operations/ops-001/norm-001-revisor-nao-pequeno.md",
+    "knowledge-hub:bundles/agent-operations/ops-004-catalogo-de-modelos.md"
+   ],
+   "material_impact_path": "Erro compartilhado de modelo não detectável",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Alta",
+    "errata": "Correcao factual: das seis revisoes de PR, quatro declaram 'Claude Opus 5.5' (#206, #207, #211, #209); a de #212 diz 'Claude (Opus)' e a de #208 'Claude (sessao independente)'. As normas do hub sao draft e nao exigiveis pelo proprio validador; Sonnet e 'carro-chefe' no catalogo do hub, logo nao ha indicio de violacao de OPS-REVIEWER-001, so impossibilidade de verificar. O caminho concreto de autorrevisao e F-13."
+   }
+  },
+  {
+   "id": "F-06",
+   "severity": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Isolamento do revisor é por nome de caminho e hash exato das entregas de tarefas/; cópia +1 byte, nota do líder renomeada e entrega da rodada 1 passam",
+   "mission": "M7",
+   "requirements": [
+    "REQ-007"
+   ],
+   "root_cause_group": "RC-3 independência formal do revisor",
+   "summary": "create_task recusou só a cópia byte a byte de tarefas/H07-dados-*/deliverable.json; aceitou a mesma cópia com um byte a mais, contexto.md do líder e a cópia de dossies/H07/dados_eventos.json.",
+   "evidence": [
+    "evidence/m7_isolation_and_gate_probes.txt",
+    "evidence/m7/isolation_probes.out"
+   ],
+   "material_impact_path": "Contaminação do revisor sem erro",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Média",
+    "errata": "Sondas arquivadas em evidence/m7/isolation_probes.out (quatro materiais nomeados)."
+   }
+  },
+  {
+   "id": "F-07",
+   "severity": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Contradição entre evidência nova e facts.episodes da ficha não é detectada",
+   "mission": "M5/M7",
+   "requirements": [
+    "REQ-011"
+   ],
+   "root_cause_group": "RC-5 detecção de conflito só entre entregas",
+   "summary": "Claim against do revisor ('ELET3 sem queda após 14/09; 15–31/10 −6,5%', as_of 2012-10-31) contradiz facts.episodes (ELET3 2012-10-18→12-17, peak −48,5%); _conflicts só compara for×against por subject/Jaccard.",
+   "evidence": [
+    "GCI:docs/descoberta/hipoteses/H07.md#facts.episodes",
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/deliverable.json#claims[6]",
+    "GCI:src/catalyst/research/investigation_reconcile.py:_conflicts",
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/task.json#as_of"
+   ],
+   "material_impact_path": "Evidência contra entra sem conflito registrado; revisão humana não é acionada por isso",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Alta",
+    "errata": "Correcao de redacao: nao e contradicao factual direta, e conflito de ESCOPO TEMPORAL nao sinalizado: a claim do revisor vai ate as_of=2012-10-31 (escolhido pelo lider na tarefa) e o episodio/claim da ficha dependem de nov–dez/2012. O desenho da tarefa e parte da causa. Severidade mantida: conclusao contraria ao nucleo da ficha entra sem alerta."
+   }
+  },
+  {
+   "id": "F-08",
+   "severity": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Guardas de probabilidade são lexicais e calibration_ref não é resolvido (decision_gate, trigger)",
+   "mission": "M4",
+   "requirements": [
+    "REQ-002"
+   ],
+   "root_cause_group": "RC-6 proibição por léxico",
+   "summary": "scenario_probability=0,62 aceito com method 'pontuação do agente Sonnet...' e calibration_ref 'calibracao_v0'; aceito com calibration_ref inexistente; '60% de chance' aceito em note; trigger scenario_probability=0,6 aceito com source 'estimativa do agente Sonnet'.",
+   "evidence": [
+    "missions/M4-quant-audit.md#2",
+    "GCI:src/catalyst/research/decision_gate.py:_check_dimension",
+    "GCI:src/catalyst/research/trigger_ontology.py:160",
+    "evidence/m4/probability_guard_probes.out"
+   ],
+   "material_impact_path": "Probabilidade subjetiva com aparência de dado em decisão humana e ficha",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Alta",
+    "errata": "Nota: nenhuma ficha real tem scenario_probability numerico e nenhuma decisao de H07 foi registrada; o risco e de capacidade (guarda cai com grafia trivial). Sondas arquivadas em evidence/m4/probability_guard_probes.out."
+   }
+  },
+  {
+   "id": "F-09",
+   "severity": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Filtro de probabilidade dos papéis (PR #209) só pega '%' junto de 'probab/chance'",
+   "mission": "M4",
+   "requirements": [
+    "REQ-043"
+   ],
+   "root_cause_group": "RC-6 proibição por léxico",
+   "summary": "Passam: 'probabilidade de 0,6', '6 chances em 10', 'odds de 3 para 2', '(p=0,6)', '60% dos cenários', '60 por cento'.",
+   "evidence": [
+    "missions/M4-quant-audit.md#2"
+   ],
+   "material_impact_path": "Percentuais narrativos chegam ao gate humano e aos registros HIG"
+  },
+  {
+   "id": "F-10",
+   "severity": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Identidade de série é uma string do chamador; troca de série homônima vira 'revisão' silenciosa",
+   "mission": "M2",
+   "requirements": [
+    "REQ-025"
+   ],
+   "root_cause_group": "RC-7 identidade estatística ausente",
+   "summary": "Captura RatingDog sob o mesmo series_id da NBS → revised=2, revision_of apontando para a NBS; as_of devolve 51,8 (S&P) como 'valor atual' da série que começou NBS; dataset_id/source_url não entram na identidade.",
+   "evidence": [
+    "missions/M2-series-audit.md#2.2",
+    "gci-pr-208:src/catalyst/sources/series_store.py",
+    "evidence/m2/store_homonym_probe.out"
+   ],
+   "material_impact_path": "Valor de outra instituição passa por revisão do dado oficial",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Alta",
+    "errata": "Nota: o rastro (dataset_id/source_url) permanece na observacao, por isso nao e Critica; codigo so em PR. Sonda arquivada em evidence/m2/store_homonym_probe.out."
+   }
+  },
+  {
+   "id": "F-11",
+   "severity": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Surpresa inoperante via store: record_capture grava sempre available_precision=upper_bound e surprise() exige o contrário",
+   "mission": "M2",
+   "requirements": [
+    "REQ-026",
+    "REQ-027"
+   ],
+   "root_cause_group": "RC-8 fail-closed inalcançável",
+   "summary": "catalyst series surprise devolve not_assessable para qualquer dado carregado pelo store; só SeriesObservation construída à mão nos testes é assessed.",
+   "evidence": [
+    "gci-pr-208:src/catalyst/sources/series_store.py:234",
+    "gci-pr-208:src/catalyst/sources/series_consensus.py:90"
+   ],
+   "material_impact_path": "Capacidade anunciada no PR #161 não existe de ponta a ponta; honesto (null), mas enganoso para quem lê o PR"
+  },
+  {
+   "id": "F-12",
+   "severity": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Auditor de fidelidade (#211) deixa passar 8 de 11 defeitos novos com auditor semântico leniente",
+   "mission": "M5",
+   "requirements": [
+    "REQ-031"
+   ],
+   "root_cause_group": "RC-9 validadores determinísticos cobrem só número/período/data",
+   "summary": "Passam pelo gate: entidade trocada, dupla negação, direção da surpresa invertida, 1,106→1.106 milhão, 50,0%→50,0 pontos, ressalva 'exceto' removida, NBS rotulado RatingDog, qualificador 'em todas as unidades'. Barrados: base 1T26→2T25, número novo 0,4. Falso positivo: data ISO.",
+   "evidence": [
+    "fixtures/m5/fidelity_211_probes.json",
+    "evidence/m5/fidelity_211_probes.rerun.out"
+   ],
+   "material_impact_path": "Artefato materialmente errado recebe pass e publication_envelope",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Alta",
+    "errata": "Correcao de redacao: o dado mais forte nao e '8 de 11 com auditor leniente' (que depende de um stub que descarta tudo), e sim que em F2, F3, F4, F6 e F11 a camada deterministica nao gera NENHUMA suspeita pertinente, e F6 (x1000 por separador pt-BR) e falha da camada numerica que o PR declara cobrir; em F7 e F10 a unica suspeita levantada (negacao_perdida) nao e a do defeito. Condicao de reclassificacao: F-12 + F-13 cumprem a rubrica de Critica se a pilha for mesclada com auditor semantico da mesma familia."
+   }
+  },
+  {
+   "id": "F-13",
+   "severity": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Independência por família de modelo contornável por grafia e cega a fornecedor",
+   "mission": "M7",
+   "requirements": [
+    "REQ-021",
+    "REQ-032",
+    "REQ-013"
+   ],
+   "root_cause_group": "RC-4 identidade de modelo",
+   "summary": "normalize_model_id('Claude Sonnet 4.5')='claudesonnet4' ≠ 'claudesonnet'; D4 aceita; 'claude-opus-4-1' aceito como independente de 'claude-sonnet-4-5'. Mesmo normalizador em #206, #211, #208.",
+   "evidence": [
+    "evidence/m7_isolation_and_gate_probes.txt",
+    "gci-pr-208:src/catalyst/research/model_identity.py",
+    "evidence/m7/iec_identity_probes.out"
+   ],
+   "material_impact_path": "Autorrevisão em D4 com rótulo diferente",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Alta",
+    "errata": "Nota: 'cega a fornecedor' e limite declarado no modulo (tabela de familias fica para #204); o bypass por grafia NAO e declarado e contradiz o fechamento N3 da revisao do PR #211. Sonda arquivada em evidence/m7/iec_identity_probes.out."
+   }
+  },
+  {
+   "id": "F-14",
+   "severity": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "IEC: autoridades são strings não autenticadas; ack de mesmo modelo por 'orquestrador'/'humano*' em D1–D3; ponteiro de outra claim aceito como prova",
+   "mission": "M7",
+   "requirements": [
+    "REQ-019",
+    "REQ-020",
+    "REQ-021"
+   ],
+   "root_cause_group": "RC-10 trust model de escritor honesto",
+   "summary": "same_model_acks aceitos com autorizado_por 'orquestrador', 'humano', 'humano-rudson'; exclusão revisada por 'gci-lider (modo humano)' com revisor_papel humano aceita; pass em FONTE-LIDA com evidência de outra claim aceito. Reexecucao: com ack 'orquestrador' o run D3 fecha ok (ver evidence/m7/iec_identity_probes.out).",
+   "evidence": [
+    "evidence/m7_isolation_and_gate_probes.txt",
+    "evidence/m7/iec_identity_probes.out"
+   ],
+   "material_impact_path": "Cobertura formal sem revisor distinto",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Média",
+    "errata": "Correcao: o ack por 'orquestrador'/'humano*' e comportamento PROJETADO (ACK_AUTHORITIES), isto e, trust model declarado, nao bypass; a sonda mostra 'missao aceita' mas run status=blocked (a cobertura de ponta a ponta sem revisor distinto NAO esta demonstrada). As sondas de exclusao por string e de ponteiro de outra claim estao agora arquivadas em evidence/m7/iec_identity_probes.out. ATUALIZACAO (reexecucao arquivada): com autorizado_por='orquestrador' o run D3 fechou status=ok com revisor = produtor em todos os checks (nenhuma segunda opiniao sorteada para esse hash de missao); com 'humano-rudson' fechou blocked. Logo a cobertura formal completa sem revisor distinto E alcancavel em D3 por configuracao."
+   }
+  },
+  {
+   "id": "F-15",
+   "severity": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Documento por seções (#212): retract_claim + append_claim reformulada devolve claim 'aprovada' sem a contraevidência",
+   "mission": "M6",
+   "requirements": [
+    "REQ-036",
+    "REQ-024"
+   ],
+   "root_cause_group": "RC-11 contestação ligada ao id, não ao conteúdo",
+   "summary": "replace_claim preserva 'contestada' (B1 fechado), mas retratar e reinserir o mesmo texto com novo board_claim_id gera 'aprovada'; índice mostra contestadas=0; a contrária fica só no tombstone.",
+   "evidence": [
+    "evidence/m6_sectioned_doc_probes.txt",
+    "evidence/m6/sectioned_doc_probes.out",
+    "gci-pr-208:src/catalyst/research/evidence_board.py:205"
+   ],
+   "material_impact_path": "#208 decide sobre 'aprovada' sem ver a contrária",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Alta",
+    "errata": "Reforco (revisao independente): o AUTOR da claim pode retrata-la sem envolvimento do revisor que a contestou; no board real o id e derivado do conteudo (claim_id_native), bastando mudar uma palavra ou o tipo_epistemico; o documento nao confere se o texto da claim bate com o da claim do board. A view mostra a retratada ao lado (algum rastro resta)."
+   }
+  },
+  {
+   "id": "F-16",
+   "severity": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Sem require_fidelity_gate, 'aprovada' não distingue claim auditada de não auditada",
+   "mission": "M6",
+   "requirements": [
+    "REQ-037"
+   ],
+   "root_cause_group": "RC-11 contestação ligada ao id, não ao conteúdo",
+   "summary": "Documento padrão grava fidelity_gate=nao_executado em todo patch e as claims ficam 'aprovada'; a view só traz contador global.",
+   "evidence": [
+    "evidence/m6_sectioned_doc_probes.txt"
+   ],
+   "material_impact_path": "Consolidação sem auditoria de fidelidade indistinguível da auditada"
+  },
+  {
+   "id": "F-17",
+   "severity": "Média",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Capacidades centrais só especificadas: exposição/causalidade (#178), regimes/correlações (#183/#195/#197), cenários/probabilidades/calibração (#219–#222), biblioteca econômica (hub #26/#27); pilha de PRs não mesclada",
+   "mission": "M1/M4",
+   "requirements": [
+    "REQ-039",
+    "REQ-041",
+    "REQ-042",
+    "REQ-043",
+    "REQ-045",
+    "REQ-046",
+    "REQ-047"
+   ],
+   "root_cause_group": "RC-12 lacuna de implementação",
+   "summary": "Todas as 16 issues de referência são de 2026-11-03; 7 requisitos não têm código em main nem em PR; 23 só em PR 'DO NOT MERGE YET'.",
+   "evidence": [
+    "requirements/requirements-matrix.json",
+    "manifest/audit-manifest.json#branches_and_prs_in_scope"
+   ],
+   "material_impact_path": "Qualquer afirmação dessas classes hoje é texto de modelo"
+  },
+  {
+   "id": "F-18",
+   "severity": "Média",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Caso frigoríficos (mai/2026): homônimo de evento (nota MAPA de mar/2025 hospedada sob 2026/05), sem identidade de evento além de origin_id/similaridade em 3 dias, sem decomposição ocorrência/exposição/surpresa/reação/causa",
+   "mission": "M3",
+   "requirements": [
+    "REQ-039",
+    "REQ-040"
+   ],
+   "root_cause_group": "RC-13 identidade de evento e causalidade",
+   "summary": "PDF 'Esclarecimento sobre a suspensão de três plantas' em static.poder360.com.br/2026/05/ é a nota de 04/03/2025 (outro trio, outro motivo); no GCI, um evento sem ficha gera no_match + discovery_suggestion vazia e o dedupe só agrupa por origin_id ou similaridade ≥0,85 em janela de 3 dias; não há registro de causas concorrentes nem exposição por empresa (Minerva/BEEF3 não é parte do evento).",
+   "evidence": [
+    "evidence/m3-sources/sources.json",
+    "evidence/m3-sources/mapa_esclarecimento_suspensao_3_plantas_china_2026-05.pdf",
+    "evidence/m3_matcher_probe.txt",
+    "missions/M3-causality-audit.md",
+    "evidence/m3-sources/sources.json#SRC-M3-01"
+   ],
+   "material_impact_path": "Um resumidor que cite o PDF atribui plantas e motivo errados ao evento de 2026; nada no GCI detecta",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Alta",
+    "errata": "Correcao factual: o PDF do MAPA (2025) NAO nomeia as plantas; os nomes do trio de 2025 vem do Poder360 (SRC-M3-05). O impacto ('um resumidor que cite o PDF...') e hipotetico: nenhuma ficha, entrega ou dossie do GCI trata o caso; o matcher da no_match. Lacuna de capacidade da mesma classe de F-17, nao perda demonstrada."
+   }
+  },
+  {
+   "id": "F-19",
+   "severity": "Média",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Disponibilidade por público (NBS zh 04-30 vs en 05-01/05-06) e consenso por provedor (51,4 vs 51,6) não têm lugar no modelo; primária RatingDog bloqueada",
+   "mission": "M2",
+   "requirements": [
+    "REQ-050",
+    "REQ-026"
+   ],
+   "root_cause_group": "RC-7 identidade estatística ausente",
+   "summary": "Issue #194 usa 51,4 e 'surpresa +0,4'; Reuters poll dá 51,6 e +0,2; o store não representa idioma/público da disponibilidade; S&P Global 403.",
+   "evidence": [
+    "evidence/m2-sources/sources.json"
+   ],
+   "material_impact_path": "Surpresa depende do provedor nomeado; sem nomeá-lo, o sinal muda"
+  },
+  {
+   "id": "F-20",
+   "severity": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "gate_check(validation_ready) fica ready só com atestados booleanos, apesar de avisos de revisão humana pendente e evidências não verificadas",
+   "mission": "M4/M7",
+   "requirements": [
+    "REQ-015"
+   ],
+   "root_cause_group": "RC-10 trust model de escritor honesto",
+   "summary": "ready=True com warnings: needs_human_review, revisor recomendou inconclusive, 41 evidências não verificadas.",
+   "evidence": [
+    "evidence/m7_isolation_and_gate_probes.txt"
+   ],
+   "material_impact_path": "Promoção a validation_ready sem reconhecimento dos avisos"
+  },
+  {
+   "id": "F-21",
+   "severity": "Média",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Reação de preço de ativos selecionados pelo resultado entra na ficha como fact a favor",
+   "mission": "M7/M5",
+   "requirements": [
+    "REQ-009"
+   ],
+   "root_cause_group": "RC-5 detecção de conflito só entre entregas",
+   "summary": "Revisor recebeu CSV de fechamentos do líder; claim c0 (quedas de CESP6/TRPL4...) é fact for; nenhuma regra marca circularidade.",
+   "evidence": [
+    "GCI:docs/descoberta/hipoteses/H07.md#evidence_for[5]",
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/task.json#materials"
+   ],
+   "material_impact_path": "Confirmação circular",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Média",
+    "errata": "Correcao: 'nenhuma regra marca circularidade' e correto quanto a codigo, mas a propria nota do lider (seq 52, alternative_explanations) registra 'Selecao retrospectiva... e circular'; a circularidade esta reconhecida em texto e nao em estrutura."
+   }
+  },
+  {
+   "id": "F-22",
+   "severity": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Log do dossiê: truncamento da cauda e reescrita com recálculo da cadeia indetectáveis; head não fixado em artefato versionado",
+   "mission": "M6",
+   "requirements": [
+    "REQ-006"
+   ],
+   "root_cause_group": "RC-14 âncora externa ausente",
+   "summary": "Apagar seq 42–52 ou inverter stance e recalcular hashes passa no replay; PROJECT-STATE não registra o head c2476aef….",
+   "evidence": [
+    "evidence/m6_dossier_log_tamper.txt",
+    "GCI:docs/descoberta/decisoes/H07_gate_check.json",
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/status.jsonl"
+   ],
+   "material_impact_path": "Perda silenciosa de rodada inteira",
+   "revision": {
+    "version": 2,
+    "at": "2026-11-03T19:30:00Z",
+    "source": "final/independent-review.md",
+    "severity_before": "Média",
+    "errata": "Correcao factual: o head c2476aef… ESTA fixado em docs/descoberta/decisoes/H07_gate_check.json (evidence_version) e no data.note_entry_id dos tres status.jsonl das tarefas. A lacuna real: nenhum codigo cruza essas ancoras com o log, e elas vivem no mesmo repositorio. Truncamento e rechain continuam indetectaveis pelo replay."
+   }
+  },
+  {
+   "id": "F-23",
+   "severity": "Baixa",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Auditor de fidelidade reprova formato de data ISO equivalente (falso positivo documentado)",
+   "mission": "M5",
+   "requirements": [
+    "REQ-031"
+   ],
+   "root_cause_group": "RC-9 validadores determinísticos cobrem só número/período/data",
+   "summary": "F9: 30/06/2026 → 2026-06-30 gera data_ausente_no_original.",
+   "evidence": [
+    "fixtures/m5/fidelity_211_probes.json"
+   ],
+   "material_impact_path": "Atrito; sem impacto material"
+  },
+  {
+   "id": "F-24",
+   "severity": "Média",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Orçamento de tarefa declarativo, não medido; rodada de 3 tarefas em ≤3 min",
+   "mission": "M7",
+   "requirements": [
+    "REQ-014"
+   ],
+   "root_cause_group": "RC-15 observabilidade",
+   "summary": "Nenhuma contagem de chamadas/tokens; budget só gera deadline por minutos.",
+   "evidence": [
+    "GCI:docs/descoberta/tarefas/*/status.jsonl"
+   ],
+   "material_impact_path": "Impossível auditar esforço do revisor"
+  },
+  {
+   "id": "F-25",
+   "severity": "Baixa",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Knowledge Hub sem bundle econômico; normas de revisão todas draft e não ligadas ao GCI",
+   "mission": "M1",
+   "requirements": [
+    "REQ-047",
+    "REQ-048"
+   ],
+   "root_cause_group": "RC-12 lacuna de implementação",
+   "summary": "Grep vazio para PMI/frigoríficos/economics; validate hub avisa 'draft mandatory candidate is not enforceable'.",
+   "evidence": [
+    "missions/M1-inventory.md#2.3"
+   ],
+   "material_impact_path": "Nenhum conhecimento econômico reutilizável está disponível ao GCI"
+  }
+ ],
+ "register_version": 2,
+ "reclassification_condition": "F-12 combinado com F-13 passa a Critica se a pilha de PRs #206-#212 for mesclada com um auditor semantico da mesma familia do compressor (revisao independente, secao 6)."
+}

@@ -1,0 +1,103 @@
+[
+ {
+  "id": "SRC-M3-01",
+  "event": "MAPA nota oficial (04/03/2025): suspensao temporaria de tres frigorificos brasileiros pela GACC apos video-auditorias; 126 plantas habilitadas. O PDF NAO nomeia as plantas.",
+  "document_date": "Publicado em 04/03/2025 18h12",
+  "hosted_url": "https://static.poder360.com.br/2026/05/Esclarecimento-sobre-a-suspensao-de-tres-plantas-frigorificas-para-a-China-%E2%80%94-Ministerio-da-Agricultura-e-Pecuaria.pdf",
+  "original_url": "https://www.gov.br/agricultura/pt-br/assuntos/noticias/esclarecimento-sobre-a-suspensao-de-tres-plantas-frigorificas-para-a-china",
+  "local_copy": "evidence/m3-sources/mapa_esclarecimento_suspensao_3_plantas_china_2026-05.pdf",
+  "pdf_sha256": "bcd7dc838d7f260ba0bf00e460539be6f88fe496691963a83b3a91310d2eb343",
+  "pdf_print_date": "20/05/2026 15:13 (rodape); CreationDate 2026-05-20T18:13:43Z",
+  "retrieved_at": "2026-11-03",
+  "excerpt": "recebeu da Administracao-Geral de Aduanas da China (GACC) o comunicado da suspensao temporaria da importacao de carne bovina de tres frigorificos brasileiros. A GACC realizou video auditorias ... Hoje, o Brasil tem 126 plantas frigorificas habilitadas",
+  "note": "ARMADILHA DE HOMONIMO: documento de MARCO/2025 hospedado sob caminho 2026/05 e impresso em 20/05/2026; motivo (video-auditoria) distinto do de maio/2026 (substancia). Os nomes das plantas de 2025 (JBS Mozarlandia, Frisa Nanuque, Bon-Mart Presidente Prudente) vem de SRC-M3-05 (Poder360, 20/05/2026), nao deste PDF. Correcao apos revisao independente."
+ },
+ {
+  "id": "SRC-M3-02",
+  "event": "MOFCOM confirma salvaguarda: vigencia 2026-01-01 a 2028-12-31; cota Brasil 2026 = 1,106 milhao t; tarifa adicional 55% acima da cota (12% dentro -> 67%)",
+  "url": "https://www.theagribiz.com/?p=316782",
+  "publisher": "The AgriBiz",
+  "published_at": "31/12/2025 12:41",
+  "retrieved_at": "2026-11-03 (WebFetch)",
+  "excerpt": "comecara em 1,106 milhao de toneladas em 2026 ... Exportar fora da cota sera inviavel"
+ },
+ {
+  "id": "SRC-M3-03",
+  "event": "Scot Consultoria/Noticias Agricolas: salvaguarda, tarifa adicional 55,0%, vigencia 01/01/2026-31/12/2028",
+  "url": "https://www.noticiasagricolas.com.br/noticia/413296",
+  "published_at": "02/01/2026 16:44",
+  "retrieved_at": "2026-11-03 (WebFetch)",
+  "excerpt": "uma tarifa adicional de 55,0% sobre volumes que ultrapassarem essas cotas ... entraram em vigor em 1o de janeiro de 2026 ... ate 31 de dezembro de 2028"
+ },
+ {
+  "id": "SRC-M3-04",
+  "event": "China suspende Pantaneira/Frigosul (Varzea Grande-MT) por acetato de medroxiprogesterona",
+  "url": "https://mercadoeconsumo.com.br/16/04/2026/economia/china-suspende-importacoes-de-frigorifico-de-mato-grosso-apos-detectar-substancia-proibida/",
+  "published_at": "16/04/2026",
+  "retrieved_at": "2026-11-03 (snippet; pagina nao aberta)",
+  "access": "nao aberto"
+ },
+ {
+  "id": "SRC-M3-05",
+  "event": "MAPA anuncia (19/05/2026) retomada das 3 plantas suspensas desde marco/2025",
+  "url": "https://www.poder360.com.br/poder-agro/china-retoma-compras-de-carne-de-3-frigorificos-brasileiros/",
+  "publisher": "Poder360",
+  "published_at": "20/05/2026",
+  "retrieved_at": "2026-11-03 (WebFetch)",
+  "excerpt": "3a feira (19.mai.2026) ... Mapa anunciou a retomada ... suspensas desde marco de 2025; nota Abiec de 21/05 descreve suspensao de OUTRAS tres plantas: JBS Pontes e Lacerda (MT), PrimaFoods Araguari (MG), Frialto Matupa (MT)"
+ },
+ {
+  "id": "SRC-M3-06",
+  "event": "GACC suspende (vigencia 20/05/2026, Ciferquery) JBS Pontes e Lacerda (SIF 51), PrimaFoods Araguari (SIF 177), Vale Grande/Frialto Matupa (SIF 4490) por acetato de medroxiprogesterona; MAPA notificado em 20/05",
+  "url": "https://mercadoeconsumo.com.br/21/05/2026/economia/china-suspende-importacoes-de-3-frigorificos-brasileiros-por-substancia-vetada/",
+  "publisher": "Mercado&Consumo",
+  "published_at": "21/05/2026",
+  "retrieved_at": "2026-11-03 (WebFetch)",
+  "excerpt": "JBS de Pontes e Lacerda (MT - SIF 51) ... PrimaFoods de Araguari (MG - SIF 177) ... Vale Grande (Frialto) de Matupa (MT - SIF 4490) ... acetato de medroxiprogesterona",
+  "note": "nenhuma mencao a preco de acao ou ticker"
+ },
+ {
+  "id": "SRC-M3-07",
+  "event": "Agencia Brasil via Agrolink: suspensao temporaria/preventiva (Abiec); Frialto diz que Brasil se aproxima do limite da cota 2026",
+  "url": "https://www.agrolink.com.br/noticias/china-suspende-tres-frigorificos-brasileiros-apos-irregularidades_514945.html",
+  "published_at": "25/05/2026 15h24",
+  "retrieved_at": "2026-11-03 (WebFetch)",
+  "excerpt": "irregularidades sanitarias em cargas de carne bovina ... preventiva e temporaria ... Brasil se aproxima do limite da cota de 2026",
+  "note": "nenhuma mencao a Minerva/BEEF3 ou precos"
+ },
+ {
+  "id": "SRC-M3-08",
+  "event": "Cota 2026: 80% em 21/07/2026; 90% em 10/08/2026 (Mofcom)",
+  "url": "https://bpmoney.com.br/agro/carne-bovina-brasil-90-cota-anual-exportacao-china/",
+  "publisher": "BP Money",
+  "published_at": "12/08/2026 16:25",
+  "retrieved_at": "2026-11-03 (WebFetch)",
+  "excerpt": "1,106 milhao de toneladas ... 90% ... alcancado na segunda-feira (10) ... 80% em 21 de julho ... tarifa adicional de 55% sobre a aliquota vigente ... a partir do terceiro dia"
+ },
+ {
+  "id": "SRC-M3-09",
+  "event": "Alegacao de que 50% da cota teria sido atingida em maio e abates para a China encerrariam entre 15/05 e 15/06",
+  "url": "(snippet de busca; origem nao identificada entre as paginas abertas)",
+  "retrieved_at": "2026-11-03",
+  "access": "NAO VERIFICADO",
+  "note": "conflita com SRC-M3-08; tratado como nao_verificado"
+ },
+ {
+  "id": "SRC-M3-10",
+  "event": "Cotacoes de BEEF3/JBSS3/MBRF em maio/2026",
+  "url": null,
+  "access": "BLOQUEADO: nenhuma fonte de precos licenciada no ambiente de auditoria; COTAHIST 2026 do GCI reside no banco do operador (nao acessado)"
+ },
+ {
+  "id": "SRC-M3-11",
+  "event": "canalrural 'Brasil atinge 90% da cota'",
+  "url": "https://www.canalrural.com.br/pecuaria/brasil-atinge-90-da-cota-anual-de-carne-bovina-para-a-china/",
+  "access": "BLOQUEADO: HTTP 403"
+ },
+ {
+  "id": "SRC-M3-12",
+  "event": "band.com.br salvaguarda 2026",
+  "url": "https://www.band.com.br/agro/noticias/salvaguarda-chinesa-para-carne-bovina-impoe-desafios-ao-setor-em-2026-202601081839",
+  "access": "BLOQUEADO: HTTP 403"
+ }
+]

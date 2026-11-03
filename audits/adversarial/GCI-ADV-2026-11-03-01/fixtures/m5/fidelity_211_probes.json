@@ -1,0 +1,792 @@
+{
+ "fixture": {
+  "_aviso": "FICTICIO (sonda da auditoria GCI-ADV-2026-11-03-01)",
+  "tema": "sondas_auditoria",
+  "documents": [
+   {
+    "uri": "https://exemplo.invalid/audit/relatorio.txt",
+    "paragraphs": [
+     "A receita liquida do grupo Alfa cresceu 12% no 2T26 frente ao 1T26.",
+     "O PMI industrial RatingDog da China ficou em 51,8 em maio de 2026, ante 52,2 em abril de 2026; o consenso Reuters era 51,6.",
+     "A cota de carne bovina do Brasil para a China e de 1,106 milhao de toneladas, com tarifa adicional de 55% acima da cota.",
+     "Nao e possivel afirmar que nao houve queda de volume na controlada Beta no 2T26.",
+     "O PMI oficial NBS ficou em 50,0% em maio de 2026, recuo de 0,3 ponto percentual frente a abril de 2026.",
+     "A margem caiu 3 pontos percentuais no 2T26, exceto na unidade Gama, onde subiu 1 ponto percentual.",
+     "O contrato foi assinado em 30/06/2026.",
+     "Paragrafo de contexto sem dado decisivo."
+    ]
+   }
+  ],
+  "claims": [
+   {
+    "ref": "c1",
+    "texto": "A receita liquida do grupo Alfa cresceu 12% no 2T26 frente ao 1T26",
+    "tipo": "fato_primario",
+    "evidencias": [
+     {
+      "loc": {
+       "doc": 0,
+       "p": 1
+      },
+      "quote": "A receita liquida do grupo Alfa cresceu 12% no 2T26 frente ao 1T26",
+      "pol": "favoravel"
+     }
+    ]
+   },
+   {
+    "ref": "c2",
+    "texto": "O PMI industrial RatingDog da China ficou em 51,8 em maio de 2026, ante 52,2 em abril de 2026; o consenso Reuters era 51,6",
+    "tipo": "fato_primario",
+    "evidencias": [
+     {
+      "loc": {
+       "doc": 0,
+       "p": 2
+      },
+      "quote": "O PMI industrial RatingDog da China ficou em 51,8 em maio de 2026, ante 52,2 em abril de 2026; o consenso Reuters era 51,6",
+      "pol": "favoravel"
+     }
+    ]
+   },
+   {
+    "ref": "c3",
+    "texto": "A cota de carne bovina do Brasil para a China e de 1,106 milhao de toneladas",
+    "tipo": "fato_primario",
+    "evidencias": [
+     {
+      "loc": {
+       "doc": 0,
+       "p": 3
+      },
+      "quote": "A cota de carne bovina do Brasil para a China e de 1,106 milhao de toneladas, com tarifa adicional de 55% acima da cota",
+      "pol": "favoravel"
+     }
+    ]
+   },
+   {
+    "ref": "c4",
+    "texto": "Nao e possivel afirmar que nao houve queda de volume na controlada Beta no 2T26",
+    "tipo": "fato_primario",
+    "evidencias": [
+     {
+      "loc": {
+       "doc": 0,
+       "p": 4
+      },
+      "quote": "Nao e possivel afirmar que nao houve queda de volume na controlada Beta no 2T26",
+      "pol": "favoravel"
+     }
+    ]
+   },
+   {
+    "ref": "c5",
+    "texto": "O PMI oficial NBS ficou em 50,0% em maio de 2026",
+    "tipo": "fato_primario",
+    "evidencias": [
+     {
+      "loc": {
+       "doc": 0,
+       "p": 5
+      },
+      "quote": "O PMI oficial NBS ficou em 50,0% em maio de 2026, recuo de 0,3 ponto percentual frente a abril de 2026",
+      "pol": "favoravel"
+     }
+    ]
+   },
+   {
+    "ref": "c6",
+    "texto": "A margem caiu 3 pontos percentuais no 2T26, exceto na unidade Gama",
+    "tipo": "fato_primario",
+    "evidencias": [
+     {
+      "loc": {
+       "doc": 0,
+       "p": 6
+      },
+      "quote": "A margem caiu 3 pontos percentuais no 2T26, exceto na unidade Gama, onde subiu 1 ponto percentual",
+      "pol": "favoravel"
+     }
+    ]
+   },
+   {
+    "ref": "c7",
+    "texto": "O contrato foi assinado em 30/06/2026",
+    "tipo": "fato_primario",
+    "evidencias": [
+     {
+      "loc": {
+       "doc": 0,
+       "p": 7
+      },
+      "quote": "O contrato foi assinado em 30/06/2026",
+      "pol": "favoravel"
+     }
+    ]
+   }
+  ],
+  "cases": [
+   {
+    "nome": "F0_controle_fiel",
+    "esperado": {
+     "decisao": "?",
+     "defeitos_criticos": []
+    },
+    "required": [
+     "c1"
+    ],
+    "required_sections": [
+     "S1"
+    ],
+    "artifact": {
+     "sections": [
+      {
+       "section_id": "S1",
+       "titulo": "Resumo",
+       "claims": [
+        {
+         "ref": "c1",
+         "texto": "A receita liquida do grupo Alfa cresceu 12% no 2T26 frente ao 1T26.",
+         "locators": [
+          {
+           "doc": 0,
+           "p": 1
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "manifest": {
+     "default": {
+      "disposicao": "descartado",
+      "justificativa": "generico: unidade fora do escopo da missao, sem dado decisivo para a pergunta"
+     }
+    }
+   },
+   {
+    "nome": "F1_base_de_comparacao_trocada_1T26_para_2T25",
+    "esperado": {
+     "decisao": "?",
+     "defeitos_criticos": []
+    },
+    "required": [
+     "c1"
+    ],
+    "required_sections": [
+     "S1"
+    ],
+    "artifact": {
+     "sections": [
+      {
+       "section_id": "S1",
+       "titulo": "Resumo",
+       "claims": [
+        {
+         "ref": "c1",
+         "texto": "A receita liquida do grupo Alfa cresceu 12% no 2T26 frente ao 2T25.",
+         "locators": [
+          {
+           "doc": 0,
+           "p": 1
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "manifest": {
+     "default": {
+      "disposicao": "descartado",
+      "justificativa": "generico: unidade fora do escopo da missao, sem dado decisivo para a pergunta"
+     }
+    }
+   },
+   {
+    "nome": "F2_entidade_trocada_Alfa_para_Beta",
+    "esperado": {
+     "decisao": "?",
+     "defeitos_criticos": []
+    },
+    "required": [
+     "c1"
+    ],
+    "required_sections": [
+     "S1"
+    ],
+    "artifact": {
+     "sections": [
+      {
+       "section_id": "S1",
+       "titulo": "Resumo",
+       "claims": [
+        {
+         "ref": "c1",
+         "texto": "A receita liquida do grupo Beta cresceu 12% no 2T26 frente ao 1T26.",
+         "locators": [
+          {
+           "doc": 0,
+           "p": 1
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "manifest": {
+     "default": {
+      "disposicao": "descartado",
+      "justificativa": "generico: unidade fora do escopo da missao, sem dado decisivo para a pergunta"
+     }
+    }
+   },
+   {
+    "nome": "F3_dupla_negacao_invertida",
+    "esperado": {
+     "decisao": "?",
+     "defeitos_criticos": []
+    },
+    "required": [
+     "c4"
+    ],
+    "required_sections": [
+     "S1"
+    ],
+    "artifact": {
+     "sections": [
+      {
+       "section_id": "S1",
+       "titulo": "Resumo",
+       "claims": [
+        {
+         "ref": "c4",
+         "texto": "Nao houve queda de volume na controlada Beta no 2T26.",
+         "locators": [
+          {
+           "doc": 0,
+           "p": 4
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "manifest": {
+     "default": {
+      "disposicao": "descartado",
+      "justificativa": "generico: unidade fora do escopo da missao, sem dado decisivo para a pergunta"
+     }
+    }
+   },
+   {
+    "nome": "F4_direcao_vs_consenso_invertida_mesmos_numeros",
+    "esperado": {
+     "decisao": "?",
+     "defeitos_criticos": []
+    },
+    "required": [
+     "c2"
+    ],
+    "required_sections": [
+     "S1"
+    ],
+    "artifact": {
+     "sections": [
+      {
+       "section_id": "S1",
+       "titulo": "Resumo",
+       "claims": [
+        {
+         "ref": "c2",
+         "texto": "O PMI industrial RatingDog da China ficou em 51,8 em maio de 2026, abaixo do consenso Reuters de 51,6, ante 52,2 em abril de 2026.",
+         "locators": [
+          {
+           "doc": 0,
+           "p": 2
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "manifest": {
+     "default": {
+      "disposicao": "descartado",
+      "justificativa": "generico: unidade fora do escopo da missao, sem dado decisivo para a pergunta"
+     }
+    }
+   },
+   {
+    "nome": "F5_variacao_mensal_rotulada_surpresa_numero_novo",
+    "esperado": {
+     "decisao": "?",
+     "defeitos_criticos": []
+    },
+    "required": [
+     "c2"
+    ],
+    "required_sections": [
+     "S1"
+    ],
+    "artifact": {
+     "sections": [
+      {
+       "section_id": "S1",
+       "titulo": "Resumo",
+       "claims": [
+        {
+         "ref": "c2",
+         "texto": "O PMI industrial RatingDog da China ficou em 51,8 em maio de 2026, surpresa negativa de 0,4 frente a abril de 2026 (52,2); consenso Reuters 51,6.",
+         "locators": [
+          {
+           "doc": 0,
+           "p": 2
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "manifest": {
+     "default": {
+      "disposicao": "descartado",
+      "justificativa": "generico: unidade fora do escopo da missao, sem dado decisivo para a pergunta"
+     }
+    }
+   },
+   {
+    "nome": "F6_separador_milhar_ptbr_1,106_para_1.106",
+    "esperado": {
+     "decisao": "?",
+     "defeitos_criticos": []
+    },
+    "required": [
+     "c3"
+    ],
+    "required_sections": [
+     "S1"
+    ],
+    "artifact": {
+     "sections": [
+      {
+       "section_id": "S1",
+       "titulo": "Resumo",
+       "claims": [
+        {
+         "ref": "c3",
+         "texto": "A cota de carne bovina do Brasil para a China e de 1.106 milhao de toneladas.",
+         "locators": [
+          {
+           "doc": 0,
+           "p": 3
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "manifest": {
+     "default": {
+      "disposicao": "descartado",
+      "justificativa": "generico: unidade fora do escopo da missao, sem dado decisivo para a pergunta"
+     }
+    }
+   },
+   {
+    "nome": "F7_pct_vs_pontos_PMI",
+    "esperado": {
+     "decisao": "?",
+     "defeitos_criticos": []
+    },
+    "required": [
+     "c5"
+    ],
+    "required_sections": [
+     "S1"
+    ],
+    "artifact": {
+     "sections": [
+      {
+       "section_id": "S1",
+       "titulo": "Resumo",
+       "claims": [
+        {
+         "ref": "c5",
+         "texto": "O PMI oficial NBS ficou em 50,0 pontos em maio de 2026.",
+         "locators": [
+          {
+           "doc": 0,
+           "p": 5
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "manifest": {
+     "default": {
+      "disposicao": "descartado",
+      "justificativa": "generico: unidade fora do escopo da missao, sem dado decisivo para a pergunta"
+     }
+    }
+   },
+   {
+    "nome": "F8_ressalva_exceto_removida",
+    "esperado": {
+     "decisao": "?",
+     "defeitos_criticos": []
+    },
+    "required": [
+     "c6"
+    ],
+    "required_sections": [
+     "S1"
+    ],
+    "artifact": {
+     "sections": [
+      {
+       "section_id": "S1",
+       "titulo": "Resumo",
+       "claims": [
+        {
+         "ref": "c6",
+         "texto": "A margem caiu 3 pontos percentuais no 2T26.",
+         "locators": [
+          {
+           "doc": 0,
+           "p": 6
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "manifest": {
+     "default": {
+      "disposicao": "descartado",
+      "justificativa": "generico: unidade fora do escopo da missao, sem dado decisivo para a pergunta"
+     }
+    }
+   },
+   {
+    "nome": "F9_formato_de_data_ISO",
+    "esperado": {
+     "decisao": "?",
+     "defeitos_criticos": []
+    },
+    "required": [
+     "c7"
+    ],
+    "required_sections": [
+     "S1"
+    ],
+    "artifact": {
+     "sections": [
+      {
+       "section_id": "S1",
+       "titulo": "Resumo",
+       "claims": [
+        {
+         "ref": "c7",
+         "texto": "O contrato foi assinado em 2026-06-30.",
+         "locators": [
+          {
+           "doc": 0,
+           "p": 7
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "manifest": {
+     "default": {
+      "disposicao": "descartado",
+      "justificativa": "generico: unidade fora do escopo da missao, sem dado decisivo para a pergunta"
+     }
+    }
+   },
+   {
+    "nome": "F10_serie_homonima_NBS_rotulada_RatingDog",
+    "esperado": {
+     "decisao": "?",
+     "defeitos_criticos": []
+    },
+    "required": [
+     "c5"
+    ],
+    "required_sections": [
+     "S1"
+    ],
+    "artifact": {
+     "sections": [
+      {
+       "section_id": "S1",
+       "titulo": "Resumo",
+       "claims": [
+        {
+         "ref": "c5",
+         "texto": "O PMI RatingDog da China ficou em 50,0% em maio de 2026.",
+         "locators": [
+          {
+           "doc": 0,
+           "p": 5
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "manifest": {
+     "default": {
+      "disposicao": "descartado",
+      "justificativa": "generico: unidade fora do escopo da missao, sem dado decisivo para a pergunta"
+     }
+    }
+   },
+   {
+    "nome": "F11_qualificador_universal_inventado",
+    "esperado": {
+     "decisao": "?",
+     "defeitos_criticos": []
+    },
+    "required": [
+     "c1"
+    ],
+    "required_sections": [
+     "S1"
+    ],
+    "artifact": {
+     "sections": [
+      {
+       "section_id": "S1",
+       "titulo": "Resumo",
+       "claims": [
+        {
+         "ref": "c1",
+         "texto": "A receita liquida do grupo Alfa cresceu 12% no 2T26 frente ao 1T26 em todas as unidades.",
+         "locators": [
+          {
+           "doc": 0,
+           "p": 1
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "manifest": {
+     "default": {
+      "disposicao": "descartado",
+      "justificativa": "generico: unidade fora do escopo da missao, sem dado decisivo para a pergunta"
+     }
+    }
+   },
+   {
+    "nome": "F12_tarifa_55pct_omitida_de_claim_sobre_cota",
+    "esperado": {
+     "decisao": "?",
+     "defeitos_criticos": []
+    },
+    "required": [
+     "c3"
+    ],
+    "required_sections": [
+     "S1"
+    ],
+    "artifact": {
+     "sections": [
+      {
+       "section_id": "S1",
+       "titulo": "Resumo",
+       "claims": [
+        {
+         "ref": "c3",
+         "texto": "A cota de carne bovina do Brasil para a China e de 1,106 milhao de toneladas.",
+         "locators": [
+          {
+           "doc": 0,
+           "p": 3
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "manifest": {
+     "default": {
+      "disposicao": "descartado",
+      "justificativa": "generico: unidade fora do escopo da missao, sem dado decisivo para a pergunta"
+     }
+    }
+   }
+  ]
+ },
+ "results": {
+  "F0_controle_fiel": {
+   "decision": "pass",
+   "gate_allowed": true,
+   "det_findings": [],
+   "suspeitas": [
+    "negativa_descartada_com_justificativa"
+   ],
+   "findings": []
+  },
+  "F1_base_de_comparacao_trocada_1T26_para_2T25": {
+   "decision": "fail",
+   "gate_allowed": false,
+   "det_findings": [
+    [
+     "data_ausente_no_original",
+     "importante"
+    ]
+   ],
+   "suspeitas": [
+    "negativa_descartada_com_justificativa"
+   ],
+   "findings": [
+    [
+     "data_ausente_no_original",
+     "importante"
+    ]
+   ]
+  },
+  "F2_entidade_trocada_Alfa_para_Beta": {
+   "decision": "pass",
+   "gate_allowed": true,
+   "det_findings": [],
+   "suspeitas": [
+    "negativa_descartada_com_justificativa"
+   ],
+   "findings": []
+  },
+  "F3_dupla_negacao_invertida": {
+   "decision": "pass",
+   "gate_allowed": true,
+   "det_findings": [],
+   "suspeitas": [
+    "negativa_descartada_com_justificativa"
+   ],
+   "findings": []
+  },
+  "F4_direcao_vs_consenso_invertida_mesmos_numeros": {
+   "decision": "pass",
+   "gate_allowed": true,
+   "det_findings": [],
+   "suspeitas": [
+    "negativa_descartada_com_justificativa"
+   ],
+   "findings": []
+  },
+  "F5_variacao_mensal_rotulada_surpresa_numero_novo": {
+   "decision": "fail",
+   "gate_allowed": false,
+   "det_findings": [
+    [
+     "numero_ausente_no_original",
+     "critica"
+    ]
+   ],
+   "suspeitas": [
+    "negativa_descartada_com_justificativa"
+   ],
+   "findings": [
+    [
+     "numero_ausente_no_original",
+     "critica"
+    ]
+   ]
+  },
+  "F6_separador_milhar_ptbr_1,106_para_1.106": {
+   "decision": "pass",
+   "gate_allowed": true,
+   "det_findings": [],
+   "suspeitas": [
+    "negativa_descartada_com_justificativa"
+   ],
+   "findings": []
+  },
+  "F7_pct_vs_pontos_PMI": {
+   "decision": "pass",
+   "gate_allowed": true,
+   "det_findings": [],
+   "suspeitas": [
+    "negacao_perdida",
+    "negativa_descartada_com_justificativa"
+   ],
+   "findings": []
+  },
+  "F8_ressalva_exceto_removida": {
+   "decision": "pass",
+   "gate_allowed": true,
+   "det_findings": [],
+   "suspeitas": [
+    "negacao_perdida",
+    "negativa_descartada_com_justificativa",
+    "ressalva_removida"
+   ],
+   "findings": []
+  },
+  "F9_formato_de_data_ISO": {
+   "decision": "fail",
+   "gate_allowed": false,
+   "det_findings": [
+    [
+     "data_ausente_no_original",
+     "importante"
+    ]
+   ],
+   "suspeitas": [
+    "negativa_descartada_com_justificativa"
+   ],
+   "findings": [
+    [
+     "data_ausente_no_original",
+     "importante"
+    ]
+   ]
+  },
+  "F10_serie_homonima_NBS_rotulada_RatingDog": {
+   "decision": "pass",
+   "gate_allowed": true,
+   "det_findings": [],
+   "suspeitas": [
+    "negacao_perdida",
+    "negativa_descartada_com_justificativa"
+   ],
+   "findings": []
+  },
+  "F11_qualificador_universal_inventado": {
+   "decision": "pass",
+   "gate_allowed": true,
+   "det_findings": [],
+   "suspeitas": [
+    "negativa_descartada_com_justificativa"
+   ],
+   "findings": []
+  },
+  "F12_tarifa_55pct_omitida_de_claim_sobre_cota": {
+   "decision": "pass",
+   "gate_allowed": true,
+   "det_findings": [],
+   "suspeitas": [
+    "negativa_descartada_com_justificativa"
+   ],
+   "findings": []
+  }
+ },
+ "executed_at": "2026-11-03",
+ "harness": "tests/test_fidelidade_211.py World/FakeModel (gci-pr-208 @ 884388d8), FakeModel default disposes every suspicion as 'descartada' (lenient auditor)"
+}

@@ -1,0 +1,81 @@
+{
+ "_aviso": "Fixture ABERTA (nao cega): preparada pelo proprio executor; sem controlador independente nesta sessao. Contem erros plantados descritos em pmi_fixture_open.key.json.",
+ "observations": [
+  {
+   "obs_id": "O1",
+   "series_label": "PMI manufatura China (oficial)",
+   "publisher": "NBS/CFLP",
+   "period": "2026-04",
+   "value": 50.3,
+   "unit": "%",
+   "published_at": "2026-04-30T01:30:00Z",
+   "source": "SRC-M2-01"
+  },
+  {
+   "obs_id": "O2",
+   "series_label": "PMI manufatura China (oficial)",
+   "publisher": "NBS/CFLP",
+   "period": "2026-05",
+   "value": 50.0,
+   "unit": "%",
+   "published_at": "2026-05-31T01:30:00Z",
+   "source": "SRC-M2-02"
+  },
+  {
+   "obs_id": "O3",
+   "series_label": "PMI manufatura China (RatingDog)",
+   "publisher": "S&P Global/RatingDog",
+   "period": "2026-04",
+   "value": 52.2,
+   "unit": "indice",
+   "published_at": "2026-04-30T01:45:00Z",
+   "source": "SRC-M2-08 (primaria bloqueada)"
+  },
+  {
+   "obs_id": "O4",
+   "series_label": "PMI manufatura China (RatingDog)",
+   "publisher": "S&P Global/RatingDog",
+   "period": "2026-05",
+   "value": 51.8,
+   "unit": "indice",
+   "published_at": "2026-06-01T01:45:00Z",
+   "source": "SRC-M2-06/07 (primaria bloqueada)"
+  },
+  {
+   "obs_id": "O5",
+   "series_label": "PMI manufatura China (RatingDog)",
+   "publisher": "S&P Global/RatingDog",
+   "period": "2026-05",
+   "value": 50.0,
+   "unit": "indice",
+   "published_at": "2026-06-01T01:45:00Z",
+   "source": "(plantado)"
+  },
+  {
+   "obs_id": "O6",
+   "series_label": "consenso RatingDog maio/2026",
+   "publisher": "Reuters poll (via RTHK)",
+   "period": "2026-05",
+   "value": 51.6,
+   "captured_at": "2026-05-29T00:00:00Z",
+   "source": "SRC-M2-06"
+  },
+  {
+   "obs_id": "O7",
+   "series_label": "consenso RatingDog maio/2026",
+   "publisher": "nao nomeado (investinglive/Newsquawk)",
+   "period": "2026-05",
+   "value": 51.4,
+   "captured_at": "2026-05-29T00:00:00Z",
+   "source": "SRC-M2-07"
+  },
+  {
+   "obs_id": "O8",
+   "series_label": "surpresa RatingDog maio/2026",
+   "publisher": "(derivado)",
+   "period": "2026-05",
+   "value": -0.4,
+   "source": "(plantado)"
+  }
+ ]
+}

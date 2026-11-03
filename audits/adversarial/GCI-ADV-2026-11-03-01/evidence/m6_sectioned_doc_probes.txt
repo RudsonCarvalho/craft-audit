@@ -1,0 +1,32 @@
+Q1 CA1 after counterevidence: ('active', 'contestada')
+Q1 replace same board_claim -> CA1b: ('active', 'contestada') | CA1: ('superseded', 'substituida')
+Q1b replace with NEW board_claim_id -> CA1c: ('active', 'contestada') | contested predecessor CA1: ('superseded', 'substituida')
+Q1b index row SA: ['| SA | 4 | fcfa652ac7a0 | ana | active | 1 | 1 |']
+Q1c retract+append same text, new board claim -> CA1d: ('active', 'aprovada')
+Q2 CC1 before: ('active', 'conclusao') conclusions: {'CC1': 'current'}
+Q2 after retract CA1 -> CC1: ('active', 'conclusao') conclusions: {'CC1': 'stale'}
+Q2 hashes changed: {'SA': True, 'SB': False, 'SC': False}
+Q4 stale patch on SC (dependent on retracted CA1) with rebase if_disjoint: APPLIED v 9 CC1: ('active', 'conclusao')
+Q4b -> PatchInvalid ops[0] (replace_claim): depends_on CA1 inexistente ou não ativa
+Q6 default doc fidelity_gate per patch: [{'status': 'nao_executado'}, {'status': 'nao_executado'}, {'status': 'nao_executado'}, {'status': 'nao_executado'}] | CA1: ('active', 'aprovada')
+Traceback (most recent call last):
+  File "<stdin>", line 66, in <module>
+  File "/home/user/gci-pr-208/tests/test_sectioned_doc_212.py", line 82, in do
+    return self.apply(
+           ~~~~~~~~~~^
+        self.patch(author, ops, **kw),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        authority=af.authority_for(self.state, author, grants, sections),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/user/gci-pr-208/tests/test_sectioned_doc_212.py", line 73, in apply
+    entries, res = af.apply_patch(self.entries, patch, board=self.board, at=self.clock(), **kw)
+                   ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/gci-pr-208/tests/authority_fixtures.py", line 51, in apply_patch
+    return sd.apply_patch(*args, **kw)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/user/gci-pr-208/src/catalyst/research/sectioned_doc.py", line 1508, in apply_patch
+    raise FidelityGateRejected("documento exige o gate de fidelidade (#211) e nenhum foi dado")
+catalyst.research.sectioned_doc.FidelityGateRejected: documento exige o gate de fidelidade (#211) e nenhum foi dado

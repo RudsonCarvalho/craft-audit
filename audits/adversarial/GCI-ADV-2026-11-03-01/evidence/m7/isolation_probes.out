@@ -1,0 +1,5 @@
+ISOLATION [copia byte a byte da entrega dados r2 (nome neutro)] -> IsolationError: docs/descoberta/materiais/notas_de_contexto.json: idêntico a entrega de outro papel (notas_de_contexto.json)
+ISOLATION [mesma copia + 1 byte] -> CRIADA H07-rev-f966a4a249
+ISOLATION [nota do lider com nome neutro] -> CRIADA H07-rev-071de65343
+ISOLATION [copia byte a byte de dossies/H07/dados_eventos.json (rodada 1)] -> CRIADA H07-rev-bd7255ff2e
+reviewer_material_errors em copias renomeadas: []

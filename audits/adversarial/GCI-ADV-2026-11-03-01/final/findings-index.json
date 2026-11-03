@@ -1,0 +1,505 @@
+{
+ "schema": "audit-findings-index/1",
+ "audit_id": "GCI-ADV-2026-11-03-01",
+ "generated_at": "2026-11-03T19:45:00Z",
+ "register_version": 2,
+ "count": 25,
+ "severity_counts": {
+  "Crítica": 0,
+  "Alta": 7,
+  "Média": 16,
+  "Baixa": 2
+ },
+ "confirmation_counts": {
+  "confirmado_por_reproducao": 17,
+  "confirmado_por_inspecao_documental": 8
+ },
+ "reclassification_condition": "F-12 combinado com F-13 passa a Critica se a pilha de PRs #206-#212 for mesclada com um auditor semantico da mesma familia do compressor (revisao independente, secao 6).",
+ "findings": [
+  {
+   "id": "F-01",
+   "severity": "Média",
+   "severity_before_review": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Resumo do líder omite contraexemplo (TBLE3 −12%) e distorce rótulo (Taesa como distribuidora); handoff repete e acrescenta fato sem rastro",
+   "mission": "M5",
+   "requirements": [
+    "REQ-012",
+    "REQ-009"
+   ],
+   "root_cause_group": "RC-1 texto livre do líder sem controle",
+   "evidence": [
+    "evidence/m5/trace_h07_round2.json#summary_mentions",
+    "GCI:docs/descoberta/hipoteses/log/H07.jsonl#seq52",
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/deliverable.json#claims[0]",
+    "GCI:docs/PROJECT-STATE.md:15",
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/status.jsonl",
+    "GCI:docs/descoberta/hipoteses/H07.md:904",
+    "GCI:src/catalyst/research/investigation_task_io.py:256"
+   ],
+   "detail": "findings/findings.json#F-01",
+   "review_verdict": "CONCORDA COM CORRECAO"
+  },
+  {
+   "id": "F-02",
+   "severity": "Alta",
+   "severity_before_review": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Projeções (ficha, Radar) descartam 81% das claims da rodada, o corpo das notas e 6 de 9 campos de exposição",
+   "mission": "M5",
+   "requirements": [
+    "REQ-010",
+    "REQ-009"
+   ],
+   "root_cause_group": "RC-2 projeção com perda sem rótulo de incompletude",
+   "evidence": [
+    "evidence/m5/trace_h07_round2.json",
+    "GCI:src/catalyst/research/hypothesis_dossier.py:apply_to_card",
+    "GCI:src/catalyst/radar/queries.py:dossier",
+    "GCI:src/catalyst/research/investigation_reconcile.py:plan_reconciliation",
+    "evidence/m5/trace_h07_round2.json#radar_dossier"
+   ],
+   "detail": "findings/findings.json#F-02",
+   "review_verdict": "CONCORDA COM CORRECAO"
+  },
+  {
+   "id": "F-03",
+   "severity": "Média",
+   "severity_before_review": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Flag post_event não sobrevive à reconciliação: alegação de imprensa pós-evento vira evidence_for",
+   "mission": "M5/M7",
+   "requirements": [
+    "REQ-008",
+    "REQ-009"
+   ],
+   "root_cause_group": "RC-2 projeção com perda sem rótulo de incompletude",
+   "evidence": [
+    "evidence/m7_isolation_and_gate_probes.txt",
+    "GCI:docs/descoberta/hipoteses/H07.md#evidence_for[4]"
+   ],
+   "detail": "findings/findings.json#F-03",
+   "review_verdict": "CONCORDA COM CORRECAO"
+  },
+  {
+   "id": "F-04",
+   "severity": "Média",
+   "severity_before_review": "Alta",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Snapshot 'congelado' do revisor transporta conclusões da rodada 1 (date_note do gatilho, inferência do líder, confiança rebaixada)",
+   "mission": "M7",
+   "requirements": [
+    "REQ-007"
+   ],
+   "root_cause_group": "RC-3 independência formal do revisor",
+   "evidence": [
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/card_snapshot.json",
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/deliverable.json#claims[9]",
+    "GCI:src/catalyst/research/investigation_task.py:REVIEWER_STRIPPED_FIELDS"
+   ],
+   "detail": "findings/findings.json#F-04",
+   "review_verdict": "CONCORDA COM CORRECAO"
+  },
+  {
+   "id": "F-05",
+   "severity": "Média",
+   "severity_before_review": "Alta",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Nenhuma identidade estrutural de modelo; mesma família (Claude) em especialistas, revisor, líder, revisores de PR e neste auditor",
+   "mission": "M7",
+   "requirements": [
+    "REQ-013",
+    "REQ-047",
+    "REQ-048"
+   ],
+   "root_cause_group": "RC-4 identidade de modelo",
+   "evidence": [
+    "GCI:docs/descoberta/tarefas/*/status.jsonl",
+    "gci-pr-208:docs/*/revisao_independente_*.md",
+    "knowledge-hub:bundles/agent-operations/ops-001/norm-001-revisor-nao-pequeno.md",
+    "knowledge-hub:bundles/agent-operations/ops-004-catalogo-de-modelos.md"
+   ],
+   "detail": "findings/findings.json#F-05",
+   "review_verdict": "CONCORDA COM CORRECAO"
+  },
+  {
+   "id": "F-06",
+   "severity": "Média",
+   "severity_before_review": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Isolamento do revisor é por nome de caminho e hash exato das entregas de tarefas/; cópia +1 byte, nota do líder renomeada e entrega da rodada 1 passam",
+   "mission": "M7",
+   "requirements": [
+    "REQ-007"
+   ],
+   "root_cause_group": "RC-3 independência formal do revisor",
+   "evidence": [
+    "evidence/m7_isolation_and_gate_probes.txt",
+    "evidence/m7/isolation_probes.out"
+   ],
+   "detail": "findings/findings.json#F-06",
+   "review_verdict": "CONCORDA"
+  },
+  {
+   "id": "F-07",
+   "severity": "Alta",
+   "severity_before_review": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Contradição entre evidência nova e facts.episodes da ficha não é detectada",
+   "mission": "M5/M7",
+   "requirements": [
+    "REQ-011"
+   ],
+   "root_cause_group": "RC-5 detecção de conflito só entre entregas",
+   "evidence": [
+    "GCI:docs/descoberta/hipoteses/H07.md#facts.episodes",
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/deliverable.json#claims[6]",
+    "GCI:src/catalyst/research/investigation_reconcile.py:_conflicts",
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/task.json#as_of"
+   ],
+   "detail": "findings/findings.json#F-07",
+   "review_verdict": "CONCORDA COM CORRECAO"
+  },
+  {
+   "id": "F-08",
+   "severity": "Alta",
+   "severity_before_review": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Guardas de probabilidade são lexicais e calibration_ref não é resolvido (decision_gate, trigger)",
+   "mission": "M4",
+   "requirements": [
+    "REQ-002"
+   ],
+   "root_cause_group": "RC-6 proibição por léxico",
+   "evidence": [
+    "missions/M4-quant-audit.md#2",
+    "GCI:src/catalyst/research/decision_gate.py:_check_dimension",
+    "GCI:src/catalyst/research/trigger_ontology.py:160",
+    "evidence/m4/probability_guard_probes.out"
+   ],
+   "detail": "findings/findings.json#F-08",
+   "review_verdict": "CONCORDA"
+  },
+  {
+   "id": "F-09",
+   "severity": "Média",
+   "severity_before_review": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Filtro de probabilidade dos papéis (PR #209) só pega '%' junto de 'probab/chance'",
+   "mission": "M4",
+   "requirements": [
+    "REQ-043"
+   ],
+   "root_cause_group": "RC-6 proibição por léxico",
+   "evidence": [
+    "missions/M4-quant-audit.md#2"
+   ],
+   "detail": "findings/findings.json#F-09",
+   "review_verdict": "nao revisado individualmente"
+  },
+  {
+   "id": "F-10",
+   "severity": "Alta",
+   "severity_before_review": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Identidade de série é uma string do chamador; troca de série homônima vira 'revisão' silenciosa",
+   "mission": "M2",
+   "requirements": [
+    "REQ-025"
+   ],
+   "root_cause_group": "RC-7 identidade estatística ausente",
+   "evidence": [
+    "missions/M2-series-audit.md#2.2",
+    "gci-pr-208:src/catalyst/sources/series_store.py",
+    "evidence/m2/store_homonym_probe.out"
+   ],
+   "detail": "findings/findings.json#F-10",
+   "review_verdict": "CONCORDA"
+  },
+  {
+   "id": "F-11",
+   "severity": "Média",
+   "severity_before_review": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Surpresa inoperante via store: record_capture grava sempre available_precision=upper_bound e surprise() exige o contrário",
+   "mission": "M2",
+   "requirements": [
+    "REQ-026",
+    "REQ-027"
+   ],
+   "root_cause_group": "RC-8 fail-closed inalcançável",
+   "evidence": [
+    "gci-pr-208:src/catalyst/sources/series_store.py:234",
+    "gci-pr-208:src/catalyst/sources/series_consensus.py:90"
+   ],
+   "detail": "findings/findings.json#F-11",
+   "review_verdict": "CONCORDA"
+  },
+  {
+   "id": "F-12",
+   "severity": "Alta",
+   "severity_before_review": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Auditor de fidelidade (#211) deixa passar 8 de 11 defeitos novos com auditor semântico leniente",
+   "mission": "M5",
+   "requirements": [
+    "REQ-031"
+   ],
+   "root_cause_group": "RC-9 validadores determinísticos cobrem só número/período/data",
+   "evidence": [
+    "fixtures/m5/fidelity_211_probes.json",
+    "evidence/m5/fidelity_211_probes.rerun.out"
+   ],
+   "detail": "findings/findings.json#F-12",
+   "review_verdict": "CONCORDA COM CORRECAO"
+  },
+  {
+   "id": "F-13",
+   "severity": "Alta",
+   "severity_before_review": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Independência por família de modelo contornável por grafia e cega a fornecedor",
+   "mission": "M7",
+   "requirements": [
+    "REQ-021",
+    "REQ-032",
+    "REQ-013"
+   ],
+   "root_cause_group": "RC-4 identidade de modelo",
+   "evidence": [
+    "evidence/m7_isolation_and_gate_probes.txt",
+    "gci-pr-208:src/catalyst/research/model_identity.py",
+    "evidence/m7/iec_identity_probes.out"
+   ],
+   "detail": "findings/findings.json#F-13",
+   "review_verdict": "CONCORDA"
+  },
+  {
+   "id": "F-14",
+   "severity": "Média",
+   "severity_before_review": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "IEC: autoridades são strings não autenticadas; ack de mesmo modelo por 'orquestrador'/'humano*' em D1–D3; ponteiro de outra claim aceito como prova",
+   "mission": "M7",
+   "requirements": [
+    "REQ-019",
+    "REQ-020",
+    "REQ-021"
+   ],
+   "root_cause_group": "RC-10 trust model de escritor honesto",
+   "evidence": [
+    "evidence/m7_isolation_and_gate_probes.txt",
+    "evidence/m7/iec_identity_probes.out"
+   ],
+   "detail": "findings/findings.json#F-14",
+   "review_verdict": "CONCORDA COM CORRECAO"
+  },
+  {
+   "id": "F-15",
+   "severity": "Alta",
+   "severity_before_review": "Alta",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Documento por seções (#212): retract_claim + append_claim reformulada devolve claim 'aprovada' sem a contraevidência",
+   "mission": "M6",
+   "requirements": [
+    "REQ-036",
+    "REQ-024"
+   ],
+   "root_cause_group": "RC-11 contestação ligada ao id, não ao conteúdo",
+   "evidence": [
+    "evidence/m6_sectioned_doc_probes.txt",
+    "evidence/m6/sectioned_doc_probes.out",
+    "gci-pr-208:src/catalyst/research/evidence_board.py:205"
+   ],
+   "detail": "findings/findings.json#F-15",
+   "review_verdict": "CONCORDA"
+  },
+  {
+   "id": "F-16",
+   "severity": "Média",
+   "severity_before_review": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Sem require_fidelity_gate, 'aprovada' não distingue claim auditada de não auditada",
+   "mission": "M6",
+   "requirements": [
+    "REQ-037"
+   ],
+   "root_cause_group": "RC-11 contestação ligada ao id, não ao conteúdo",
+   "evidence": [
+    "evidence/m6_sectioned_doc_probes.txt"
+   ],
+   "detail": "findings/findings.json#F-16",
+   "review_verdict": "nao revisado individualmente"
+  },
+  {
+   "id": "F-17",
+   "severity": "Média",
+   "severity_before_review": "Média",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Capacidades centrais só especificadas: exposição/causalidade (#178), regimes/correlações (#183/#195/#197), cenários/probabilidades/calibração (#219–#222), biblioteca econômica (hub #26/#27); pilha de PRs não mesclada",
+   "mission": "M1/M4",
+   "requirements": [
+    "REQ-039",
+    "REQ-041",
+    "REQ-042",
+    "REQ-043",
+    "REQ-045",
+    "REQ-046",
+    "REQ-047"
+   ],
+   "root_cause_group": "RC-12 lacuna de implementação",
+   "evidence": [
+    "requirements/requirements-matrix.json",
+    "manifest/audit-manifest.json#branches_and_prs_in_scope"
+   ],
+   "detail": "findings/findings.json#F-17",
+   "review_verdict": "nao revisado individualmente"
+  },
+  {
+   "id": "F-18",
+   "severity": "Média",
+   "severity_before_review": "Alta",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Caso frigoríficos (mai/2026): homônimo de evento (nota MAPA de mar/2025 hospedada sob 2026/05), sem identidade de evento além de origin_id/similaridade em 3 dias, sem decomposição ocorrência/exposição/surpresa/reação/causa",
+   "mission": "M3",
+   "requirements": [
+    "REQ-039",
+    "REQ-040"
+   ],
+   "root_cause_group": "RC-13 identidade de evento e causalidade",
+   "evidence": [
+    "evidence/m3-sources/sources.json",
+    "evidence/m3-sources/mapa_esclarecimento_suspensao_3_plantas_china_2026-05.pdf",
+    "evidence/m3_matcher_probe.txt",
+    "missions/M3-causality-audit.md",
+    "evidence/m3-sources/sources.json#SRC-M3-01"
+   ],
+   "detail": "findings/findings.json#F-18",
+   "review_verdict": "CONCORDA COM CORRECAO"
+  },
+  {
+   "id": "F-19",
+   "severity": "Média",
+   "severity_before_review": "Média",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Disponibilidade por público (NBS zh 04-30 vs en 05-01/05-06) e consenso por provedor (51,4 vs 51,6) não têm lugar no modelo; primária RatingDog bloqueada",
+   "mission": "M2",
+   "requirements": [
+    "REQ-050",
+    "REQ-026"
+   ],
+   "root_cause_group": "RC-7 identidade estatística ausente",
+   "evidence": [
+    "evidence/m2-sources/sources.json"
+   ],
+   "detail": "findings/findings.json#F-19",
+   "review_verdict": "nao revisado individualmente"
+  },
+  {
+   "id": "F-20",
+   "severity": "Média",
+   "severity_before_review": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "gate_check(validation_ready) fica ready só com atestados booleanos, apesar de avisos de revisão humana pendente e evidências não verificadas",
+   "mission": "M4/M7",
+   "requirements": [
+    "REQ-015"
+   ],
+   "root_cause_group": "RC-10 trust model de escritor honesto",
+   "evidence": [
+    "evidence/m7_isolation_and_gate_probes.txt"
+   ],
+   "detail": "findings/findings.json#F-20",
+   "review_verdict": "CONCORDA"
+  },
+  {
+   "id": "F-21",
+   "severity": "Média",
+   "severity_before_review": "Média",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Reação de preço de ativos selecionados pelo resultado entra na ficha como fact a favor",
+   "mission": "M7/M5",
+   "requirements": [
+    "REQ-009"
+   ],
+   "root_cause_group": "RC-5 detecção de conflito só entre entregas",
+   "evidence": [
+    "GCI:docs/descoberta/hipoteses/H07.md#evidence_for[5]",
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/task.json#materials"
+   ],
+   "detail": "findings/findings.json#F-21",
+   "review_verdict": "nao revisado individualmente"
+  },
+  {
+   "id": "F-22",
+   "severity": "Média",
+   "severity_before_review": "Média",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Log do dossiê: truncamento da cauda e reescrita com recálculo da cadeia indetectáveis; head não fixado em artefato versionado",
+   "mission": "M6",
+   "requirements": [
+    "REQ-006"
+   ],
+   "root_cause_group": "RC-14 âncora externa ausente",
+   "evidence": [
+    "evidence/m6_dossier_log_tamper.txt",
+    "GCI:docs/descoberta/decisoes/H07_gate_check.json",
+    "GCI:docs/descoberta/tarefas/H07-rev-7acb9d7691/status.jsonl"
+   ],
+   "detail": "findings/findings.json#F-22",
+   "review_verdict": "CONCORDA COM CORRECAO"
+  },
+  {
+   "id": "F-23",
+   "severity": "Baixa",
+   "severity_before_review": "Baixa",
+   "confirmation": "confirmado_por_reproducao",
+   "title": "Auditor de fidelidade reprova formato de data ISO equivalente (falso positivo documentado)",
+   "mission": "M5",
+   "requirements": [
+    "REQ-031"
+   ],
+   "root_cause_group": "RC-9 validadores determinísticos cobrem só número/período/data",
+   "evidence": [
+    "fixtures/m5/fidelity_211_probes.json"
+   ],
+   "detail": "findings/findings.json#F-23",
+   "review_verdict": "nao revisado individualmente"
+  },
+  {
+   "id": "F-24",
+   "severity": "Média",
+   "severity_before_review": "Média",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Orçamento de tarefa declarativo, não medido; rodada de 3 tarefas em ≤3 min",
+   "mission": "M7",
+   "requirements": [
+    "REQ-014"
+   ],
+   "root_cause_group": "RC-15 observabilidade",
+   "evidence": [
+    "GCI:docs/descoberta/tarefas/*/status.jsonl"
+   ],
+   "detail": "findings/findings.json#F-24",
+   "review_verdict": "nao revisado individualmente"
+  },
+  {
+   "id": "F-25",
+   "severity": "Baixa",
+   "severity_before_review": "Baixa",
+   "confirmation": "confirmado_por_inspecao_documental",
+   "title": "Knowledge Hub sem bundle econômico; normas de revisão todas draft e não ligadas ao GCI",
+   "mission": "M1",
+   "requirements": [
+    "REQ-047",
+    "REQ-048"
+   ],
+   "root_cause_group": "RC-12 lacuna de implementação",
+   "evidence": [
+    "missions/M1-inventory.md#2.3"
+   ],
+   "detail": "findings/findings.json#F-25",
+   "review_verdict": "nao revisado individualmente"
+  }
+ ]
+}

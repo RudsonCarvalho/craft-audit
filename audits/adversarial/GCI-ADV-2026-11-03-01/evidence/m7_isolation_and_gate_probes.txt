@@ -1,0 +1,17 @@
+create_task signature: (hypotheses_dir: 'str | Path', tasks_dir: 'str | Path', spec: 'dict', *, now: 'str | None' = None, root: 'str | Path' = '.') -> 'tuple[dict, bool]'
+ISOLATION byte-identical copy of dados deliverable (neutral name): TypeError: create_task() missing 1 required positional argument: 'spec'
+ISOLATION copy with one byte appended: TypeError: create_task() missing 1 required positional argument: 'spec'
+ISOLATION lead note renamed: TypeError: create_task() missing 1 required positional argument: 'spec'
+reviewer_material_errors on renamed copies: []
+gate_check validation_ready with operator flags true -> ready: True | unmet: [] | warnings: ['last investigation round: needs_human_review=true (human must read it)', 'a reviewer recommended inconclusive in the last round', '41 active evidence item(s) not verified']
+card validate with calibrated_probability=0.6 -> ['assessment.calibrated_probability: must be null until validated calibration']
+card validate with trigger scenario_probability=0.6 (source=LLM estimate) -> ACCEPTED
+post_event claims in deliverable: 1 | reconciled payload keys: ['available_at', 'captured_at', 'claim', 'evidence_class', 'evidence_id', 'excerpt_or_field', 'origin_id', 'published_at', 'source_url_or_ref', 'stance', 'verified'] | 'post_event' in payload: False
+ISOLATION [byte-identical copy of r2 dados deliverable (neutral name)] -> IsolationError: docs/descoberta/materiais/notas_de_contexto.json: idêntico a entrega de outro papel (notas_de_contexto.json)
+ISOLATION [same copy + 1 byte] -> CREATED H07-rev-f966a4a249
+ISOLATION [lead note with neutral name] -> CREATED H07-rev-071de65343
+ISOLATION [byte-identical copy of ROUND-1 dados_eventos.json (dossies/)] -> CREATED H07-rev-bd7255ff2e
+IEC same-model ack autorizado_por='orquestrador': mission accepted; run status=blocked; mesmo_modelo flags=None; reviewers used=['model-A']
+IEC same-model ack autorizado_por='humano-rudson': mission accepted; run status=blocked; mesmo_modelo flags=None; reviewers used=['model-A']
+IEC same-model ack autorizado_por='humano': mission accepted; run status=blocked; mesmo_modelo flags=None; reviewers used=['model-A']
+IEC same-model ack autorizado_por='Orquestrador ': mission accepted; run status=blocked; mesmo_modelo flags=None; reviewers used=['model-A']
